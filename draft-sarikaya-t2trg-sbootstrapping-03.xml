@@ -1,0 +1,605 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+<!ENTITY I-D.ietf-homenet-arch PUBLIC "" "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-homenet-arch.xml">
+<!ENTITY I-D.behringer-autonomic-network-framework PUBLIC "" "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.behringer-autonomic-network-framework.xml">
+]>
+<rfc category="info" docName="draft-sarikaya-t2trg-sbootstrapping-03" ipr="trust200902">
+  <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
+  <?rfc toc="yes" ?>
+  <?rfc compact="yes" ?>
+  <?rfc symrefs="yes" ?>
+  <?rfc sortrefs="yes"?>
+  <?rfc iprnotified="no" ?>
+  <?rfc strict="yes" ?>
+  <front>
+    <title abbrev="IoT Bootstrapping Analysis">Secure IoT Bootstrapping: A Survey</title>
+
+    <author fullname="Behcet Sarikaya" initials="B.S." surname="Sarikaya">
+      <organization>Huawei</organization>
+      <address>
+        <postal>
+          <street>5340 Legacy Dr. Building 3</street>
+          <street/>
+          <city>Plano</city>
+          <region>TX</region>
+          <code>75024</code>
+          <country>USA</country>
+        </postal>
+        <email>sarikaya@ieee.org</email>
+      </address>
+    </author>
+
+
+    <author fullname="Mohit Sethi" initials="M.S." surname="Sethi">
+      <organization>Ericsson</organization>
+      <address>
+        <postal>
+          <street>Hirsalantie 11</street>
+          <city>Jorvas</city>
+          <region></region>
+          <code>02420</code>
+          <country>Finland</country>
+        </postal>
+        <email>mohit@piuha.net</email>
+      </address>
+    </author>
+	
+	<author fullname="Abdur Rashid Sangi" initials="AR." surname="Sangi">
+      <organization>Huawei Technologies</organization>
+      <address>
+        <postal>
+          <street>No.156 Beiqing Rd. Haidian District</street>      
+          <city>Beijing</city>
+          <region/>
+          <code>100095</code>
+          <country>P.R. China</country>
+        </postal>
+        <phone/>
+        <email>rashid.sangi@huawei.com</email>
+      </address>
+    </author>
+
+    <date/>
+    <abstract>
+      <t>This document presents a survey of secure bootstrapping mechanisms available for smart objects that are part of an Internet of Things (IoT) network. It aims to provide a structured classification of the available mechanisms. The document does not prescribe any one secure bootstrapping mechanism and rather presents IoT developers with different options to choose from, depending on their use-case, security requirements and the user interface available on their smart objects.</t>
+    </abstract>
+  </front>
+
+  <middle>
+    <section title="Introduction">
+      <t>An Internet of Things (IoT) network consists of connected things that cooperate together to accomplish tasks such as smart buildings, smart environment monitoring system, and intelligent transport systems. The size of an IoT network varies from a couple of devices to tens of thousands depending on the application. A smart object, or a thing, or a device in an IoT network is typically produced by a variety of vendors and are typically heterogeneous in terms of the constraints on their power supply, communication capability, computation capacity and memory available. Due to this heterogeneity, a wide variety of bootstrapping mechanisms are proposed and used for these smart objects.</t>
+
+      <t>Before classifying and describing the various methods of bootstrapping, it is important to discuss what is meant by the term bootstrapping. In order to understand the term bootstrapping, we need to discuss some important preliminaries first. We start by discussing the meaning of identity and identifiers. The dictionary defines identity as "something that distinguishes an entity from other entities". Dick Hardt (an advocate of identity 2.0 concept) in his keynote talk on identity describes human identity as "who you are, what you like, what you say about yourself and what others say about you" <xref target="identity2.0"/>. In addition to human beings, other entities in our physical environment such as the electronic devices we use, our pets and wildlife also have identities.</t>
+        
+      <t>Just as in the real world, humans also have identities in the digital world. For example, a digital identity may be used by online service to verify the identity of a registered user and provide it with secure personalized service. This process of identity verification is also known as authentication. An attribute that can be used to identify and distinguish one entity from another is referred to as an identifier. The passport number of a citizen is an example of an real-world identifier. Similarly, an email address is an example of a digital identifier. Often the digital identifier of a human user and the digital identifier of its electronic devices are used interchangeably and one may subsume the other for authentication purposes. For instance, when performing network access authentication, the user may enter its identity credentials on the device that should connect to the network. In this case, the device assumes the user identity on its behalf and authenticates to obtain network access. Ubiquitous computing devices increasingly interact with each other without human intervention. This essentially requires the devices to have their own identifiers for authentication and secure communication.</t>
+
+      <t>With these preliminaries in mind, we try to decipher the meaning of bootstrapping. The term itself has often been used in many different contexts. For instance, <xref target="RFC4640"/> describes bootstrapping as the process by which a mobile IPv6 node obtains information about the home address, the home agent address, and a security association. The IoT@Work project defines bootstrapping in the context of Internet of Things (IoT) as the process by which the state of a device, a subsystem, a network, or an application changes from not operational to operational <xref target="iotwork"/>. <xref target="I-D.oflynn-core-bootstrapping"/> also discusses the problem of secure bootstrapping for resource-constrained devices and highlights the role of IETF in defining suitable solutions. </t>
+	  
+	  <t>We define bootstrapping as any process that is required before the resource-constrained device network can operate.  Similarly, Vermillard <xref target="vermillard"/> describes bootstrapping as the procedure by which an IoT device gets the secret keys and URL for reaching the necessary servers. Vermillard notes that this procedure is also useful for re-keying, upgrading the security schemes and for redirecting the devices to other servers. The term device onboarding refers to similar ideas and is often used interchangeably with the term bootstrapping. As an example, the AllSeen Alliance <xref target="allseen"/> defines onboarding as a service that provides a common and simple way for new devices to be brought onto an existing WiFi network. Some solutions and standards organizations distinguish the processes involved in bootstrapping into the following sub-processes:
+      
+	  <list style="letters">
+ 		<t>initial establishment of keys and configuration information</t>
+ 		<t>subsequent provisioning of keys and configuration information</t>
+ 	  </list>	
+      The Open Connectivity Foundation (OCF), for example, uses the term onboarding for (a) and bootstrapping for (b). Some specifications consider (a) out of scope and assume that this information is manufacturer provisioned. However, in many cases the two processes are interdependent and may require business agreements and/or protocols to ensure security for both the sub-processes. 
+
+      Instead of providing yet another definition of bootstrapping, here we list the different goals that bootstrapping may be used to fulfill:</t>
+      <t><list style="symbols">
+        <t>Authentication of a pre-established identity or creation of a new identity: To illustrate this with an example, consider the case where a user wishes to use one of the many free online mail services. The user in this case needs to first register and create a unique identifier (email address) for its identity. Thereafter, the user will use this email address along with the password to authenticate and access the mails. Both these processes can be considered as a part of bootstrapping.</t>
+        <t>Authorization for network access that may include configuration of communication parameters: Bootstrapping also includes the process by which a device authenticates to the network and receives authorization and credentials for subsequent secure communication.</t>
+        <t>Registration or joining a domain or group: The process by which a windows device joins a windows domain can also be seen as bootstrapping.</t>
+        <t>Pairing with a specific node, or connecting to a cloud service: Securely pairing two personal computing devices that have no a-priori
+        information about each other, and securely connecting a device to an online cloud service are both different forms of bootstrapping.</t>
+      </list></t>
+
+      <t>It is evident that bootstrapping maybe used in many diverse scenarios to fulfill different goals. Thus, it is not surprising that there are many different bootstrapping protocols and methods available. Rather than trying to achieve the impossible target of enlisting all the different bootstrapping solutions, we instead classify them into the following categories in section 3. 
+    </t>
+
+
+    </section>
+
+    <section title="Terminology">
+      <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in <xref target="RFC2119"/>.</t>
+    </section>
+
+    <section title="Classification of available mechanisms">
+      <t>While some bootstrapping approaches are more user-intensive and require extensive user-involvement by scanning QR codes or entering passwords; others maybe more automated, such as those that rely on mobile networks <xref target="I-D.sethi-gba-constrained"/>. We classify available bootstrapping solutions into the following major categories:</t>
+      <t><list style="symbols">
+        <t>Managed methods: These bootstrapping methods rely on pre-established trust relations and authentication credentials. They typically utilize centralized servers for authentication, although several such servers may join to form a distributed federation. Example methods include Extensible Authentication Protocol (EAP) <xref target="RFC3748"/>, Generic Bootstrapping Architecture (GBA) <xref target="TS33220"/>, Kerberos <xref target="RFC4120"/>, and vendor certificates <xref target="vendorcert"/>. EAP Transport Layer Security EAP-TLS <xref target="RFC5216"/> for instance assumes that both the client and the server have certificates to authenticate each other. Based on this authentication, the server would then authorize the client for network access. The Eduroam federation <xref target="RFC7593"/> uses a network of such servers to support roaming clients.</t>
+
+        <t>Peer-to-Peer (P2P) and Ad-hoc methods: These bootstrapping methods do not rely on any pre-established credentials. Instead, the bootstrapping protocol results in credentials being established for subsequent secure communication. Such bootstrapping methods typically perform an unauthenticated Diffie-Hellman exchange <xref target="dh"/> and then use an out-of-band (OOB) communication channel to prevent a man-in-the-middle attack (MitM). Various secure device pairing protocols fall in this category. Another example P2P or Ad-hoc method is EAP-NOOB <xref target="I-D.aura-eap-noob"/> that specifies nimble out-of-band authentication for EAP. Based on how the OOB channel is used, the P2P methods can be further classified into two sub categories:
+     	  	<list style="symbols">
+        	  <t>Key derivation: Contextual information received over the OOB channel is used for shared key derivation. For example, <xref target="proximate"/> relies on the common radio environment of the devices being paired to derive the shared secret which would then be used for secure communication.</t>
+			  
+          	  <t>Key confirmation: A Diffie-Hellman key exchange occurs over the insecure network and the established key is used to authenticate with the help of the OOB channel. For example, Bluetooth simple pairing <xref target="SimplePairing"/> use the OOB channel to ask the user to compare pins and approve the completed exchange. </t>
+       		</list>
+        </t>
+
+        <t>Opportunistic and leap-of-faith methods: In these bootstrapping methods, rather than verifying the initial authentication, the continuity of the initial identity or connection is verified. Some of these methods assume that the attacker is not present during the initial setup. Example methods include Secure Neighbor Discovery (SEND) <xref target="RFC3971"/> and Cryptographically Generated Addresses (CGA) <xref target="RFC3972"/>, Wifi Protected Setup (WPS) push button <xref target="wps"/>, and Secure Shell (SSH) <xref target="RFC4253"/>. Additionally, various online services such as Gmail and Facebook allow anyone to create a new identity during the initial setup and later only verify the continuity of the same identity.</t>
+
+        <t>Hybrid methods: Most deployed methods are hybrid and use components from both managed and ad-hoc methods. For instance, central management may be used for devices after they have been registered with the server using ad-hoc registration methods.</t>
+      </list></t>
+
+      <t>It is important to note here that categorization of different bootstrapping methods is not always easy or clear. For example, all the opportunistic and leap-of-faith methods become managed methods after the initial vulnerability window. The choice of bootstrapping method used for devices depends heavily on the business case. Questions that may govern the choice include: What third parties are available? Who wants to retain control or avoid work? In each category, there are many different methods of secure bootstrapping available. The choice of the method may also be governed by the type of device being bootstrapped. Depending on the link-layer technology used, and the User Interface (UI) available, one or more of the above mentioned methods might be suitable.</t>
+  </section>
+
+  <section title="IoT Device Bootstrapping Methods">
+        <t>In this section we look at some of the recent bootstrapping proposals for IoT devices both at the IETF and elsewhere. Needless to say, if the devices are capable in terms of their computation power and UI available, they can always rely on many existing methods such as username and password combinations and various EAP methods.</t>
+
+        <section anchor="managed" title="Managed Methods">
+          <t>We first discuss some examples of managed bootstrapping methods.</t>
+        
+          <t>EAP-TLS is a widely used EAP method for network access authentication <xref target="RFC7250"/>. It allows mutual authentication and distributes the keying material for secure subsequent communications. However it only supports certificate-based mutual authentication, and therefore a public key infrastructure is required. The ZigBee Alliance has specified an IPv6 stack aimed at IEEE 802.15.4 <xref target="IEEE802.15.4"/> devices mainly used in smart meters developed primarily for SEP 2.0 (Smart Energy Profile) application layer traffic <xref target="SEP2.0"/>. The ZigBee IP stack uses EAP-TLS for secure bootstrapping of devices.</t>
+
+          <t>EAP-PSK <xref target="RFC4764"/> is another EAP method. It
+          realizes mutual authentication and session key derivation using a
+          Pre-Shared Key (PSK). Normally four messages are exchanged in the
+          authentication process. Once the authentication is successful,
+          EAP-PSK provides a protected communication channel. Given the light-weight nature of EAP-PSK, it can often be a good choice on constrained devices.</t>
+
+          <t>EAP-COAP <xref target="I-D.marin-ace-wg-coap-eap"/> uses EAP transported over CoAP <xref target="RFC7252"/> messages for authenticating two CoAP endpoints and configuring key material to protect CoAP  messages exchanged between them. They discuss the use of EAP-PSK in the draft, but state that any EAP method that results in generation of cryptographic material is suitable.</t>
+          
+		  <t>Protocol for Carrying Authentication for Network Access (PANA) <xref target="RFC5191"/> is a network layer protocol with which a node can authenticate itself to gain access to the network. PANA does not define a new authentication protocol and rather uses EAP over User Datagram Protocol (UDP) for authentication. Colin O'Flynn <xref target="I-D.oflynn-core-bootstrapping"/>proposes the use of PANA for secure bootstrapping of resource constrained devices. He demonstrates how a 6LowPAN Border Router (PANA Authentication Agent (PAA)) can authenticate the identity of a joining constrained device (PANA Client). Once the constrained device has been successfully authenticated, the border router can also provide network and security parameters to the joining device. Hernandez-Ramos et al. <xref target="panaiot"/> also use EAP-TLS over PANA for secure bootstrapping of smart objects. They also extend their bootstrapping scheme for configuring additional keys that are used for secure group communication.</t>
+		  
+		  <t>When a device is not a direct neighbor of the authenticator, its parent node MUST act as relay. Different EAP encapsulation protocols have different mechanisms for the relay function, such as the PANA Relay Element (PRE).</t>
+			  
+		  <t>After  a successful bootstrapping, the device runs neighbor discovery protocol to get an IPv6 address assigned <xref target="RFC6775"/>.  Data transfer can be secured using DTLS or IPSec. Keys derived from EAP TLS are used in either generating DTLS ciphering keys after a successful DTLS handshake or IPSec ESP ciphering keys after a successful IKEv2 handshake.</t>
+		
+          <t> Generic Bootstrapping Architecture (GBA) is another bootstrapping method that falls in centralized category. GBA is part of the 3GPP standard <xref target="TS33220"/> and is based on 3GPP Authentication and Key Agreement (3GPP AKA).  GBA is an application independent mechanism to provide a client application (running on the User equipment (UE)) and any application server with a shared session secret.  This shared session secret can subsequently be used to authenticate and protect the communication between the client application and the application server. GBA authentication is based on the permanent secret shared between the UE's Universal Integrated Circuit Card (UICC), for example SIM card, and the corresponding profile information stored within the cellular network operator's Home Subscriber System (HSS) database. <xref target="I-D.sethi-gba-constrained"/> describes a resource-constrained adaptation of GBA to IoT applications.</t>
+        
+          <t>Open Mobile Alliance (OMA) Light-weight M2M standard also defines secure bootstrapping for resource-constrained IoT devices with a centralized Bootstrapping Server (BS). The current standard defines the following four bootstrapping modes:</t>
+          
+		  <t>
+            <list style="symbols">
+              <t>Factory Bootstrap: An IoT device in this case is configured with all the necessary bootstrap information during manufacturing and prior to its deployment.</t>
+              <t>Bootstrap from Smartcard: An IoT device retrieves and processes all the necessary bootstrap data from a Smartcard.</t>
+              <t>Client Initiated Bootstrap: This mode provides a mechanism for an IoT client device to retrieve the bootstrap information from a Bootstrap Server. This requires the client device to have an account at the Bootstrap Server and credentials to obtain the necessary information securely.</t>
+              <t>Server Initiated Bootstrap: In this bootstrapping mode, the bootstrapping server configures all the bootstrap information on the IoT device without receiving a request from the client. This means that the bootstrap server needs to know if a client IoT Device is ready for bootstrapping before it can be configured. For example, a network may inform the bootstrap server of a new connecting IoT client device.</t>
+            </list>
+          </t>
+		
+		  <t> The Kerberos protocol <xref target="RFC4120"/> is a network authentication protocol that allows several endpoints to communicate over an insecure network. Kerberos relies on a symmetric cryptography scheme and requires a trusted third party, that guarantees the identities of the various actors. It relies on the use of "tickets" for nodes to prove identity to one another in a secure manner. There has been research work on using Kereberos for IoT devices<xref target="kerberosiot"/>.</t>
+		
+		  <t>The ANIMA working group is also working on a bootstrapping solution for resource-constrained devices that relies on 802.1AR vendor certificates <xref target="I-D.ietf-anima-bootstrapping-keyinfra"/> called Bootstrapping Remote Secure Key Infrastructures (BRSKI). In addition to vendor installed IEEE 802.1AR certificates, a vendor based service on the Internet is required.  Before being authenticated, a new device only needs link-local connectivity, and does not require a routable address.  When a vendor provides an Internet based service, devices can be forced to join only specific domains. The draft highlights that the described solution is aimed in general at non-constrained (i.e. class 2+ defined in <xref target="RFC7228"/>) devices operating in a non-Challenged network. It claims to scale to thousands of devices located in hostile environments, such as ISP provided CPE devices which are drop-shipped to the end user.</t>
+		
+		  <t><xref target="I-D.kumar-6lo-selective-bootstrap"/> presents a   selective bootstrapping/commissioning method by introducing the concept of Commissioning Tool (CT). In this method the devices are left to connect to the network and execute 6LowPAN neighbor discovery  protocol and have an IPv6 address before they are authenticated. Then the devices are selected one by one in some order to communicate with the CT via untrusted constructed route. Once the ID of joining device is authenticated, the CT sends the layer-2 key material to the device via secured channel. This secure channel is established with DTLS with credential material that has to be installed onto the device during its manufacture.</t>
+		
+		  <t><xref target="I-D.ietf-netconf-zerotouch"/> defines a bootstrapping strategy for enabling devices to securely obtain all the configuration information with no installer input, beyond the actual physical placement and connection of cables. Their goal is to enable a secure NETCONF <xref target="RFC6241"/> or RESTCONF <xref target="I-D.ietf-netconf-restconf"/> connection to the deployment specific network management system (NMS). This bootstrapping method requires the devices to be configured with trust anchors in the form of X.509 certificates.</t>
+			
+			
+          <t>Before closing the discussion on managed methods, it is also important to mention some of the work done on implicit certificates and identity-based cryptographic schemes <xref target="himmo"/>, <xref target="implicit"/>. While these are interesting and novel schemes that can be a part of securely bootstrapping devices, at this point, it is hard to speculate on whether such schemes would see large-scale deployment in the future.</t>
+          
+        </section>
+		<section anchor="p2p" title="Peer to Peer or Adhoc Methods">
+          
+        	<t>While managed methods are viable for many IoT devices, they may not be suitable or desirable in all scenarios. All the managed methods assume that some credentials are provisioned into the device. These credentials may be in the device micro-controller or in a replaceable smart card such as a SIM card. The methods also sometimes assume that the manufacturer embeds these credentials during the device manufacture on the factory floor. However, in many cases the manufacturer may not have sufficient incentive to do this. In other scenarios, it may be hard to completely trust and rely on the device manufacturer to securely perform this task. Therefore, many times, P2P or Adhoc methods of bootstrapping are used. We discuss a few example next.</t>
+          
+       		<t>P2P or ad-hoc bootstrapping methods are used for establishing keys and credential information for secure communication without any pre-provisioned information. These bootstrapping mechanisms typically rely on an out-of-band (OOB) channel in order to prevent man-in-the-middle (MitM) attacks. P2P and ad-hoc methods have typically been used for securely pairing personal computing devices such as smart phones. <xref target="devicepairing"/> provides a survey of such secure device pairing methods. Many original pairing schemes required the user to enter the same key string or authentication code to both devices or to compare and approve codes displayed by the devices. While these methods can provide reasonable security, they require user interaction that is relatively unnatural and often considered a nuisance. Thus, there is ongoing research for more natural ways of pairing devices. To reduce the amount of user-interaction required in the pairing process, several proposals use contextual or location-dependent information, or natural user input such as sound or movement, for device pairing <xref target="proximate"/>.</t>
+			
+			 
+     		<t>The local association created between two devices may later be used for connecting/introducing one of the devices to a centralized server. Such methods would however be classified as hybrids.</t>
+
+     		<t>EAP-NOOB <xref target="I-D.aura-eap-noob"/> is an example of P2P and ad-hoc bootstrapping method that establishes a security association between an IoT device (node) and an online server (unlike pairing two devices for local connections over WiFi or Bluetooth).</t>
+		
+			<t>EAP-NOOB defines an EAP method where the authentication is based on a user-assisted out-of-band (OOB) channel between the server and peer. It is intended as a generic bootstrapping solution for Internet-of-Things devices which have no pre-configured authentication credentials and which are not yet registered on the authentication server. This method claims to be more generic than most ad-hoc bootstrapping solutions in that it supports many types of OOB channels. The exact in-band messages and OOB message contents are specified and not the OOB channel details. Also, EAP-NOOB supports IoT devices with only output (e.g. display) or only input (e.g. camera). It makes combined use of both secrecy and integrity of the OOB channel for more robust security than the ad-hoc solutions.</t>
+      		
+	  		<t>Thread Group commissioning <xref target="threadcommissioning"/> introduces a two phased process i.e. Petitioning and Joining. Entities involved are Leader, Joiner, Commissioner, Joiner Router and Border Router. Leader is the first device in Thread Network that must be commissioned using out-of-band process and is used to inject correct user generated Commissioning Credentials (can be changed later) into Thread Network. Joiner is the node that intends to get authenticated and authorized on Thread Network. Commissioner is either within the Thread Network (Native) or connected with Thread Network via a WLAN (External).</t>
+
+			<t>Under some topologies, Joiner Router and Border Router facilitate the Joiner node to reach Native and External Commissioner, respectively. Petitioning begins before Joining process and is used to grant sole commissioning authority to a Commissioner. After an authorized Commissioner is designated, eligible thread devices can join network. Pair-wise key is shared between Commissioner and Joiner, network parameters (Network Name, Security Policy, Steering Data, Commissioning Data Timestamp, Commissioning Credential, Network Master Key, Network Key Sequence, Network Mesh-Local ULA, Border Router Locator, Commissioner Session ID, XPANID, PANID and Channel) are sent out securely (using pair-wise key) by Joiner Router to Joiner for letting Joiner to join the Thread Network. Entities involved in Joining process depends on system topology i.e. location of Commissioner and Joiner. </t>
+
+			<t>Thread networks only operates using IPv6. Thread devices can devise GUAs (Global Unicast Addresses) <xref target="RFC4291"/>. Provision also exist via Border Router, for Thread device to acquire individual global address by means of DHCPv6 or using SLAAC (Stateless Address Autoconfiguration) address derived with advertised network prefix.</t>
+			
+			<t>DPP (Device Provisioning Protocol) <xref target="dpp"/> is a 3 message authentication protocol currently being standardized by the WiFi Alliance for devices that rely on IEEE 802.11 link-layer for communication. The current DPP specification is only aimed at networks that use WPA2-PSK (also known as WPA2-Home) for network access authentication. Authentication Request, Response and Confirm are 3 messages types based on <xref target="IEEE802.11"/> format. It provides authentication and key establishment between an initiator and a responder. Out of band mechanisms i.e. QR code, USB, NFC, Bluetooth or proof of shared code/phrase/word is used to acquire bootstrapping key <xref target="dpptech"/>. Afterwards, authentication and configuration exchange takes place. Bootstrap trust in public key can be only for responder's public key or for both parties in mutual authentication manner. The role of initiator and responder as either enrollee or configurator is decided during initial exchange of DPP Authentication frames. Configurator's protocol key is always a one-time-used (ephemeral) key but enrollee's protocol key always becomes its network access provisioning key.</t>  
+		</section>
+		<section anchor="leap" title="Leap-of-faith/Opportunistic Methods">
+		
+	  		<t>Next, we look at a leap-of-faith/opportunistic bootstrapping method for IoT devices.</t>
+		
+	  		<t>Bergmann et al. <xref target="simplekey"/> develop a secure bootstrapping mechanism that does not rely on pre-provisioned credentials using resurrecting-duckling imprinting scheme. Their bootstrapping protocol involves three distinct phases: discover (the duckling node searches for network nodes that can act as mother node), imprint (the mother node imprints a shared secret establishing a secure channel once a positive response is received for the imprinting request) and configure (additional configuration information such as network prefix and default gateway are configured). In this model for bootstrapping, a small initial vulnerability window is acceptable and can be mitigated using techniques such as a Faraday Cage (securing the communication physically) to protect the environment of the mother and duck nodes, though this may be inconvenient for the user.</t>	  
+			<t><xref target="RFC7250"/> defines how raw public keys can be used to authenticate constrained devices for mutual authentication using EAP-TLS or DTLS. Raw public key TLS/DTLS extension simplifies client_certificate_type and server_certificate_type to carry only SubjectPublicKeyInfo structure with the raw public key instead of many other parameters found in the certificates. The device and the authentication server (AS) exchange client_hello and server_hello messages and send their raw public keys. The device and AS validate the keys by comparing the pre-configured values <xref target="I-D.sarikaya-6lo-bootstrapping-solution"/>. This bootstrapping method can be seen as a hybrid. This is because it generally requires an out-of-band (OOB) step (P2P/Ad-hoc) where the raw public keys <xref target="RFC7250"/> are provided to the authenticating entities, after which the actual authentication occurs online (managed). Raw public key approach when used with DTLS offers a simple secure bootstrapping solution especially for smart energy and building automation applications. It can be easily integrated with the Constrained Application Protocol (CoAP).</t>
+        </section>  
+    </section>
+
+
+
+
+  <section title="Security Considerations">
+ 	  <t>Bootstrapping protocols that do not rely on a pre-shared key for peer authentication generally rely on an online or offline third-party (e.g., an authentication server, a key distribution center in Kerberos, a certification authority in PKI, a private key generator in ID-based cryptography and so on) to prevent man-in-the-middle attacks during bootstrapping.  Depending on use cases, a resource-constrained device may not always have access to an online third-party for bootstrapping. Some bootstrapping methods therefore rely on a configuration tool (such as a smartphone) that assists the bootstrapping process by providing temporary reachability to the online server.</t>
+	
+	  <t>Depending on use cases, a bootstrapping protocol may deal with authorization separately from authentication in terms of timing and signaling path.  For example, two resource-constrained devices A and B may perform mutual authentication using authentication credentials provided by an offline third-party X whereas resource-constrained device A obtains authorization for running a particular application with resource-constrained device B from an online third-party Y before or after the authentication.  In some use cases, authentication and authorization are tightly coupled, e.g., successful authentication also means successful authorization.</t>
+	
+	  <t>If authorization information communicated includes cryptographic keys, care must be taken for provisioning the keys, e.g., guidelines for AAA-based key management are described in <xref target="RFC4962"/>. Re-bootstrapping of IoT devices may required and therefore there must be adequate provisions for revocation and re-bootstrapping of authentication/authorization credentials. Re-bootstrapping must be as secure as the initial bootstrapping regardless of whether this re-bootstrapping is done manually or automatically over the network.</t>
+	
+	  <t>If resource-constrained devices use a multicast group key for authentications of peers that belong to the group, or for message authentication/encryption, the group key must be securely distributed to the current members of the group. Protocols designed for group key management <xref target="RFC4046"/> may be used for group key distribution after the initial bootstrapping. Alternatively, key wrap attributes for securely encapsulating group key may be defined in network access authentication protocols such as PANA. Those protocols use an end-to-end, point-to-point communication channel with a pair-wise security association between a key distribution center and each key recipient. Further considerations may be needed for more efficient group key management to support a large number of resource-constrained devices.</t>
+  </section>
+
+   <section title="IANA Considerations">
+      <t>There are no IANA considerations for this document.</t>
+  </section>
+
+  <section title="Acknowledgements">
+    <t>We would like to thank Tuomas Aura and Hannes Tschofenig for providing extensive feedback. </t>
+  </section>
+  </middle>
+
+  <back>
+    
+    <references title="Informative References">
+      <?rfc include='reference.RFC.2119'?>
+
+      <?rfc include='reference.RFC.4046'?>
+	  
+	  <?rfc include='reference.RFC.4291'?>
+
+      <?rfc include='reference.RFC.3748'?>
+
+      <?rfc include='reference.RFC.3971'?>
+
+      <?rfc include='reference.RFC.3972'?>
+
+      <?rfc include='reference.RFC.4120'?>
+
+      <?rfc include='reference.RFC.4253'?>
+
+      <?rfc include='reference.RFC.4640'?>
+
+      <?rfc include='reference.RFC.4764'?>
+       <?rfc include='reference.RFC.4962'?>
+
+      <?rfc include='reference.RFC.5191'?>
+      
+      <?rfc include='reference.RFC.5216'?>
+
+      <?rfc include='reference.RFC.6241'?>
+
+      <?rfc include='reference.RFC.7228'?>
+
+      <?rfc include='reference.RFC.7250'?>
+
+      <?rfc include='reference.RFC.7252'?>
+
+      <?rfc include='reference.RFC.7593'?>
+	  
+	  <?rfc include='reference.RFC.6775'?>
+
+      <reference anchor="SimplePairing">
+        <front>
+          <title>Simple pairing whitepaper</title>
+          <author>
+            <organization>Bluetooth, SIG</organization>
+          </author>
+          <date year="2007" />
+        </front>
+        <seriesInfo name=" Technical report" value="" />
+      </reference>
+
+      <reference anchor="IEEE802.15.4"
+                 target="http://standards.ieee.org/findstds/standard/802.15.4-2015.html">
+        <front>
+          <title>IEEE Std. 802.15.4-2015</title>
+
+          <author fullname="" surname="IEEE Standard">
+            <organization/>
+          </author>
+
+          <date month="April" year="2016"/>
+        </front>
+      </reference>
+
+
+	<reference anchor="wps">
+        <front>
+          <title>Wi-fi protected setup</title>
+
+          <author fullname="" surname="IEEE Standard">
+            <organization>Wi-Fi Alliance</organization>
+          </author>
+
+          <date month="" year="2007"/>
+        </front>
+		<seriesInfo name="Wi-Fi Alliance" value=""/>
+      </reference>
+	<reference anchor="simplekey">
+        <front>
+          <title>Simple Keys for Simple Smart Objects</title>
+          <author initials="O" surname="Bergmann">
+            <organization>Universitat Bremen TZI</organization>
+          </author>
+          <author initials="S" surname="Gerdes">
+            <organization>Universitat Bremen TZI</organization>
+          </author>
+          <author initials="C" surname="Bormann">
+            <organization>Universitat Bremen TZI</organization>
+          </author>
+          <date year="2012" month="March"/>
+        </front>
+        <seriesInfo name="Smart Object Security Workshop, IETF 83" value=""/>
+      </reference>
+
+      <reference anchor="devicepairing">
+        <front>
+          <title>Secure Device Pairing: A Survey</title>
+          <author initials="S" surname="Mirzadeh">
+          </author>
+          <author initials="H" surname="Cruickshank">
+          </author>
+          <author initials="R" surname="Tafazolli">
+          </author>
+          <date year="2014"/>
+        </front>
+        <seriesInfo name="IEEE Communications Surveys and Tutorials" value=""/>
+        <seriesInfo name="pp." value="17-40"/>
+      </reference>
+
+      <reference anchor="TS33220" 
+        target="http://www.3gpp.org/DynaReport/33220.htm">
+        <front>
+          <title>3rd Generation Partnership Project; Technical Specification  Group Services and System Aspects; Generic Authentication Architecture (GAA); Generic Bootstrapping Architecture (GBA) (Release 14)</title>
+          <author>
+            <organization>3GPP</organization>
+          </author>
+          <date year="2016" month="December" day="17"/>
+        </front>
+      </reference>
+
+       <reference anchor="kerberosiot"
+                 target="https://kit.mit.edu/sites/default/files/documents/Kerberos_Internet_of%20Things.pdf">
+        <front>
+          <title>Kerberos for Internet-of-Things</title>
+
+          <author fullname="Thomas Hardjono" surname="Hardjono">
+            <organization>MIT Kerberos and Internet Trust Consortium</organization>
+          </author>
+
+          <date month="February" year="2014"/>
+        </front>
+      </reference>
+
+      <reference anchor="proximate">
+        <front>
+          <title>Proximate: proximity-based secure pairing using ambient wireless signals.</title>
+
+          <author fullname="Suhas Mathur" surname="Mathur">
+            <organization>AT&amp;T Security Research Center, New York</organization>
+          </author>
+
+          <author fullname="Robert Miller" surname="Miller">
+            <organization>WINLAB, Rutgers University, North Brunswick</organization>
+          </author>
+
+           <author fullname="Alexander Varshavsky" surname="Varshavsky">
+            <organization>AT&amp;T Labs, Florham Park, NJ</organization>
+          </author>
+
+           <author fullname="Wade Trappe" surname="Trappe">
+            <organization>WINLAB, Rutgers University, North Brunswick</organization>
+          </author>
+
+           <author fullname="Narayan Mandayam" surname="Mandayam">
+            <organization>WINLAB, Rutgers University, North Brunswick</organization>
+          </author>
+          <date month="June" year="2011"/>
+        </front>
+		<seriesInfo name="Proceedings of MobiSys International Conference" value=""/>
+		<seriesInfo name="pp." value="211-224"/>
+      </reference>
+
+      <reference anchor="SEP2.0"
+                 target="hhttp://www.zigbee.org/non-menu-pages/zigbee-ip-download/">
+        <front>
+          <title>ZigBee IP Specification</title>
+
+          <author>
+            <organization>ZigBee Alliance</organization>
+          </author>
+
+          <date month="March" year="2014"/>
+        </front>
+      </reference>
+      
+      <?rfc include='reference.I-D.ietf-anima-bootstrapping-keyinfra'?>
+
+      <?rfc include='reference.I-D.sarikaya-6lo-bootstrapping-solution'?>
+
+      <?rfc include='reference.I-D.marin-ace-wg-coap-eap'?>
+
+      <?rfc include='reference.I-D.ietf-netconf-restconf'?>
+
+      <?rfc include='reference.I-D.oflynn-core-bootstrapping'?>
+
+      <?rfc include='reference.I-D.aura-eap-noob'?>
+
+      <?rfc include='reference.I-D.ietf-netconf-zerotouch'?>
+
+      <?rfc include='reference.I-D.kumar-6lo-selective-bootstrap'?>
+
+      <?rfc include='reference.I-D.sethi-gba-constrained'?>
+
+      <reference anchor="identity2.0">
+        <front>
+          <title>Identity 2.0</title>
+           <author initials="D." surname="Hardt">
+            <organization>Sxip Identity</organization>
+          </author>
+          <date year="2005" />
+        </front>
+          <seriesInfo name="O'Reilly Open Source Convention (OSCON)" value=""/>
+      </reference>
+
+      <reference anchor="iotwork">
+        <front>
+          <title>IoT@Work bootstrapping architecture Deliverable D2.2</title>
+          <author>
+          <organization>European Commission FP7</organization>
+          </author>
+          <date year="2011" month="June" />
+        </front>
+          
+      </reference>
+
+	<reference anchor="panaiot">
+        <front>
+          <title>Dynamic Security Credentials PANA-based Provisioning for IoT Smart Objects</title>
+          <author initials="J. L." surname="Hernandez-Ramos">
+          	<organization>University of Murcia</organization>
+          </author>
+          <author initials="D. G." surname="Carrillo">
+          	<organization>University of Murcia</organization>
+          </author>
+          <author initials="R." surname="Marin-Lopez">
+          	<organization>University of Murcia</organization>
+          </author>
+          <author initials="A. F." surname="Skarmeta">
+          	<organization>University of Murcia</organization>
+          </author>
+          <date year="2015" month="" />
+        </front>
+          <seriesInfo name="2nd World Forum on Internet of Things (WF-IoT)" value=""/>
+          <seriesInfo name="IEEE" value=""/>
+      </reference>
+
+      <reference anchor="vermillard">
+        <front>
+          <title>Bootstrapping device security with lightweight M2M</title>
+          <author initials="J." surname="Vermillard">
+          </author>
+          <date year="2015" month="February" />
+        </front>
+		<seriesInfo name="Appeared on blog at medium.com" value=""/>
+      </reference>
+
+      <reference anchor="allseen" target="https://allseenalliance.org/framework/documentation/learn/base-services/onboarding">
+        <front>
+          <title>Onboarding service</title>
+          <author>
+           <organization>AllSeen Alliance</organization>
+          </author>
+          <date year="" month="" />
+        </front>
+            
+      </reference>
+
+	 <reference anchor="vendorcert">
+        <front>
+          <title>Standard for local and metropolitan area networks - secure device identity</title>
+          <author>
+                  <organization>IEEE std. 802.1ar-2009</organization> 
+          </author>
+          <date year="2009" month="December" />
+        </front>
+            
+      </reference>
+
+
+	<reference anchor="dh">
+        <front>
+          <title>New directions in cryptography</title>
+          <author initials="W." surname="Diffie">
+          </author>
+          <author initials="M.E." surname="Hellman">
+          </author>
+          <date year="1976" month="" />
+        </front>
+           <seriesInfo name="IEEE Transactions on Information Theory" value=""/>
+            <seriesInfo name="vol." value="22"/>
+            <seriesInfo name="no." value="6"/>
+           <seriesInfo name="pp." value="644-654"/>
+      </reference>
+
+
+	<reference anchor="implicit">
+        <front>
+          <title>Pauthkey: A pervasive authentication protocol and key establishment scheme for wireless sensor networks in distributed iot applications</title>
+          <author initials="P." surname="Porambage">
+          	<organization>University of Oulu</organization>
+          </author>
+          <author initials="C." surname="Schmitt">
+          	<organization>University of Zurich</organization>
+          </author>
+           <author initials="P." surname="Kumar">
+           	<organization>University of Oulu</organization>
+          </author>
+           <author initials="A." surname="Gurtov">
+           	<organization>University of Oulu</organization>
+          </author>
+		  <author initials="M." surname="Ylianttila">
+		  	<organization>University of Oulu</organization>
+          </author>
+          <date year="2014" month="" />
+        </front>
+           <seriesInfo name="International Journal of Distributed Sensor Networks" value=""/>
+            <seriesInfo name="Hindawi Publishing Corporation" value=""/>
+      </reference>
+
+      <reference anchor="himmo" target="https://eprint.iacr.org/2014/1008">
+        <front>
+          <title>DTLS-HIMMO: Efficiently Securing a Post-Quantum World with a Fully-Collusion Resistant KPS</title>
+          <author initials="O." surname="Garcia-Morchon">
+          	<organization>Philips Group Innovation</organization>
+          </author>
+          <author initials="R." surname="Rietman">
+          	<organization>Philips Group Innovation</organization>
+          </author>
+           <author initials="S." surname="Sharma">
+           	<organization>Philips Group Innovation</organization>
+          </author>
+           <author initials="L." surname="Tolhuizen">
+           	<organization>Philips Group Innovation</organization>
+          </author>
+		  <author initials="J. L." surname="Torre-Arce">
+		  	<organization>Philips Group Innovation</organization>
+          </author>
+          <date year="2014" month="December" />
+        </front>
+           <seriesInfo name="Submitted to NIST Workshop on Cybersecurity in a Post-Quantum World" value=""/>
+            <seriesInfo name="version" value="20141225:065757"/>
+      </reference>
+	  
+	  <reference anchor="dpp">
+	    <front>
+			<title>Wi-Fi Device Provisioning Protocol (DPP)</title>
+			<author fullname="" surname="Overview Document">
+				<organization>Wi-Fi Alliance</organization>
+			</author>
+			<date month="" year="2016"/>
+        </front>
+		<seriesInfo name="Wi-Fi Alliance" value=""/>
+      </reference>
+	  
+	  <reference anchor="dpptech">
+	    <front>
+			<title>Technical Specification Draft for DPP</title>
+			<author fullname="" surname="Technical Specification">
+				<organization>Wi-Fi Alliance</organization>
+			</author>
+			<date month="" year="2016"/>
+        </front>
+		<seriesInfo name="Wi-Fi Alliance" value=""/>
+      </reference>
+	  
+	  <reference anchor="IEEE802.11"
+		target="https://standards.ieee.org/findstds/standard/802.11-2016.html">
+        <front>
+			<title>IEEE Std. 802.11-2016</title>
+			<author fullname="" surname="IEEE Standard">
+				<organization/>
+			</author>
+			<date month="December" year="2016"/>
+        </front>
+      </reference>
+ 	  
+	  <reference anchor="threadcommissioning">
+	    <front>
+			<title>Thread Commissioning</title>
+			<author fullname="" surname="White Paper">
+				<organization>Thread Group</organization>
+			</author>
+			<date month="" year="2015"/>
+        </front>
+		<seriesInfo name="Thread Group, Inc." value=""/>
+      </reference>
+    </references>
+  </back>
+</rfc>
+
+
