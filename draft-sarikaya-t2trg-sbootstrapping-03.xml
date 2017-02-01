@@ -164,7 +164,7 @@
 		
 		  <t><xref target="I-D.kumar-6lo-selective-bootstrap"/> presents a   selective bootstrapping/commissioning method by introducing the concept of Commissioning Tool (CT). In this method the devices are left to connect to the network and execute 6LowPAN neighbor discovery  protocol and have an IPv6 address before they are authenticated. Then the devices are selected one by one in some order to communicate with the CT via untrusted constructed route. Once the ID of joining device is authenticated, the CT sends the layer-2 key material to the device via secured channel. This secure channel is established with DTLS with credential material that has to be installed onto the device during its manufacture.</t>
 		
-		  <t><xref target="I-D.ietf-netconf-zerotouch"/> defines a bootstrapping strategy for enabling devices to securely obtain all the configuration information with no installer input, beyond the actual physical placement and connection of cables. Their goal is to enable a secure NETCONF <xref target="RFC6241"/> or RESTCONF <xref target="I-D.ietf-netconf-restconf"/> connection to the deployment specific network management system (NMS). This bootstrapping method requires the devices to be configured with trust anchors in the form of X.509 certificates.</t>
+		  <t><xref target="I-D.ietf-netconf-zerotouch"/> defines a bootstrapping strategy for enabling devices to securely obtain all the configuration information with no installer input, beyond the actual physical placement and connection of cables. Their goal is to enable a secure NETCONF <xref target="RFC6241"/> or RESTCONF <xref target="RFC8040"/> connection to the deployment specific network management system (NMS). This bootstrapping method requires the devices to be configured with trust anchors in the form of X.509 certificates.</t>
 			
 			
           <t>Before closing the discussion on managed methods, it is also important to mention some of the work done on implicit certificates and identity-based cryptographic schemes <xref target="himmo"/>, <xref target="implicit"/>. While these are interesting and novel schemes that can be a part of securely bootstrapping devices, at this point, it is hard to speculate on whether such schemes would see large-scale deployment in the future.</t>
@@ -260,7 +260,9 @@
 
       <?rfc include='reference.RFC.7593'?>
 	  
-	  <?rfc include='reference.RFC.6775'?>
+   	  <?rfc include='reference.RFC.6775'?>
+
+      <?rfc include='reference.RFC.8040'?>
 
       <reference anchor="SimplePairing">
         <front>
@@ -402,8 +404,6 @@
       <?rfc include='reference.I-D.sarikaya-6lo-bootstrapping-solution'?>
 
       <?rfc include='reference.I-D.marin-ace-wg-coap-eap'?>
-
-      <?rfc include='reference.I-D.ietf-netconf-restconf'?>
 
       <?rfc include='reference.I-D.oflynn-core-bootstrapping'?>
 
