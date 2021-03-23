@@ -1,7 +1,7 @@
 ---
 stand_alone: true
 ipr: trust200902
-docname: draft-sarikaya-t2trg-sbootstrapping-12
+docname: draft-sarikaya-t2trg-sbootstrapping-latest
 cat: info
 pi:
   toc: 'yes'
