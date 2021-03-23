@@ -2,7 +2,7 @@
 <!DOCTYPE rfc
   SYSTEM 'rfc2629.dtd' [
 <!ENTITY I-D.ietf-homenet-arch PUBLIC "" "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.ietf-homenet-arch.xml"><!ENTITY I-D.behringer-autonomic-network-framework PUBLIC "" "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.behringer-autonomic-network-framework.xml">]>
-<rfc category="info" docName="draft-sarikaya-t2trg-sbootstrapping-11" ipr="trust200902">
+<rfc category="info" docName="draft-sarikaya-t2trg-sbootstrapping-12" ipr="trust200902">
   <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
   <?rfc toc="yes" ?>
   <?rfc compact="yes" ?>
@@ -75,6 +75,7 @@
           <t>Initialization</t>
           <t>Configuration</t>
           <t>Registration</t>
+          <t>Discovery</t>
         </list>
       </t>
       <t>We attempt to find out whether all these terms refer to the same phenomena. We begin by looking at how these terms have been used in various standards and standardization bodies in <xref target="usage"/>. We then summarize our understanding in <xref target="comp"/>, and provide our recommendations on their usage in <xref target="recommend"/>. <xref target="classification"/> provides a taxonomy of bootstrapping methods and <xref target="categorization"/> categorizes methods according to the taxonomy.</t>
