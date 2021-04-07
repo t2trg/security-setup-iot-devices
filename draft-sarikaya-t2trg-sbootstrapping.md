@@ -1,7 +1,7 @@
 ---
 stand_alone: true
 ipr: trust200902
-docname: draft-sarikaya-t2trg-sbootstrapping-latest
+docname: draft-irtf-t2trg-secure-bootstrapping-latest
 cat: info
 pi:
   toc: 'yes'
@@ -330,7 +330,7 @@ informative:
 --- abstract
 
 
-This draft provides an overview of the various terms that are used when discussing
+This draft provides an overview of the various terms that are used when discussing 
 bootstrapping of IoT devices. We document terms that have been used within
 the IETF as well as other standards bodies. We investigate if the terms refer
 to the same phenomena or have subtle differences. We provide recommendations
