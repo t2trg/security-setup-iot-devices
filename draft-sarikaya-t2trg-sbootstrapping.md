@@ -528,9 +528,34 @@ for device operation.
 
 ## Bluetooth
 
-Bluetooth mesh provisioning. Beacons for discovery. Public-key exchange followed
-by authentication. Finally provisioning of the network key and unicast address.
-To be expanded.
+  Bluetooth mesh specifies a provisioning protocol.  The goal of the
+   provisioning phase is to securely incorporate a new Bluetooth mesh
+   node, by completing two critical tasks.  First, to authenticate the
+   unprovisioned device and second, to create a secure link with said
+   device to share information.
+
+   The provisioning process is divided into five distinct stages
+   summarize next.
+
+   *  Beaconing for discovery.  In this phase, the provisioned device
+      allows to be discovered the provisioner.
+
+   *  Invitation as a sort of negotiation.  In this phase, the
+      unprovisioned device indicates to the provisioner a set of
+      capabilities such as the security algorithms supported, the
+      availability of its public key using an Out-of-Band (OOB)
+      technology and the input/output interaction with users.
+
+   *  Exchange public keys. In this phase, the authentication method is selected by the provisioner and both devices exchange Elliptic-curve Diffie–Hellman (ECDH) public keys.  These keys may be static or ephemeral. Their exchange can be done in two ways, either via Out-of-Band or directly through a Bluetooth link. Each device then generates a symmetric key, named ECDHSecret, by combining its own private key and the public key of the peer device. The EDCHSecret is used to secure communication between the two devices. 
+   
+
+  * Authentication. Given the authentication method selected from the three possible choices:  Output OOB, Input OOB, and Static OOB or No OOB, the unprovisioned device is here authenticated. With Output OOB, the unprovisioned device chooses a random number and outputs that number in manner consistent with its capabilities. The provisioner then inputs this number. Then, a check confirmation value operation is performed. This involves a cryptographic exchange regarding (in this case) the random number to complete the authentication. With Input OOB, the roles are reversed, being the provisioner the entity that generates the random number. When neither of the previous authentication procedures are feasible, both the provisioner and unprovisioned device generate a random number and perform a check confirmation value operation. 
+  
+  
+  * Distribution of provisioning data. At this point, the provisioning process can be secured. This involves the distribution of data such as a Network key, to secure the communications at network layer and a unicast address among other information.
+
+
+
 
 
 ## Fast IDentity Online (FIDO) alliance
