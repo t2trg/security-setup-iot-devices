@@ -396,34 +396,16 @@ There are several terms that have often been used in the context of bootstrappin
 * Discovery
 
 
-We attempt to find out whether all these terms refer to the same phenomena.
-We begin by looking at how these terms have been used in various
-standards and standardization bodies in {{usage}}.  We then summarize
-our understanding in {{comp}}, and provide our recommendations on
-their usage in {{recommend}}. {{classification}} provides a taxonomy
-of bootstrapping methods and {{categorization}} categorizes methods
-according to the taxonomy.
-
-# Terminology {#terminology}
-
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
-"SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to
-be interpreted as described in BCP 14 {{RFC2119}}{{RFC8174}}.
 
 
 # Usage of bootstrapping terminology in standards {#usage}
 
-To better understand bootstrapping related terminology, let us first look
-at the terms used by some existing specifications:
+To better understand bootstrapping related terminology, let us first look at the terms used by some existing specifications:
 
 ## Device Provisioning Protocol (DPP)
 
-The Wi-Fi Alliance Device provisioning protocol (DPP) {{dpp}}
-describes itself as a standardized protocol for providing user
-friendly Wi-Fi
-setup while maintaining or increasing the security. DPP relies on a configurator,
-e.g. a smartphone application, for setting up all other devices, called enrollees,
-in the network. DPP has the following three phases/sub-protocols:
+The Wi-Fi Alliance Device provisioning protocol (DPP) {{dpp}} describes itself as a standardized protocol for providing user friendly Wi-Fi setup while maintaining or increasing the security. DPP relies on a configurator,
+e.g. a smartphone application, for setting up all other devices, called enrollees, in the network. DPP has the following three phases/sub-protocols:
 
 * Bootstrapping: The configurator obtains bootstrapping information from the
   enrollee using an out-of-band channel such as scanning a QR code or tapping
@@ -440,6 +422,15 @@ in the network. DPP has the following three phases/sub-protocols:
 * Configuration: Using the key established from the authentication protocol,
   the enrollee asks the configurator for network information such as the SSID
   and passphrase of the access point.
+
+DPP has the following characteristics:
+
+  * Terms:
+  * Players: 
+  * Initial beliefs assumed in the device:
+  * Processes:
+  * Beliefs imparted to the device after protocol execution:
+
 
 
 
@@ -471,7 +462,13 @@ modes:
   can be configured. For example, a network may inform the bootstrap server
   of a new connecting IoT client device.
 
+OMA has the following characteristics:
 
+  * Terms:
+  * Players: 
+  * Initial beliefs assumed in the device:
+  * Processes:
+  * Beliefs imparted to the device after protocol execution:
 
 ## Open Connectivity Foundation (OCF)
 
@@ -515,6 +512,13 @@ for interacting with them. The AMS is responsible for provisioning access
 control entries, while the CMS provisions security credentials necessary
 for device operation.
 
+OCF has the following characteristics:
+
+  * Terms:
+  * Players: 
+  * Initial beliefs assumed in the device:
+  * Processes:
+  * Beliefs imparted to the device after protocol execution:
 
 ## Bluetooth
 
@@ -545,7 +549,13 @@ for device operation.
   * Distribution of provisioning data. At this point, the provisioning process can be secured. This involves the distribution of data such as a Network key, to secure the communications at network layer and a unicast address among other information.
 
 
+Bluetooth mesh has the following characteristics:
 
+  * Terms:
+  * Players: 
+  * Initial beliefs assumed in the device:
+  * Processes:
+  * Beliefs imparted to the device after protocol execution:
 
 
 ## Fast IDentity Online (FIDO) alliance
@@ -587,12 +597,15 @@ control of the device and provides it with credentials of the IoT platform
 which the device should used.
 
 
-## Internet Engineering Task Force (IETF)
+FIDO has the following characteristics:
 
-In this section, we will look at some IETF standards and draft specifications
-related to IoT bootstrapping.
+  * Terms:
+  * Players: 
+  * Initial beliefs assumed in the device:
+  * Processes:
+  * Beliefs imparted to the device after protocol execution:
 
-### Enrollment over Secure Transport (EST)
+## Enrollment over Secure Transport (EST)
 
 Enrollment over Secure Transport (EST) {{RFC7030}} defines a profile
 of Certificate Management over CMS (CMC) {{RFC5272}}. EST relies on
@@ -611,8 +624,16 @@ received over the unauthenticated TLS connection setup. After successful
 completion of this bootstrapping step, clients can proceed to the enrollment
 step during which they obtain client certificates and associated CA certificates.
 
+EST has the following characteristics:
 
-### Bootstrapping Remote Secure Key Infrastructures (BRSKI)
+  * Terms:
+  * Players: 
+  * Initial beliefs assumed in the device:
+  * Processes:
+  * Beliefs imparted to the device after protocol execution:
+
+
+## Bootstrapping Remote Secure Key Infrastructures (BRSKI)
 
 The ANIMA working group is working on a bootstrapping solution for devices
 that relies on 802.1AR vendor certificates called Bootstrapping Remote Secure
@@ -628,8 +649,15 @@ is aimed in general at non-constrained (i.e. class 2+ defined in
 of devices located in hostile environments, such as ISP provided CPE devices
 which are drop-shipped to the end user.
 
+BRSKI has the following characteristics:
 
-### Secure Zero Touch Provisioning
+  * Terms:
+  * Players: 
+  * Initial beliefs assumed in the device:
+  * Processes:
+  * Beliefs imparted to the device after protocol execution:
+
+## Secure Zero Touch Provisioning
 
  {{RFC8572}} defines a bootstrapping strategy for enabling devices to securely obtain
 all the configuration information with no installer input, beyond the actual
@@ -639,8 +667,16 @@ deployment specific network management system (NMS). This
 bootstrapping method requires the devices to be configured with trust anchors
 in the form of X.509 certificates. {{RFC8572}} is similar to BRSKI based on {{RFC8366}}.
 
+SZTP has the following characteristics:
 
-### Nimble out-of-band authentication for EAP (EAP-NOOB)
+  * Terms:
+  * Players: 
+  * Initial beliefs assumed in the device:
+  * Processes:
+  * Beliefs imparted to the device after protocol execution:
+
+
+## Nimble out-of-band authentication for EAP (EAP-NOOB)
 
 EAP-NOOB {{I-D.ietf-emu-eap-noob}} defines an EAP method where the
 authentication is based on a user-assisted
@@ -655,7 +691,95 @@ input (e.g. camera). It makes combined use of both secrecy and integrity
 of the OOB channel for more robust security than the ad-hoc solutions.
 
 
+EAP-NOOB has the following characteristics:
 
+  * Terms:
+  * Players: 
+  * Initial beliefs assumed in the device:
+  * Processes:
+  * Beliefs imparted to the device after protocol execution:
+
+## Initial device setup in LPWAN {#lpwan}
+
+Low Power Wide Area Network (LPWAN) encompasses a wide variety of
+technologies whose link-layer characteristics are severely constrained
+in comparison to other typical IoT link-layer technologies such as
+Bluetooth or IEEE 802.15.4.
+While some LPWAN technologies rely on proprietary bootstrapping
+solutions which are not publicly accessible, others simply ignore the
+challenge of bootstrapping and key distribution.
+In this section, we discuss the bootstrapping methods used by LPWAN
+technologies covered in {{RFC8376}}.
+
+* LoRaWAN {{LoRaWAN}} describes its own protocol to authenticate nodes
+  before allowing them join a LoRaWAN network.
+  This process is called as joining and it is based on pre-shared
+  keys (called AppKeys in the standard). The joining procedure comprises only
+  one exchange (join-request and join-accept) between the joining node and
+  the network server. There are several adaptations to this joining procedure
+  that allow network servers to delegate authentication and authorization to
+  a backend AAA infrastructure {{RFC2904}}.
+
+* Wi-SUN Alliance Field Area Network (FAN) uses IEEE 802.1X and EAP-TLS for
+  network access authentication. It performs a 4-way handshake to establish
+  a session keys after EAP-TLS authentication.
+
+* NB-IoT relies on the traditional 3GPP mutual authentication scheme based
+  on a shared-secret in the Subscriber Identity Module (SIM) of the device
+  and the mobile operator.
+
+* Sigfox security is based on unique device identifiers and cryptographic keys.
+  As stated in {{RFC8376}}, although the algorithms and keying details
+  are not publicly available, there is sufficient information to
+  indicate that bootstrapping in Sigfox is based on pre-established
+  credentials between the device and the Sigfox network.
+
+From the above, it is clear that all LPWAN technologies rely on pre-provisioned
+credentials for authentication between a new device and the network. Thus,
+all of them can be categorized as managed bootstrapping methods.
+
+LPWAN has the following characteristics:
+
+  * Terms:
+  * Players: 
+  * Initial beliefs assumed in the device:
+  * Processes:
+  * Beliefs imparted to the device after protocol execution:
+
+##  Initial device setup in Thread {#thread}   
+
+Thread Group commissioning {{threadcommissioning}} introduces a two
+phased process i.e. Petitioning and Joining. Entities involved
+are leader, joiner, commissioner, joiner router and border router. Leader
+is the first device in Thread network that must be commissioned using out-of-band
+process and is used to inject correct user generated Commissioning Credentials
+(can be changed later) into Thread Network. Joiner is the node that intends
+to get authenticated and authorized on Thread Network. Commissioner is either
+within the Thread Network (Native) or connected with Thread Network via a
+WLAN (External).
+
+Under some topologies, Joiner Router and Border Router facilitate the Joiner
+node to reach Native and External Commissioner, respectively. Petitioning
+begins before Joining process and is used to grant sole commissioning authority
+to a Commissioner. After an authorized Commissioner is designated, eligible
+thread devices can join network. Pair-wise key is shared between Commissioner
+and Joiner, network parameters (such as network name, security policy, etc.,)
+are sent out securely (using pair-wise key) by Joiner Router to Joiner for
+letting Joiner to join the Thread Network. Entities involved in Joining process
+depends on system topology i.e. location of Commissioner and Joiner. Thread
+networks only operate using IPv6. Thread devices can devise GUAs (Global
+Unicast Addresses) {{RFC4291}}. Provision also exist via Border
+Router, for Thread device to acquire individual
+global address by means of DHCPv6 or using SLAAC (Stateless Address Autoconfiguration)
+address derived with advertised network prefix.
+
+Thread has the following characteristics:
+
+  * Terms:
+  * Players: 
+  * Initial beliefs assumed in the device:
+  * Processes:
+  * Beliefs imparted to the device after protocol execution:
 
 # Comparison {#comp}
 
@@ -674,93 +798,7 @@ device management protocol then may run over this TLS tunnel for provisioning
 operational information and credentials.
 
 
-# Recommendations {#recommend}
 
-
-
-* It is recommended that the IETF use the term "bootstrapping" for the initial
-  (authentication) step that a device must perform. Bootstrapping will likely
-  happen before the device has obtained full network connectivity.
-
-* It is recommended to use the term "provisioning"/"configuring" for the process
-  of providing necessary information to a device to become operational after
-  initial authentication is complete. As is evident from above, provisioning
-  and configuring may include bootstrapping and authentication as a sub protocol.
-
-* IETF specifications should aim to avoid mixing terminology or adding new
-  terminology for better consistency.
-
-
-
-# Classification of available mechanisms {#classification}
-
-Given the large number of bootstrapping protocols and related specifications,
-it can be helpful to classify them. We categorize the available bootstrapping
-solutions into the following major classes:
-
-
-
-* Managed methods: These methods rely on pre-established trust relations and
-  authentication credentials. They typically utilize centralized servers for
-  authentication, although several such servers may join to form a distributed
-  federation.
-  Example methods include Extensible Authentication Protocol (EAP)
-  {{RFC3748}}, Generic Bootstrapping Architecture (GBA) {{TS33220}},
-  Kerberos {{RFC4120}}, Bootstrapping Remote Secure Key
-  Infrastructures (BRSKI) and vendor certificates {{vendorcert}}.
-  EAP Transport Layer Security EAP-TLS {{I-D.ietf-emu-eap-tls13}} for
-  instance assumes that both the client and the server have
-  certificates to authenticate each other.
-  Based on this authentication, the server authorizes
-  the client for network access. The Eduroam federation {{RFC7593}}
-  uses a network of such servers to support roaming clients.
-
-
-* Opportunistic and leap-of-faith methods: In these methods, rather than verifying
-  the initial authentication, the continuity of the initial identity or connection
-  is verified. Some of these methods assume that the attacker is not present
-  during the initial setup.  Example methods include Secure Neighbor
-  Discovery (SEND) {{RFC3971}} and Cryptographically Generated
-  Addresses (CGA) {{RFC3972}}, Wifi Protected Setup (WPS) push button
-  {{wps}}, and Secure Shell (SSH) {{RFC4253}}.
-
-* Peer-to-Peer (P2P) and Ad-hoc methods: These bootstrapping methods do not
-  rely on any pre-established credentials. Instead, the bootstrapping protocol
-  results in credentials being established for subsequent secure communication.
-  Such bootstrapping methods typically perform an unauthenticated Diffie-Hellman
-  exchange {{dh}} and then use an out-of-band (OOB) communication
-  channel to prevent a man-in-the-middle
-  attack (MitM). Various secure device pairing protocols fall in this category.
-  Based on how the OOB channel is used, the P2P methods can be further classified
-  into two sub categories:
-
-  * Key derivation: Contextual information received over the OOB channel is used
-    for shared key derivation. For example, {{proximate}} relies on
-    the common radio environment of the devices being paired to derive
-    the shared secret which would then be used for secure communication.
-
-  * Key confirmation: A Diffie-Hellman key exchange occurs over the insecure
-    network and the established key is used to authenticate with the help of
-    the OOB channel. For example, Bluetooth simple pairing
-    {{SimplePairing}} use the OOB channel to ask the user to compare
-    pins and approve the completed
-    exchange.
-
-
-* Hybrid methods: Most deployed methods are hybrid and use components from
-  both managed and ad-hoc methods. For instance, central management may be
-  used for devices after they have been registered with the server using ad-hoc
-  registration methods.
-
-
-It is important to note here that categorization of different methods is
-not always easy or clear. For example, all the opportunistic and leap-of-faith
-methods become managed methods after the initial vulnerability window. The
-choice of bootstrapping method used for devices depends heavily on the business
-case. Questions that may govern the choice include: What third parties are
-available? Who wants to retain control or avoid work? In each category, there
-are many different methods of secure bootstrapping available. The choice
-of the method may also be governed by the type of device being bootstrapped.
 
 
 # IoT Device Bootstrapping Methods {#categorization}
@@ -814,8 +852,7 @@ communication.
 Generic Bootstrapping Architecture (GBA) is another bootstrapping
 method that falls in centralized category. GBA is part of the 3GPP
 standard {{TS33220}} and is based on 3GPP Authentication and Key
-Agreement (3GPP AKA).
-GBA is an application independent mechanism to provide a client
+Agreement (3GPP AKA). GBA is an application independent mechanism to provide a client
 application (running on the User equipment (UE)) and any application
 server with a shared session secret. This shared session secret can
 subsequently be used to authenticate and protect the communication
@@ -846,46 +883,6 @@ certificates and identity-based cryptographic schemes {{himmo}},
 be a part of securely bootstrapping devices, at this point, it is hard
 to speculate on whether such schemes would see large-scale deployment
 in the future.
-
-### Bootstrapping in LPWAN {#lpwan}
-
-Low Power Wide Area Network (LPWAN) encompasses a wide variety of
-technologies whose link-layer characteristics are severely constrained
-in comparison to other typical IoT link-layer technologies such as
-Bluetooth or IEEE 802.15.4.
-While some LPWAN technologies rely on proprietary bootstrapping
-solutions which are not publicly accessible, others simply ignore the
-challenge of bootstrapping and key distribution.
-In this section, we discuss the bootstrapping methods used by LPWAN
-technologies covered in {{RFC8376}}.
-
-* LoRaWAN {{LoRaWAN}} describes its own protocol to authenticate nodes
-  before allowing them join a LoRaWAN network.
-  This process is called as joining and it is based on pre-shared
-  keys (called AppKeys in the standard). The joining procedure comprises only
-  one exchange (join-request and join-accept) between the joining node and
-  the network server. There are several adaptations to this joining procedure
-  that allow network servers to delegate authentication and authorization to
-  a backend AAA infrastructure {{RFC2904}}.
-
-* Wi-SUN Alliance Field Area Network (FAN) uses IEEE 802.1X and EAP-TLS for
-  network access authentication. It performs a 4-way handshake to establish
-  a session keys after EAP-TLS authentication.
-
-* NB-IoT relies on the traditional 3GPP mutual authentication scheme based
-  on a shared-secret in the Subscriber Identity Module (SIM) of the device
-  and the mobile operator.
-
-* Sigfox security is based on unique device identifiers and cryptographic keys.
-  As stated in {{RFC8376}}, although the algorithms and keying details
-  are not publicly available, there is sufficient information to
-  indicate that bootstrapping in Sigfox is based on pre-established
-  credentials between the device and the Sigfox network.
-
-From the above, it is clear that all LPWAN technologies rely on pre-provisioned
-credentials for authentication between a new device and the network. Thus,
-all of them can be categorized as managed bootstrapping methods.
-
 
 
 ## Peer-to-Peer or Ad-hoc Methods {#p2p}
@@ -926,30 +923,7 @@ bootstrapping method that establishes a security
 association between an IoT device (node) and an online server (unlike pairing
 two devices for local connections over WiFi or Bluetooth).
 
-Thread Group commissioning {{threadcommissioning}} introduces a two
-phased process i.e. Petitioning and Joining. Entities involved
-are leader, joiner, commissioner, joiner router and border router. Leader
-is the first device in Thread network that must be commissioned using out-of-band
-process and is used to inject correct user generated Commissioning Credentials
-(can be changed later) into Thread Network. Joiner is the node that intends
-to get authenticated and authorized on Thread Network. Commissioner is either
-within the Thread Network (Native) or connected with Thread Network via a
-WLAN (External).
 
-Under some topologies, Joiner Router and Border Router facilitate the Joiner
-node to reach Native and External Commissioner, respectively. Petitioning
-begins before Joining process and is used to grant sole commissioning authority
-to a Commissioner. After an authorized Commissioner is designated, eligible
-thread devices can join network. Pair-wise key is shared between Commissioner
-and Joiner, network parameters (such as network name, security policy, etc.,)
-are sent out securely (using pair-wise key) by Joiner Router to Joiner for
-letting Joiner to join the Thread Network. Entities involved in Joining process
-depends on system topology i.e. location of Commissioner and Joiner. Thread
-networks only operate using IPv6. Thread devices can devise GUAs (Global
-Unicast Addresses) {{RFC4291}}. Provision also exist via Border
-Router, for Thread device to acquire individual
-global address by means of DHCPv6 or using SLAAC (Stateless Address Autoconfiguration)
-address derived with advertised network prefix.
 
 
 ## Leap-of-faith/Opportunistic Methods {#leap}
