@@ -13,7 +13,7 @@ pi:
 title: 'Terminology and processes for initial security setup of IoT devices'
 abbrev: IoT initial security setup
 author:
-- ins: M. S. Sethi
+- ins: M. Sethi
   name: Mohit Sethi
   org: Ericsson
   street: Hirsalantie 11
@@ -22,7 +22,7 @@ author:
   code: '02420'
   country: Finland
   email: mohit@piuha.net
-- ins: B. S. Sarikaya
+- ins: B. Sarikaya
   name: Behcet Sarikaya
   org: Denpel Informatique
   street:
@@ -33,7 +33,7 @@ author:
   code: ''
   country: ''
   email: sarikaya@ieee.org
-- ins: D. G. Garcia-Carrillo
+- ins: D. Garcia-Carrillo
   name: Dan Garcia-Carrillo
   org: University of Oviedo
   street: ''
@@ -330,23 +330,13 @@ informative:
 --- abstract
 
 
-This draft provides an overview of the various terms that are used when discussing 
-bootstrapping of IoT devices. We document terms that have been used within
-the IETF as well as other standards bodies. We investigate if the terms refer
-to the same phenomena or have subtle differences. We provide recommendations
-on the applicability of terms in different contexts. Finally, this document
-presents a survey of secure bootstrapping mechanisms available for smart
-objects that are part of an Internet of Things (IoT) network. The survey
-does not prescribe any one mechanism and rather presents IoT developers with
-different options to choose from, depending on their use-case, security requirements,
-and the user interface available on their IoT devices.
+This document provides an overview of terms that are commonly used when discussing the initial security setup of Internet of Things (IoT) devices. This document also presents a brief and illustrative survey of protocols available for initial security setup of IoT devices. For each protocol, we identify the terminology used, the entities involved, the initial assumptions, the processes necessary for completetion, and knowledge imparted to IoT devices after the setup.
 
 --- middle
 
 # Introduction
 
-We informally define bootstrapping as "any process that takes place before
-a device can become operational". While bootstrapping is necessary for all
+We informally define bootstrapping as "any process that takes place before a device can become operational". While bootstrapping is necessary for all
 computing devices, until recently, most of our devices typically had sufficient
 computing power and user interface (UI) for ensuring somewhat smooth operation.
 For example, a typical laptop device required the user to setup a username/password
