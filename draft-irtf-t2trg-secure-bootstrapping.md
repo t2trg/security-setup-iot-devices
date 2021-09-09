@@ -10,8 +10,8 @@ pi:
   sortrefs: 'yes'
   iprnotified: 'no'
   strict: 'yes'
-title: 'Secure IoT Bootstrapping: A Survey'
-abbrev: IoT Bootstrapping Analysis
+title: 'Terminology and processes for initial security setup of IoT devices'
+abbrev: IoT initial security setup
 author:
 - ins: M. S. Sethi
   name: Mohit Sethi
