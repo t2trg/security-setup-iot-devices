@@ -67,8 +67,8 @@ informative:
   RFC8376:
   RFC8572:
   RFC8949:
-  I-D.ietf-anima-bootstrapping-keyinfra:
-  I-D.marin-ace-wg-coap-eap:
+  RFC8995:
+  I-D.ietf-ace-wg-coap-eap:
   I-D.oflynn-core-bootstrapping:
   I-D.ietf-emu-eap-noob:
   I-D.sethi-gba-constrained:
@@ -638,7 +638,7 @@ EST has the following characteristics:
 The ANIMA working group is working on a bootstrapping solution for devices
 that relies on 802.1AR vendor certificates called Bootstrapping Remote Secure
 Key Infrastructures (BRSKI)
-{{I-D.ietf-anima-bootstrapping-keyinfra}}. In addition to vendor
+{{RFC8995}}. In addition to vendor
 installed IEEE 802.1AR certificates, a vendor based
 service on the Internet is required. Before being authenticated, a new device
 only needs link-local connectivity, and does not require a routable address.
@@ -823,7 +823,7 @@ derivation using a Pre-Shared Key (PSK). Given the light-weight nature of
 EAP-PSK, it can be suitable for resource-constrained devices. However, secure
 distribution of a large number of PSKs can be challenging.
 
-CoAP-EAP {{I-D.marin-ace-wg-coap-eap}} defines a bootstrapping service
+CoAP-EAP {{I-D.ietf-ace-wg-coap-eap}} defines a bootstrapping service
 for IoT. The authors propose transporting EAP over CoAP {{RFC7252}}
 for the constrained link, and communication with AAA infrastructures
 in the non-constrained link. While the draft discusses the use of
