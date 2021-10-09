@@ -126,18 +126,14 @@ informative:
       IEEE Std.: 802.15.4-2015
 
   LoRaWAN:
-    target: https://www.lora-alliance.org/portals/0/specs/LoRaWAN%20Specification%201R0.pdf
-    title: LoRa Specification V1.0
+    target: https://lora-alliance.org/resource_hub/lorawan-specification-v1-1/
+    title: LoRa Specification V1.1
     author:
-    - ins: N. Sornin
-      org: ''
-    - ins: M. Luis
-      org: ''
-    - ins: T. Eirich
-      org: ''
-    - ins: T. Kramp
-      org: ''
-    date: 2015-01
+    - org: LoRa Alliance
+    date: 2017-10
+    seriesinfo:
+      LoRa Alliance: 'Version: 1.1'
+
   wps:
     title: Wi-fi protected setup
     author:
@@ -298,7 +294,7 @@ informative:
       Submitted to NIST Workshop on Cybersecurity in a Post-Quantum World: ''
       version: 20141225:065757
   oma:
-    target: www.openmobilealliance.org/release/LightweightM2M/V1_2-20201110-A/OMA-TS-LightweightM2M_Core-V1_2-20201110-A.pdf
+    target: https://www.openmobilealliance.org/release/LightweightM2M/V1_2-20201110-A/OMA-TS-LightweightM2M_Core-V1_2-20201110-A.pdf
     title: 'Lightweight Machine to Machine Technical Specification: Core'
     author:
     - org: Open Mobile Alliance
@@ -306,27 +302,34 @@ informative:
     seriesinfo:
       'Approved Version': 1.2
   ocf:
-    target: https://openconnectivity.org/specs/OCF_Security_Specification_v1.0.0.pdf
+    target: https://openconnectivity.org/specs/OCF_Security_Specification_v2.2.2.pdf
     title: OCF Security Specification
     author:
     - org: Open Connectivity Foundation
-    date: 2017-06
+    date: 2021-02
     seriesinfo:
-      Version: 1.0.0
+      Version: 2.2.2
   threadcommissioning:
     title: Thread Commissioning
     author:
     - org: Thread Group
     date: 2015
   fidospec:
-    target: https://fidoalliance.org/specs/internet-of-things/FIDO-IoT-spec.html
-    title: FIDO IoT Spec
+    target: https://fidoalliance.org/specifications/download-iot-specifications/
+    title: FIDO Device Onboard Specification
     author:
     - org: Fast Identity Online Alliance
-    date: 2020-08
+    date: 2021-03
     seriesinfo:
       Fido Alliance: 'Version: 1.0'
-
+  fairhair:
+    target: https://openconnectivity.org/wp-content/uploads/2019/11/fairhair-specification-version-10_approved_april-2019.pdf
+    title: Fairhair Specifications
+    author:
+    - org: Fairhair Alliance
+    date: 2019-04
+    seriesinfo:
+      Fairhair Alliance: 'Version: 1.0'
 --- abstract
 
 
@@ -425,7 +428,7 @@ e.g. a smartphone application, for setting up all other devices, called enrollee
 
 DPP has the following characteristics:
 
-  * Terms:
+  * Terms: Bootstrapping, provisioning, enrollment, configuration, discovery.
   * Players: 
   * Initial beliefs assumed in the device:
   * Processes:
@@ -464,7 +467,7 @@ modes:
 
 OMA has the following characteristics:
 
-  * Terms:
+  * Terms: Bootstrapping, provisioning, intialization, configuration, registration.
   * Players: 
   * Initial beliefs assumed in the device:
   * Processes:
@@ -514,7 +517,7 @@ for device operation.
 
 OCF has the following characteristics:
 
-  * Terms:
+  * Terms: Provisioning, onboarding, enrollment, configuration, registration, discovery. 
   * Players: 
   * Initial beliefs assumed in the device:
   * Processes:
@@ -551,7 +554,7 @@ OCF has the following characteristics:
 
 Bluetooth mesh has the following characteristics:
 
-  * Terms:
+  * Terms: Provisioning, configuration, discovery.
   * Players: 
   * Initial beliefs assumed in the device:
   * Processes:
@@ -599,7 +602,7 @@ which the device should used.
 
 FIDO has the following characteristics:
 
-  * Terms:
+  * Terms: Provisioning, onboarding, commissioning, initialization.
   * Players: 
   * Initial beliefs assumed in the device:
   * Processes:
@@ -626,7 +629,7 @@ step during which they obtain client certificates and associated CA certificates
 
 EST has the following characteristics:
 
-  * Terms:
+  * Terms: Bootstrapping, enrollment, initialization, configuration.
   * Players: 
   * Initial beliefs assumed in the device:
   * Processes:
@@ -651,7 +654,7 @@ which are drop-shipped to the end user.
 
 BRSKI has the following characteristics:
 
-  * Terms:
+  * Terms: Bootstrapping, provisioning, enrollment, onboarding. 
   * Players: 
   * Initial beliefs assumed in the device:
   * Processes:
@@ -669,7 +672,7 @@ in the form of X.509 certificates. {{RFC8572}} is similar to BRSKI based on {{RF
 
 SZTP has the following characteristics:
 
-  * Terms:
+  * Terms: Bootstrapping, provisioning, onboarding, enrollment, configuration, discovery.
   * Players: 
   * Initial beliefs assumed in the device:
   * Processes:
@@ -693,7 +696,7 @@ of the OOB channel for more robust security than the ad-hoc solutions.
 
 EAP-NOOB has the following characteristics:
 
-  * Terms:
+  * Terms: Bootstrapping, registration, configuration, registration. 
   * Players: 
   * Initial beliefs assumed in the device:
   * Processes:
@@ -740,7 +743,7 @@ all of them can be categorized as managed bootstrapping methods.
 
 LPWAN has the following characteristics:
 
-  * Terms:
+  * Terms: Bootstrapping, provisioning, configuration, discovery, 
   * Players: 
   * Initial beliefs assumed in the device:
   * Processes:
@@ -775,7 +778,7 @@ address derived with advertised network prefix.
 
 Thread has the following characteristics:
 
-  * Terms:
+  * Terms: Provisioning, commissioning, discovery.
   * Players: 
   * Initial beliefs assumed in the device:
   * Processes:
