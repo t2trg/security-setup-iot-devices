@@ -429,7 +429,7 @@ e.g. a smartphone application, for setting up all other devices, called enrollee
 DPP has the following characteristics:
 
   * Terms: Bootstrapping, provisioning, enrollment, configuration, discovery.
-  * Players: 
+  * Players: Authenticator, Bootstrap Server, Client, Configurator, Device, Initiator, Manager, Manufacturer, Owner, Peer, Peer, Persona, Responder, Server, User
   * Initial beliefs assumed in the device:
   * Processes:
   * Beliefs imparted to the device after protocol execution:
@@ -468,7 +468,7 @@ modes:
 OMA has the following characteristics:
 
   * Terms: Bootstrapping, provisioning, intialization, configuration, registration.
-  * Players: 
+  * Players: Bootstrap Server, Client, Device, Manufacturer, Owner, Server, User
   * Initial beliefs assumed in the device:
   * Processes:
   * Beliefs imparted to the device after protocol execution:
@@ -518,7 +518,7 @@ for device operation.
 OCF has the following characteristics:
 
   * Terms: Provisioning, onboarding, enrollment, configuration, registration, discovery. 
-  * Players: 
+  * Players: Client, Device, Manager, Manufacturer, Owner, Peer, Peer, Responder, Server, User
   * Initial beliefs assumed in the device:
   * Processes:
   * Beliefs imparted to the device after protocol execution:
@@ -555,7 +555,7 @@ OCF has the following characteristics:
 Bluetooth mesh has the following characteristics:
 
   * Terms: Provisioning, configuration, discovery.
-  * Players: 
+  * Players: Client, Device, Manager, Manufacturer, Peer, Peer, Server, User
   * Initial beliefs assumed in the device:
   * Processes:
   * Beliefs imparted to the device after protocol execution:
@@ -603,7 +603,7 @@ which the device should used.
 FIDO has the following characteristics:
 
   * Terms: Provisioning, onboarding, commissioning, initialization.
-  * Players: 
+  * Players: Device, Manager, Manufacturer, Owner, Rendezvous Server, Server, User 
   * Initial beliefs assumed in the device:
   * Processes:
   * Beliefs imparted to the device after protocol execution:
@@ -630,7 +630,7 @@ step during which they obtain client certificates and associated CA certificates
 EST has the following characteristics:
 
   * Terms: Bootstrapping, enrollment, initialization, configuration.
-  * Players: 
+  * Players: Administrator, Client, Device, Manufacturer, Owner, Peer, Peer, Responder, Server, User
   * Initial beliefs assumed in the device:
   * Processes:
   * Beliefs imparted to the device after protocol execution:
@@ -655,7 +655,7 @@ which are drop-shipped to the end user.
 BRSKI has the following characteristics:
 
   * Terms: Bootstrapping, provisioning, enrollment, onboarding. 
-  * Players: 
+  * Players: Administrator, Client, Cloud Registrar, Configurator, Device, Domain Registrar, Initiator, Join Proxy, JRC, Manufacturer, Owner, Peer, Pledge, Server, User
   * Initial beliefs assumed in the device:
   * Processes:
   * Beliefs imparted to the device after protocol execution:
@@ -673,7 +673,7 @@ in the form of X.509 certificates. {{RFC8572}} is similar to BRSKI based on {{RF
 SZTP has the following characteristics:
 
   * Terms: Bootstrapping, provisioning, onboarding, enrollment, configuration, discovery.
-  * Players: 
+  * Players: Administrator, Bootstrap Server, Client, Device, Manufacturer, Onboarding Server, Owner, Redirect Server, Responder, Server, User
   * Initial beliefs assumed in the device:
   * Processes:
   * Beliefs imparted to the device after protocol execution:
@@ -696,8 +696,8 @@ of the OOB channel for more robust security than the ad-hoc solutions.
 
 EAP-NOOB has the following characteristics:
 
-  * Terms: Bootstrapping, registration, configuration, registration. 
-  * Players: 
+  * Terms: Bootstrapping, configuration, registration. 
+  * Players: Administrator, Authenticator, Client, Device, Manufacturer, Owner, Peer, Server, User
   * Initial beliefs assumed in the device:
   * Processes:
   * Beliefs imparted to the device after protocol execution:
@@ -743,8 +743,8 @@ all of them can be categorized as managed bootstrapping methods.
 
 LPWAN has the following characteristics:
 
-  * Terms: Bootstrapping, provisioning, configuration, discovery, 
-  * Players: 
+  * Terms: Bootstrapping, provisioning, configuration, discovery. 
+  * Players: Administrator, Authenticator, Border Router, Client, Device, Manager, Network Server, User
   * Initial beliefs assumed in the device:
   * Processes:
   * Beliefs imparted to the device after protocol execution:
@@ -779,7 +779,7 @@ address derived with advertised network prefix.
 Thread has the following characteristics:
 
   * Terms: Provisioning, commissioning, discovery.
-  * Players: 
+  * Players: Administrator, Border Agent, Border Router, Commissioner, Commissioner Candidate, Configurator, Device, End Device, End Device, Endpoint Identifier, Initiator, Joiner, Joiner Router, Owner, Peer, Peer, Responder, Server, User
   * Initial beliefs assumed in the device:
   * Processes:
   * Beliefs imparted to the device after protocol execution:
