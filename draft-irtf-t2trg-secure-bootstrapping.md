@@ -210,11 +210,6 @@ informative:
     author:
     - org: ZigBee Alliance
     date: 2014-03
-  iotwork:
-    title: IoT@Work bootstrapping architecture Deliverable D2.2
-    author:
-    - org: European Commission FP7
-    date: 2011-06
   panaiot:
     title: Dynamic Security Credentials PANA-based Provisioning for IoT Smart Objects
     author:
@@ -230,14 +225,6 @@ informative:
     seriesinfo:
       2nd World Forum on Internet of Things (WF-IoT): ''
       IEEE: ''
-  vermillard:
-    title: Bootstrapping device security with lightweight M2M
-    author:
-    - ins: J. Vermillard
-      org: ''
-    date: 2015-02
-    seriesinfo:
-      Appeared on blog at medium.com: ''
   vendorcert:
     title: Standard for local and metropolitan area networks - secure device identity
     author:
@@ -333,52 +320,19 @@ informative:
 --- abstract
 
 
-This document provides an overview of terms that are commonly used when discussing the initial security setup of Internet of Things (IoT) devices. This document also presents a brief and illustrative survey of protocols available for initial security setup of IoT devices. For each protocol, we identify the terminology used, the entities involved, the initial assumptions, the processes necessary for completetion, and knowledge imparted to IoT devices after the setup.
+This document provides an overview of terms that are commonly used when discussing the initial security setup of Internet of Things (IoT) devices. This document also presents a brief but illustrative survey of protocols available for initial security setup of IoT devices. For each protocol, we identify the terminology used, the entities involved, the initial assumptions, the processes necessary for completetion, and the knowledge imparted to the IoT devices after the setup is complete.
 
 --- middle
 
 # Introduction
 
-We informally define bootstrapping as "any process that takes place before a device can become operational". While bootstrapping is necessary for all
-computing devices, until recently, most of our devices typically had sufficient
-computing power and user interface (UI) for ensuring somewhat smooth operation.
-For example, a typical laptop device required the user to setup a username/password
-as well as enter network settings for Internet connectivity. Following these
-steps ensured that the laptop was fully operational.
+Initial security setup for a device refers to any process that takes place before a device can become operational. The setup process, among other things, involves network discovery and selection, access authentication, configuration of necessary credentials and parameters.  
 
-The problem of bootstrapping is however exacerbated for Internet of Things
-(IoT) networks. The size of an IoT network varies from a couple of devices
-to tens of thousands, depending on the application. Smart objects/things/devices
-in IoT networks are produced by a variety of vendors and are typically heterogeneous
-in terms of the constraints on their power supply, communication capability,
-computation capacity, and user interfaces available. This problem of bootstrapping
-in IoT was identified by [Sethi et al.](#Sethi14) while developing a
-bootstrapping solution for smart displays.  Although this
-document focuses on bootstrapping terminology and methods for IoT devices,
-we do not exclude bootstrapping related terminology used in other contexts.
+Initial security setup for IoT devices is challenging because the size of an IoT network varies from a couple of devices to tens of thousands, depending on the application. Smart objects/things/devices in IoT networks are produced by a variety of vendors and are typically heterogeneous in terms of the constraints on their power supply, communication capability, computation capacity, and user interfaces available. This challenge of initial security setup in IoT was identified by [Sethi et al.](#Sethi14) while developing a solution for smart displays. 
 
-Bootstrapping devices typically also involves providing them with some sort
-of network connectivity. Indeed, the functionality of a disconnected device
-is rather limited. Bootstrapping devices often assumes that some network
-has been setup a-priori. Setting up and maintaining a network itself is challenging.
-For example, users may need to configure the network name (called as Service
-Set Identifier (SSID) in Wi-Fi networks) and passpharse before new devices
-can be bootstrapped. Specifications such as the Wi-Fi Alliance Simple
-Configuration {{simpleconn}} help users setup networks.
-However, this document is only focused on terminology
-and processes associated with bootstrapping devices and excludes any discussion
-on setting up networks before devices can be bootstrapped.
+Initial security setup of devices typically also involves providing them with some sort of network connectivity. The functionality of a disconnected device is rather limited. Initial security setup of devices often assumes that some network has been setup a-priori. Setting up and maintaining a network itself is challenging. For example, users may need to configure the network name (called as Service Set Identifier (SSID) in Wi-Fi networks) and passpharse before new devices can be bootstrapped. Specifications such as the Wi-Fi Alliance Simple Configuration {{simpleconn}} help users setup networks. However, this document is only focused on terminology and processes associated with initial security setup of devices and excludes any discussion on setting up networks before devices can be setup.
 
-In addition to our informal definition, it is helpful to look at other definitions
-of bootstrapping. The IoT@Work project defines bootstrapping in the context
-of IoT as "the process by which the state of a device, a subsystem, a network,
-or an application changes from not operational to operational" {{iotwork}}.
-Vermillard {{vermillard}}, on the other hand, describes bootstrapping as the procedure by which an
-IoT device gets the URLs and secret keys for reaching the necessary servers.
-Vermillard notes that the same process is useful for re-keying, upgrading
-the security schemes, and for redirecting the IoT devices to new servers.
-
-There are several terms that have often been used in the context of bootstrapping:
+There are several terms that are used in the context of initial security setup of devices:
 
 * Bootstrapping
 
@@ -398,22 +352,18 @@ There are several terms that have often been used in the context of bootstrappin
 
 * Discovery
 
+Next, we look 
 
 
-
-# Usage of bootstrapping terminology in standards {#usage}
+# Usage of terminology in standards {#usage}
 
 To better understand bootstrapping related terminology, let us first look at the terms used by some existing specifications:
 
 ## Device Provisioning Protocol (DPP)
 
-The Wi-Fi Alliance Device provisioning protocol (DPP) {{dpp}} describes itself as a standardized protocol for providing user friendly Wi-Fi setup while maintaining or increasing the security. DPP relies on a configurator,
-e.g. a smartphone application, for setting up all other devices, called enrollees, in the network. DPP has the following three phases/sub-protocols:
+The Wi-Fi Alliance Device provisioning protocol (DPP) {{dpp}} describes itself as a standardized protocol for providing user friendly Wi-Fi setup while maintaining or increasing the security. DPP relies on a configurator, e.g. a smartphone application, for setting up all other devices, called enrollees, in the network. DPP has the following three phases/sub-protocols:
 
-* Bootstrapping: The configurator obtains bootstrapping information from the
-  enrollee using an out-of-band channel such as scanning a QR code or tapping
-  NFC. The bootstrapping information includes the public-key of the device
-  and metadata such as the radio channel on which the device is listening.
+* Bootstrapping: The configurator obtains bootstrapping information from the enrollee using an out-of-band channel such as scanning a QR code or tapping NFC. The bootstrapping information includes the public-key of the device and metadata such as the radio channel on which the device is listening.
 
 * Authentication: In DPP, either the configurator or the enrollee can initiate
   the authentication protocol. The side initiating the authentication protocol
@@ -428,7 +378,7 @@ e.g. a smartphone application, for setting up all other devices, called enrollee
 
 DPP has the following characteristics:
 
-  * Terms: Bootstrapping, provisioning, enrollment, configuration, discovery.
+  * Terms: Bootstrapping, enrollment, provisioning, configuration, discovery.
   * Players: Authenticator, Bootstrap Server, Client, Configurator, Device, Initiator, Manager, Manufacturer, Owner, Peer, Peer, Persona, Responder, Server, User
   * Initial beliefs assumed in the device:
   * Processes:
@@ -917,14 +867,8 @@ amount of user-interaction required in the pairing process, several proposals
 use contextual or location-dependent information, or natural user input such
 as sound or movement, for device pairing {{proximate}}.
 
-The local association created between two devices may later be used for connecting/introducing
-one of the devices to a centralized server. Such methods would however be
+The local association created between two devices may later be used for connecting/introducing one of the devices to a centralized server. Such methods would however be
 classified as hybrids.
-
-EAP-NOOB {{I-D.ietf-emu-eap-noob}} is an example of P2P and ad-hoc
-bootstrapping method that establishes a security
-association between an IoT device (node) and an online server (unlike pairing
-two devices for local connections over WiFi or Bluetooth).
 
 
 
