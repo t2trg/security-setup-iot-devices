@@ -326,7 +326,7 @@ This document provides an overview of terms that are commonly used when discussi
 
 # Introduction
 
-Initial security setup for a device refers to any process that takes place before a device can become operational. The phrase "initial security setup" intentionally includes the term "security" as setup of devices without adequate security or with insecure processes is no longer acceptable. The initial setup setup process, among other things, involves network discovery and selection, access authentication, configuration of necessary credentials and parameters.  
+Initial security setup for a device refers to any process that takes place before a device can become operational. The phrase "initial security setup" intentionally includes the term "security" as setup of devices without adequate security or with insecure processes is no longer acceptable. The initial security setup process, among other things, involves network discovery and selection, access authentication, configuration of necessary credentials and parameters.  
 
 Initial security setup for IoT devices is challenging because the size of an IoT network varies from a couple of devices to tens of thousands, depending on the application. Moreover, devices in IoT networks are produced by a variety of vendors and are typically heterogeneous in terms of the constraints on their power supply, communication capability, computation capacity, and user interfaces available. This challenge of initial security setup in IoT was identified by [Sethi et al.](#Sethi14) while developing a solution for smart displays. 
 
@@ -590,7 +590,7 @@ Nonetheless, we briefly discuss some important security aspects which are not fu
 
 Firstly, an IoT system may deal with authorization for resources and services separately from initial security setup in terms of timing as well as protocols. As an example, two resource-constrained devices A and B may perform mutual authentication using credentials provided by an offline third-party X before device A obtains authorization for running a particular application on device B from an online third-party Y. In some cases, authentication and authorization maybe tightly coupled, e.g., successful authentication also means successful authorization.
 
-Secondly, initial security setup of IoT devices may be necessary several times during the device lifecycle since keys have limited lifetimes and devices may be lost or resold. Protocols and systems must have adequate provisions for revocation and fresh secure setup. A rerun of the secure setup mechanism must be as secure as the initial security setup regardless of whether it is done manually or automatically over the network.
+Secondly, initial security setup of IoT devices may be necessary several times during the device lifecycle since keys have limited lifetimes and devices may be lost or resold. Protocols and systems must have adequate provisions for revocation and fresh security setup. A rerun of the security setup mechanism must be as secure as the initial security setup regardless of whether it is done manually or automatically over the network.
 
 Lastly, some IoT networks use a common group key for multicast and broadcast traffic. As the number of devices in a network increase over time, a common group key may not be scalable and the same network may need to be split into separate groups with different keys. Bootstrapping and provisioning protocols may need appropriate mechanisms for identifying and distributing keys to the current member devices of each group.
 
