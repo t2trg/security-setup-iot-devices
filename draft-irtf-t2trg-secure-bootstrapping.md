@@ -199,11 +199,16 @@ There are several terms that are used in the context of initial security setup o
 In addition to using a variety of different terms, initial security setup mechanisms can rely on a number of entities. For example, a companion smartphone device maybe necessary for some initial security setup mechanisms. Moreover, security setup procedures have diverese initial assumptions about the device being setup. As an example, an initial security setup mechanism may assume that the device is provisioned with a pre-shared key and a list of trusted network identifiers. Finally, initial security setup mechanisms impart different information to the device after completion. For example, some mechanisms may only provide a key for use with an authorization server, while others may configure elaborate access control lists directly.
 
 The next section provides an overview of some standards and protocols for initial security setup of IoT devices. For each mechanism, the following are explicitly identified:
-  * Terminology used
-  * Entities or "players" involved
-  * Initial assumptions about the device
-  * Processes necessary for completetion
-  * Knowledge imparted to the device after completion
+
+* Terminology used
+
+* Entities or "players" involved
+
+* Initial assumptions about the device
+
+* Processes necessary for completetion
+
+* Knowledge imparted to the device after completion
 
 
 
