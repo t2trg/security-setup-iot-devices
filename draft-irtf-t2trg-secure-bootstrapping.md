@@ -109,13 +109,6 @@ informative:
     date: 2018
     seriesinfo:
       Wi-Fi Alliance: Specification version 1.1
-  SimplePairing:
-    title: Simple pairing whitepaper
-    author:
-    - org: Bluetooth, SIG
-    date: 2007
-    seriesinfo:
-      " Technical report": ''
   IEEE802.15.4:
     target: http://standards.ieee.org/findstds/standard/802.15.4-2015.html
     title: IEEE Standard for Low-Rate Wireless Networks
@@ -134,152 +127,11 @@ informative:
     seriesinfo:
       LoRa Alliance: 'Version: 1.1'
 
-  wps:
-    title: Wi-fi protected setup
-    author:
-    - org: Wi-Fi Alliance
-    date: 2007
-    seriesinfo:
-      IEEE Standard: XXXXXXXTBS
-  simplekey:
-    title: Simple Keys for Simple Smart Objects
-    author:
-    - ins: O. Bergmann
-      org: Universitat Bremen TZI
-    - ins: S. Gerdes
-      org: Universitat Bremen TZI
-    - ins: C. Bormann
-      org: Universitat Bremen TZI
-    date: 2012-03
-    seriesinfo:
-      Smart Object Security Workshop, IETF 83: ''
-  devicepairing:
-    title: 'Secure Device Pairing: A Survey'
-    author:
-    - ins: S. Mirzadeh
-      org: ''
-    - ins: H. Cruickshank
-      org: ''
-    - ins: R. Tafazolli
-      org: ''
-    date: 2014
-    seriesinfo:
-      IEEE Communications Surveys and Tutorials: ''
-      pp.: 17-40
-  TS33220:
-    target: http://www.3gpp.org/DynaReport/33220.htm
-    title: 3rd Generation Partnership Project; Technical Specification  Group Services
-      and System Aspects; Generic  Authentication Architecture (GAA); Generic Bootstrapping
-      Architecture (GBA) (Release 14)
-    author:
-    - org: 3GPP
-    date: '2016-12-17'
-  kerberosiot:
-    target: https://kit.mit.edu/sites/default/files/documents/Kerberos_Internet_of%20Things.pdf
-    title: Kerberos for Internet-of-Things
-    author:
-    - surname: Hardjono
-      name: Thomas Hardjono
-      org: MIT Kerberos and Internet Trust Consortium
-    date: 2014-02
-  proximate:
-    title: 'Proximate: proximity-based secure pairing using ambient wireless signals.'
-    author:
-    - surname: Mathur
-      name: Suhas Mathur
-      org: AT&T Security Research Center, New York
-    - surname: Miller
-      name: Robert Miller
-      org: WINLAB, Rutgers University, North Brunswick
-    - surname: Varshavsky
-      name: Alexander Varshavsky
-      org: AT&T Labs, Florham Park, NJ
-    - surname: Trappe
-      name: Wade Trappe
-      org: WINLAB, Rutgers University, North Brunswick
-    - surname: Mandayam
-      name: Narayan Mandayam
-      org: WINLAB, Rutgers University, North Brunswick
-    date: 2011-06
-    seriesinfo:
-      Proceedings of MobiSys International Conference: ''
-      pp.: 211-224
-  SEP2.0:
-    target: hhttp://www.zigbee.org/non-menu-pages/zigbee-ip-download/
-    title: ZigBee IP Specification
-    author:
-    - org: ZigBee Alliance
-    date: 2014-03
-  panaiot:
-    title: Dynamic Security Credentials PANA-based Provisioning for IoT Smart Objects
-    author:
-    - ins: J.  L. Hernandez-Ramos
-      org: University of Murcia
-    - ins: D.  G. Carrillo
-      org: University of Murcia
-    - ins: R. Marin-Lopez
-      org: University of Murcia
-    - ins: A.  F. Skarmeta
-      org: University of Murcia
-    date: 2015
-    seriesinfo:
-      2nd World Forum on Internet of Things (WF-IoT): ''
-      IEEE: ''
   vendorcert:
     title: Standard for local and metropolitan area networks - secure device identity
     author:
     - org: IEEE std. 802.1ar-2009
     date: 2009-12
-  dh:
-    title: New directions in cryptography
-    author:
-    - ins: W. Diffie
-      org: ''
-    - ins: M. E. Hellman
-      org: ''
-    date: 1976
-    seriesinfo:
-      IEEE Transactions on Information Theory: ''
-      vol.: '22'
-      no.: '6'
-      pp.: 644-654
-  implicit:
-    title: 'Pauthkey: A pervasive authentication protocol and key establishment scheme
-      for wireless sensor networks in distributed iot applications'
-    author:
-    - ins: P. Porambage
-      org: University of Oulu
-    - ins: C. Schmitt
-      org: University of Zurich
-    - ins: P. Kumar
-      org: University of Oulu
-    - ins: A. Gurtov
-      org: University of Oulu
-    - ins: M. Ylianttila
-      org: University of Oulu
-    date: 2014
-    seriesinfo:
-      International Journal of Distributed Sensor Networks: ''
-      Hindawi Publishing Corporation: ''
-  himmo:
-    target: https://eprint.iacr.org/2014/1008
-    title: 'DTLS-HIMMO: Efficiently Securing a Post-Quantum World with a Fully-Collusion
-      Resistant KPS'
-    author:
-    - ins: O. Garcia-Morchon
-      org: Philips Group Innovation
-    - ins: R. Rietman
-      org: Philips Group Innovation
-    - ins: S. Sharma
-      org: Philips Group Innovation
-    - ins: L. Tolhuizen
-      org: Philips Group Innovation
-    - ins: J.  L. Torre-Arce
-      org: Philips Group Innovation
-    date: 2014-12
-    seriesinfo:
-      Submitted to NIST Workshop on Cybersecurity in a Post-Quantum World: ''
-      version: 20141225:065757
   oma:
     target: https://www.openmobilealliance.org/release/LightweightM2M/V1_2-20201110-A/OMA-TS-LightweightM2M_Core-V1_2-20201110-A.pdf
     title: 'Lightweight Machine to Machine Technical Specification: Core'
@@ -309,18 +161,10 @@ informative:
     date: 2021-03
     seriesinfo:
       Fido Alliance: 'Version: 1.0'
-  fairhair:
-    target: https://openconnectivity.org/wp-content/uploads/2019/11/fairhair-specification-version-10_approved_april-2019.pdf
-    title: Fairhair Specifications
-    author:
-    - org: Fairhair Alliance
-    date: 2019-04
-    seriesinfo:
-      Fairhair Alliance: 'Version: 1.0'
 --- abstract
 
 
-This document provides an overview of terms that are commonly used when discussing the initial security setup of Internet of Things (IoT) devices. This document also presents a brief but illustrative survey of protocols available for initial security setup of IoT devices. For each protocol, we identify the terminology used, the entities involved, the initial assumptions, the processes necessary for completetion, and the knowledge imparted to the IoT devices after the setup is complete.
+This document provides an overview of terms that are commonly used when discussing the initial security setup of Internet of Things (IoT) devices. This document also presents a brief but illustrative survey of protocols and standards available for initial security setup of IoT devices. For each protocol, we identify the terminology used, the entities involved, the initial assumptions, the processes necessary for completetion, and the knowledge imparted to the IoT devices after the setup is complete.
 
 --- middle
 
@@ -354,11 +198,11 @@ There are several terms that are used in the context of initial security setup o
 
 In addition to using a variety of different terms, initial security setup mechanisms can rely on a number of entities. For example, a companion smartphone device maybe necessary for some initial security setup mechanisms. Moreover, security setup procedures have diverese initial assumptions about the device being setup. As an example, an initial security setup mechanism may assume that the device is provisioned with a pre-shared key and a list of trusted network identifiers. Finally, initial security setup mechanisms impart different information to the device after completion. For example, some mechanisms may only provide a key for use with an authorization server, while others may configure elaborate access control lists directly.
 
-The next section provides an overview of some standardized initial security setup mechanisms. For each mechanism, the following are explicitly identified:
+The next section provides an overview of some standards and protocols for initial security setup of IoT devices. For each mechanism, the following are explicitly identified:
   * Terminology used
   * Entities or "players" involved
-  * Initial assumptions
-  * Processes
+  * Initial assumptions about the device
+  * Processes necessary for completetion
   * Knowledge imparted to the device after completion
 
 
@@ -366,7 +210,7 @@ The next section provides an overview of some standardized initial security setu
 
 # Standards and Protocols {#usage}
 
-To better understand bootstrapping related terminology, let us first look at the terms used by some existing specifications:
+
 
 ## Device Provisioning Protocol (DPP)
 
@@ -391,7 +235,7 @@ DPP has the following characteristics:
 
 ## Open Mobile Alliance (OMA) Lightweight M2M (LwM2M)
 
-The OMA LwM2M specification {{oma}} defines an architecture where a new device (LwM2M client) contacts a Bootstrap-server which is responsible for "provisioning" essential information such as credentials. After receiving this essential information, the LwM2M client device "registers" itself with one or more LwM2M Servers which will manage the device during its lifecycle. The current standard defines the following four bootstrapping modes:
+The OMA LwM2M specification {{oma}} defines an architecture where a new device (LwM2M client) contacts a Bootstrap-server which is responsible for provisioning essential information such as credentials. After receiving this essential information, the LwM2M client device registers itself with one or more LwM2M Servers which will manage the device during its lifecycle. The current standard defines the following four bootstrapping modes:
 
 * Factory Bootstrap: An IoT device in this case is configured with all the necessary bootstrap information during manufacturing and prior to its deployment.
 
@@ -412,12 +256,11 @@ OMA has the following characteristics:
 
 ## Open Connectivity Foundation (OCF)
 
-The Open Connectivity Foundation (OCF) {{ocf}} defines the process before a device is operational as onboarding.  The first step of this onboarding process is "configuring" the ownership, i.e., establishing
-a legitimate user that owns the device. For this, the user is supposed to use an Onboarding tool (OBT) and an Owner Transfer Methods (OTM).
+The Open Connectivity Foundation (OCF) {{ocf}} defines the process before a device is operational as onboarding.  The first step of this onboarding process is configuring the ownership, i.e., establishing a legitimate user that owns the device. For this, the user is supposed to use an Onboarding tool (OBT) and an Owner Transfer Method (OTM).
 
-The OBT is described as a logical entity that may be implemented on a single or multiple entities such as a home gateway, a device management tool, etc. OCF lists several optional OTMs. At the end of the execution of an OTM, the onboarding tool must have "provisioned" an Owner Credential onto the device. The following owner transfer methods are specified:
+The OBT is described as a logical entity that may be implemented on a single or multiple entities such as a home gateway, a device management tool, etc. OCF lists several optional OTMs. At the end of the execution of an OTM, the onboarding tool must have provisioned an Owner Credential onto the device. The following owner transfer methods are specified:
 
-* Just works: Performs an un-authenticated Diffie-Hellman key exchange over Datagram Transport Layer Security (DTLS). The key exchange results in a symmetric session key which is later used for provisioning. Naturally, this mode is vulnerable to Man-in-The-Middle (MiTM) attackers.
+* Just works: Performs an un-authenticated Diffie-Hellman key exchange over Datagram Transport Layer Security (DTLS). The key exchange results in a symmetric session key which is later used for provisioning. Naturally, this mode is vulnerable to on-path attackers.
 
 * Random PIN: The device generates a PIN code that is entered into the onboarding tool by the user. This pin code is used together with TLS-PSK ciphersuites for establishing a symmetric session key. OCF recommends PIN codes to have an entropy of 40 bits.
 
@@ -425,44 +268,48 @@ The OBT is described as a logical entity that may be implemented on a single or 
 
 * Vendor specific: Vendors implement their own transfer method that accommodates any specific device constraints.
 
-Once the onboarding tool and the new device have authenticated and established secure communication, the onboarding tool "provisions"/"configures" the device with Owner credentials. Owner credentials may consist of certificates, shared keys, or Kerberos tickets for example.
+Once the onboarding tool and the new device have authenticated and established secure communication, the onboarding tool provisions/configures the device with Owner credentials. Owner credentials may consist of certificates, shared keys, or Kerberos tickets for example.
 
 The OBT additionally configures/provisions information about the Access Management Service (AMS), the Credential Management  Service (CMS), and the credentials for interacting with them. The AMS is responsible for provisioning access control entries, while the CMS provisions security credentials necessary for device operation.
 
 OCF has the following characteristics:
 
   * Terms: Configuration, discovery, enrollment, onboarding, provisioning, registration,  
-  * Players: Client, Device, Manager, Manufacturer, Owner, Peer, Peer, Responder, Server, User
+  * Players: Client, Device, Manager, Manufacturer, Owner, Peer, Responder, Server, User
   * Initial beliefs assumed in the device:
   * Processes:
   * Beliefs imparted to the device after protocol execution:
 
 ## Bluetooth
 
-  Bluetooth mesh specifies a provisioning protocol.  The goal of the provisioning phase is to securely incorporate a new Bluetooth mesh node, by completing two critical tasks.  First, to authenticate the    unprovisioned device and second, to create a secure link with said device to share information. 
+  Bluetooth mesh specifies a provisioning protocol.  The goal of the provisioning phase is to securely incorporate a new Bluetooth mesh node, by completing two critical tasks. First, to authenticate the    unprovisioned device and second, to create a secure link with said device to share information. 
 
-  The provisioning process is divided into five distinct stages summarize next.
+  The provisioning process is divided into five distinct stages summarize next:
 
-   * Beaconing for discovery. In this phase, the provisioned device allows to be discovered the provisioner.
+   * Beaconing for discover: The new unprovisioned device is discovered by the provisioner
 
-   * Invitation as a sort of negotiation. In this phase, the unprovisioned device indicates to the provisioner a set of capabilities such as the security algorithms supported, the availability of its public key using an Out-of-Band (OOB) technology and the input/output interaction with users.
+   * Negotiation: The unprovisioned device indicates to the provisioner a set of capabilities such as the security algorithms supported, the availability of its public key using an Out-of-Band (OOB) channel and the input/output interfaces supported
 
-   * Exchange public keys. In this phase, the authentication method is selected by the provisioner and both devices exchange Elliptic-curve Diffie–Hellman (ECDH) public keys.  These keys may be static or ephemeral. Their exchange can be done in two ways, either via Out-of-Band or directly through a Bluetooth link. Each device then generates a symmetric key, named ECDHSecret, by combining its own private key and the public key of the peer device. The EDCHSecret is used to secure communication between the two devices. 
+   * Public-key exchange: The authentication method is selected by the provisioner and both devices exchange Elliptic-curve Diffie–Hellman (ECDH) public keys. These keys may be static or ephemeral. Their exchange can be done in two ways, either via Out-of-Band or directly through a Bluetooth link. Each device then generates a symmetric key, named ECDHSecret, by combining its own private key and the public key of the peer device. The EDCHSecret is used to protect communication between the two devices. 
    
 
-  * Authentication. Given the authentication method selected from the three possible choices:  Output OOB, Input OOB, and Static OOB or No OOB, the unprovisioned device is here authenticated. With Output OOB, the unprovisioned device chooses a random number and outputs that number in manner consistent with its capabilities. The provisioner then inputs this number. Then, a check confirmation value operation is performed. This involves a cryptographic exchange regarding (in this case) the random number to complete the authentication. With Input OOB, the roles are reversed, being the provisioner the entity that generates the random number. When neither of the previous authentication procedures are feasible, both the provisioner and unprovisioned device generate a random number and perform a check confirmation value operation. 
+  * Authentication: During this phase, the ECDH key exchange is authenticated. The authentication method can be Output OOB, Input OOB, static OOB, or No OOB. With Output OOB, the unprovisioned device chooses a random number and outputs that number in manner consistent with its capabilities. The provisioner then inputs this number. Then, a check confirmation value operation is performed. This involves a cryptographic exchange regarding (in this case) the random number to complete the authentication. With Input OOB, the roles are reversed, being the provisioner the entity that generates the random number. When neither of the previous authentication procedures are feasible, both the provisioner and unprovisioned device generate a random number and require the user supervising the setup to verify that values on the device and provisioner are the same. 
   
   
-  * Distribution of provisioning data. At this point, the provisioning process can be secured. This involves the distribution of data such as a Network key, to secure the communications at network layer and a unicast address among other information.
+  * Distribution of provisioning data: At this point, the provisioning process can be protected. This involves the distribution of data such as a Network key, to secure the communications at network layer and a unicast address among other information.
 
 
 Bluetooth mesh has the following characteristics:
 
   * Terms: Configuration, discovery, provisioning.
-  * Players: Client, Device, Manager, Manufacturer, Peer, Peer, Server, User
+  * Players: Client, Device, Manager, Manufacturer, Peer, Server, User
   * Initial beliefs assumed in the device:
   * Processes:
   * Beliefs imparted to the device after protocol execution:
+
+
+## Fast IDentity Online (FIDO) alliance
+
 
 
 ## Fast IDentity Online (FIDO) alliance
@@ -559,7 +406,7 @@ LPWAN has the following characteristics:
 
 ##  Thread {#thread}   
 
-Thread Group commissioning {{threadcommissioning}} introduces a two phased process i.e. Petitioning and Joining. Entities involved are leader, joiner, commissioner, joiner router and border router. Leader is the first device in Thread network that must be commissioned using out-of-band process and is used to inject correct user generated Commissioning Credentials (can be changed later) into Thread Network. Joiner is the node that intends to get authenticated and authorized on Thread Network. Commissioner is either within the Thread Network (Native) or connected with Thread Network via a WLAN (External).
+Thread Group commissioning {{threadcommissioning}} introduces a two phased process i.e. Petitioning and Joining. Entities involved are leader, joiner, commissioner, joiner router, and border router. Leader is the first device in Thread network that must be commissioned using out-of-band process and is used to inject correct user generated Commissioning Credentials (can be changed later) into Thread Network. Joiner is the node that intends to get authenticated and authorized on Thread Network. Commissioner is either within the Thread Network (Native) or connected with Thread Network via a WLAN (External).
 
 Under some topologies, Joiner Router and Border Router facilitate the Joiner node to reach Native and External Commissioner, respectively. Petitioning begins before Joining process and is used to grant sole commissioning authority to a Commissioner. After an authorized Commissioner is designated, eligible thread devices can join network. Pair-wise key is shared between Commissioner and Joiner, network parameters (such as network name, security policy, etc.,) are sent out securely (using pair-wise key) by Joiner Router to Joiner for letting Joiner to join the Thread Network. Entities involved in Joining process depends on system topology i.e. location of Commissioner and Joiner. Thread networks only operate using IPv6. Thread devices can devise GUAs (Global Unicast Addresses) {{RFC4291}}. Provision also exist via Border Router, for Thread device to acquire individual global address by means of DHCPv6 or using SLAAC (Stateless Address Autoconfiguration) address derived with advertised network prefix.
 
@@ -576,8 +423,15 @@ Thread has the following characteristics:
 There are several stages before a device becomes fully operational. This typically involves establishing some initial trust after which credentials and other parameters are configured. For DPP, bootstrapping is the first step before authentication and provisioning of credentials can occur. For EST, bootstrapping happens as the first step when the client devices have no certificates available for starting enrollment. Provisioning/configuring are terms used for providing additional information to devices before they are fully operational. For example, credentials are provisioned onto the device. But before credential provisioning, a device is bootstrapped and authenticated. Some protocols may only deal with parts of the process. For example, TLS maybe used for authentication after bootstrapping. A separate device management protocol then may run over this TLS tunnel for provisioning operational information and credentials.
 
 
+# Comparison of terminology {#comp-term}
 
+# Comparison of players {#comp-players}
 
+# Comparison of initial beliefs {#comp-beliefs}
+
+# Comparison of processes {#comp-process}
+
+# Comparison of knowledge imparted to the device {#comp-impart}
 
 
 
