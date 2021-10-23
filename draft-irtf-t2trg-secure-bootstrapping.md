@@ -315,10 +315,6 @@ Bluetooth mesh has the following characteristics:
 
 ## Fast IDentity Online (FIDO) alliance
 
-
-
-## Fast IDentity Online (FIDO) alliance
-
 The Fast IDentity Online Alliance (FIDO) is currently specifying an automatic onboarding protocol for IoT devices {{fidospec}}. The goal of this protocol is to provide a new IoT device with information for interacting securely with an online IoT platform. This protocol allows owners to choose the IoT platform for their devices at a late stage in the device lifecyle. The draft specification refers to this feature as "late binding".
 
 The FIDO IoT protocol itself is composed of one Device Initialization (DI) protocol and 3 Transfer of Ownership (TO) protocols TO0, TO1, TO2. Protocol messages are encoded in Concise Binary Object Representation (CBOR) {{RFC8949}} and can be transported over application layer protocols such as Constrained Application Protocol (CoAP) {{RFC7252}} or directly over TCP, Bluetooth etc. FIDO IoT however assumes that the device already has IP connectivity to a rendezvous server. Establishing this initial IP connectivity is explicitly stated as "out-of-scope" but the draft specification hints at the usage of Hypertext Transfer Protocol (HTTP) {{RFC7230}} proxies for IP networks and other forms of tunneling for non-IP networks.
@@ -428,15 +424,15 @@ Thread has the following characteristics:
 There are several stages before a device becomes fully operational. This typically involves establishing some initial trust after which credentials and other parameters are configured. For DPP, bootstrapping is the first step before authentication and provisioning of credentials can occur. For EST, bootstrapping happens as the first step when the client devices have no certificates available for starting enrollment. Provisioning/configuring are terms used for providing additional information to devices before they are fully operational. For example, credentials are provisioned onto the device. But before credential provisioning, a device is bootstrapped and authenticated. Some protocols may only deal with parts of the process. For example, TLS maybe used for authentication after bootstrapping. A separate device management protocol then may run over this TLS tunnel for provisioning operational information and credentials.
 
 
-# Comparison of terminology {#comp-term}
+## Comparison of terminology {#comp-term}
 
-# Comparison of players {#comp-players}
+## Comparison of players {#comp-players}
 
-# Comparison of initial beliefs {#comp-beliefs}
+## Comparison of initial beliefs {#comp-beliefs}
 
-# Comparison of processes {#comp-process}
+## Comparison of processes {#comp-process}
 
-# Comparison of knowledge imparted to the device {#comp-impart}
+## Comparison of knowledge imparted to the device {#comp-impart}
 
 
 
