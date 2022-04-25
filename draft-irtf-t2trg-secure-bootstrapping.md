@@ -15,13 +15,13 @@ abbrev: IoT initial security setup
 author:
 - ins: M. Sethi
   name: Mohit Sethi
-  org: Ericsson
-  street: Hirsalantie 11
-  city: Jorvas
+  org: Aalto University
+  street:
+  city: Espoo
   region: ''
-  code: '02420'
+  code: '02150'
   country: Finland
-  email: mohit@piuha.net
+  email: mohit@iki.fi
 - ins: B. Sarikaya
   name: Behcet Sarikaya
   org: Denpel Informatique
@@ -69,10 +69,8 @@ informative:
   RFC8949:
   RFC8995:
   I-D.ietf-ace-wg-coap-eap:
-  I-D.oflynn-core-bootstrapping:
-  I-D.ietf-emu-eap-noob:
-  I-D.sethi-gba-constrained:
-  I-D.ietf-emu-eap-tls13:
+  RFC9140:
+  RFC9190:
   I-D.ietf-ace-coap-est:
   simpleconn:
     target: https://www.wi-fi.org/download.php?file=/sites/default/files/private/Wi-Fi_Simple_Configuration_Technical_Specification_v2.0.7.pdf
@@ -372,7 +370,7 @@ SZTP has the following characteristics:
 
 ## Nimble out-of-band authentication for EAP (EAP-NOOB)
 
-EAP-NOOB {{I-D.ietf-emu-eap-noob}} defines an EAP method where the authentication is based on a user-assisted out-of-band (OOB) channel between the server and peer. It is intended as a generic bootstrapping solution for IoT devices which have no pre-configured authentication credentials and which are not yet registered on the authentication server. This method claims to be more generic than most ad-hoc bootstrapping solutions in that it supports many types of OOB channels. The exact in-band messages and OOB message contents are specified and not the OOB channel details. EAP-NOOB also supports IoT devices with only output (e.g. display) or only input (e.g. camera). It makes combined use of both secrecy and integrity of the OOB channel for more robust security than the ad-hoc solutions.
+EAP-NOOB {{RFC9140}} defines an EAP method where the authentication is based on a user-assisted out-of-band (OOB) channel between the server and peer. It is intended as a generic bootstrapping solution for IoT devices which have no pre-configured authentication credentials and which are not yet registered on the authentication server. This method claims to be more generic than most ad-hoc bootstrapping solutions in that it supports many types of OOB channels. The exact in-band messages and OOB message contents are specified and not the OOB channel details. EAP-NOOB also supports IoT devices with only output (e.g. display) or only input (e.g. camera). It makes combined use of both secrecy and integrity of the OOB channel for more robust security than the ad-hoc solutions.
 
 
 EAP-NOOB has the following characteristics:
