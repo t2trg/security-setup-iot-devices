@@ -1,2 +1,3 @@
-# Automatically generated CODEOWNERS file.
-draft-sarikaya-t2trg-sbootstrapping.md mohit@piuha.netsarikaya@ieee.orggarciadan@uniovi.es
+# Automatically generated CODEOWNERS
+# Regenerate with `make update-codeowners`
+draft-irtf-t2trg-secure-bootstrapping.md mohit@iki.fi sarikaya@ieee.org garciadan@uniovi.es
