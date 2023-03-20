@@ -256,7 +256,7 @@ The OMA LwM2M specification {{oma}} defines an architecture where a new device (
 * Server Initiated Bootstrap: In this bootstrapping mode, the bootstrapping server configures all the bootstrap information on the IoT device without receiving a request from the client. This means that the bootstrap server
   needs to know if a client IoT Device is ready for bootstrapping before it can be configured. For example, a network may inform the bootstrap server of a new connecting IoT client device.
 
-OMA has the following characteristics:
+OMA LwM2M has the following characteristics:
 
   * Terms: Bootstrapping, provisioning, intialization, configuration, registration.
   * Players: Bootstrap Server, Client, Device, Manufacturer, Owner, Server, User
