@@ -260,7 +260,7 @@ OMA LwM2M has the following characteristics:
 
   * Terms: Bootstrapping, provisioning, intialization, configuration, registration.
   * Players: Bootstrap Server, Client, Device, Manufacturer, Owner, Server, User
-  * Initial beliefs assumed in the device: The client has as a starting point, the necessary information to trust the LwM2M in the bootstrapping process and later the registration. The client has all the necesary to either get the bootstrap information, from the factory bootstrap (pre-installed), a smartcard, or it has key material to establish a secure communication (DTLS/OSCORE) with the LwM2M bootstrap-server and perform the bootstrapping.
+  * Initial beliefs assumed in the device: The client has as a starting point, the necessary information to trust the LwM2M in the bootstrapping process and later the registration. The client has all the necessary to either get the bootstrap information, from the factory bootstrap (pre-installed), a smartcard, or it has key material to establish a secure communication (DTLS/OSCORE) with the LwM2M bootstrap-server and perform the bootstrapping.
   * Processes: Factory Bootstrap, Bootstrap from Smartcard, Client Initiated Bootstrap and Server Initiated Bootstrap.
   * Beliefs imparted to the device after protocol execution: After the bootstrapping is performed, the LwM2M client can register with the LwM2M servers.
 
