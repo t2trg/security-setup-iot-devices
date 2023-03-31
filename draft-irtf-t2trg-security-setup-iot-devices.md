@@ -24,7 +24,7 @@ author:
   email: mohit@iki.fi
 - ins: B. Sarikaya
   name: Behcet Sarikaya
-  org: 
+  org:
   street:
   - ''
   - ''
@@ -140,7 +140,7 @@ This document provides an overview of terms that are commonly used when discussi
 
 # Introduction
 
-Initial security setup for a device refers to any process that takes place before a device can become operational. The phrase "initial security setup" intentionally includes the term "security" as setup of devices without adequate security or with insecure processes is no longer acceptable. The initial security setup process, among other things, involves network discovery and selection, access authentication, configuration of necessary credentials and parameters.  
+Initial security setup for a device refers to any process that takes place before a device can become operational. The phrase "initial security setup" intentionally includes the term "security" as setup of devices without adequate security or with insecure processes is no longer acceptable. The initial security setup process, among other things, involves network discovery and selection, access authentication, configuration of necessary credentials and parameters.
 
 Initial security setup for IoT devices is challenging because the size of an IoT network varies from a couple of devices to tens of thousands, depending on the application. Moreover, devices in IoT networks are produced by a variety of vendors and are typically heterogeneous in terms of the constraints on their power supply, communication capability, computation capacity, and user interfaces available. This challenge of initial security setup in IoT was identified by [Sethi et al.](#Sethi14) while developing a solution for smart displays.
 
@@ -203,12 +203,12 @@ DPP has the following characteristics:
   * Players: Authenticator, Client, Configurator, Device, Initiator, Manufacturer, Owner, Peer, Persona, Responder, User, Enrollee
   * Initial beliefs assumed in the device: There are two entities involved in the DPP protocol, the Initiator and Responder. These entities as a starting point do not have a trust relation, nor do they share credentials or key material. DPP uses a decentralized architecture with no central authority to coordinate or control authentication and rely on a direct trust model.
  In DPP, authentication does not rely on a pre-existing trust relation with a third-party or centralized entity, hence all entities involved in DPP need to perform the required validation.
-  
+
   * Processes: Bootstrapping, authentication,  provisioning, and network access.
     Bootstrapping: To establish a secure provisioning connection, the devices exchange public bootstrapping keys.
     Authentication: To establish trust and build a secure channel, the devices employ the DPP Authentication protocol's bootstrapping keys.
     Configuration: The Configurator uses the DPP Configuration protocol to provision the Enrollee through the secure channel created during DPP Authentication.
-    Network access: The Enrollee establishes network access using the newly provisioned credentials. 
+    Network access: The Enrollee establishes network access using the newly provisioned credentials.
 
   * Beliefs imparted to the device after protocol execution: DPP bootstrapping relies on the transfer of the public-key that is expected to be trusted. The beliefs when mutual authentication is run, relies on the trust of a succesful DPP bootstrapping. When mutual authentication is not supported, a device that can control when and how its own public key is bootstrapped, can perform a weak authentication to any entity that knows its public key.
 
@@ -232,7 +232,7 @@ OMA has the following characteristics:
 
   * Terms: Bootstrapping, provisioning, intialization, configuration, registration.
   * Players: Bootstrap Server, Client, Device, Manufacturer, Owner, Server, User
-  * Initial beliefs assumed in the device: The client has as a starting point, the necessary information to trust the LwM2M bootstrap server in the bootstrapping process and later in the registration (with the LwM2M management server). 
+  * Initial beliefs assumed in the device: The client has as a starting point, the necessary information to trust the LwM2M bootstrap server in the bootstrapping process and later in the registration (with the LwM2M management server).
   The client has all the necessary information to either get the bootstrap information, from the factory bootstrap (pre-installed), a smartcard, or it has key material to establish a secure communication (DTLS/OSCORE) with the LwM2M bootstrap server and perform the bootstrapping.
   * Processes: Factory Bootstrap, Bootstrap from Smartcard, Client Initiated Bootstrap and Server Initiated Bootstrap.
   * Beliefs imparted to the device after protocol execution: After the bootstrapping is performed, the LwM2M client can register with the LwM2M servers.
@@ -257,7 +257,7 @@ The OBT additionally configures/provisions information about the Access Manageme
 
 OCF has the following characteristics:
 
-  * Terms: Configuration, discovery, enrollment, onboarding, provisioning, registration,  
+  * Terms: Configuration, discovery, enrollment, onboarding, provisioning, registration,
   * Players: Client, Device, Manager, Manufacturer, Owner, Peer, Server, User
   * Initial beliefs assumed in the device: The device needs to be associated with an owner in the onboarding process and then go through the provisioning process before being considered as trustworty.
   * Processes: Onboarding, provisioning.
@@ -265,7 +265,7 @@ OCF has the following characteristics:
 
 ## Bluetooth
 
-  Bluetooth mesh specifies a provisioning protocol.  The goal of the provisioning phase is to securely incorporate a new Bluetooth mesh node, by completing two critical tasks. First, to authenticate the unprovisioned device and second, to create a secure link with said device to share information. 
+  Bluetooth mesh specifies a provisioning protocol.  The goal of the provisioning phase is to securely incorporate a new Bluetooth mesh node, by completing two critical tasks. First, to authenticate the unprovisioned device and second, to create a secure link with said device to share information.
 
   The provisioning process is divided into five distinct stages summarize next:
 
@@ -306,7 +306,7 @@ FIDO has the following characteristics:
 
   * Terms: Provisioning, onboarding, commissioning, initialisation.
   * Players: Device, Manager, Manufacturer, Owner, Rendezvous Server,  User
-  * Initial beliefs assumed in the device: In the initial state the device is not yet associated with a specific owner. The DI process has to take place to embed owndership and manufacturing credentials in the device, the first in a chaim to create an ownership voucher that will be used to perform the transfer of ownership of the device. 
+  * Initial beliefs assumed in the device: In the initial state the device is not yet associated with a specific owner. The DI process has to take place to embed owndership and manufacturing credentials in the device, the first in a chaim to create an ownership voucher that will be used to perform the transfer of ownership of the device.
 
   * Processes: Device Initialize Protocol (DI), Transfer Ownership Protocol 0 (TO0), Transfer Ownership Protocol 1 (TO1), Transfer Ownership Protocol 2 (TO2)
   * Beliefs imparted to the device after protocol execution: When the device is powered on, and all TO protocols run, the device figures out by contacting with the rendezvous server, who the owner is, authenticate with the owner. At this point the rendezvous server, and owner are able to authenticate the device.
@@ -320,7 +320,7 @@ EST has the following characteristics:
 
   * Terms: Bootstrapping, enrollment, initialization, configuration.
   * Players: Administrator, Client, Device, Manufacturer, Owner, Peer, Server, User
-  * Initial beliefs assumed in the device: There is a process of distribution of initial information which provides both the EST client and server with the information for the EST client and server to perform mutual authentication as well as for authorization.   
+  * Initial beliefs assumed in the device: There is a process of distribution of initial information which provides both the EST client and server with the information for the EST client and server to perform mutual authentication as well as for authorization.
   * Processes: Distribution of Certificates, Bootstrap, Enrollment
   * Beliefs imparted to the device after protocol execution: The EST enrollment process is designed to make establishing automated certificate issuing from a trustworthy CA as simple as possible. After the processe have finished, the device is able to automatically renew its certificates through re-enrollment as it has a trust relation with the ESP server.
 
@@ -359,7 +359,7 @@ EAP-NOOB has the following characteristics:
 
   * Terms: Bootstrapping, configuration, registration.
   * Players: Administrator, Authenticator, Client, Device, Manufacturer, Owner, Peer, Server, User
-  * Initial beliefs assumed in the device: The device does not have to have pre-installed credentials as in other EAP methods.  
+  * Initial beliefs assumed in the device: The device does not have to have pre-installed credentials as in other EAP methods.
   * Processes: This EAP exchange is encompassed by Initial Exchange, OOB step, Completion Exchange and Waiting Exchange.
   * Beliefs imparted to the device after protocol execution: After EAP-NOOB is run, the device is able to trust the EAP server and the EAP authenticator by extension.
 
@@ -388,7 +388,7 @@ LPWAN has the following characteristics:
 
 
 
-##  Thread {#thread}   
+##  Thread {#thread}
 
 Thread Group commissioning {{threadcommissioning}} introduces a two phased process i.e. Petitioning and Joining. Entities involved are leader, joiner, commissioner, joiner router, and border router. Leader is the first device in Thread network that must be commissioned using out-of-band process and is used to inject correct user generated Commissioning Credentials (can be changed later) into Thread Network. Joiner is the node that intends to get authenticated and authorized on Thread Network. Commissioner is either within the Thread Network (Native) or connected with Thread Network via a WLAN (External).
 
@@ -416,15 +416,15 @@ Finally, when the entities involved in the process are authenticated and the con
 The specifics of every term varies depending on the technology, but we enumerate here the basic terminology and what it means for the different solutions.
 
 
-- Bootstrapping: 
+- Bootstrapping:
   * DPP: Client obtains the Controller’s public bootstrapping key and IP address
-  * OMA: An IoT device retrieves and processes all the bootstrap data 
+  * OMA: An IoT device retrieves and processes all the bootstrap data
   * EST: installation of the Explicit TA database
-  * BRSKI: A protocol to obtain a local trust anchor. 
+  * BRSKI: A protocol to obtain a local trust anchor.
   * SZTP: The process by which obtains "bootstrapping data" such as conveyed information, owner certificate and owner voucher.
   * EAP-NOOB: For an IoT device to be registered, authenticated, authorized and for it to derive key material to act as a trustworty entity in the security domain where it is deployed.
 
-- configuration: 
+- configuration:
   * DPP: The process performed by a Configurator by which the Enrollee is provisioned.
   * OMA: Adding or removing an LwM2M Server Account to or from the LwM2M Client configuration.
   * OCF: The necessary information the Device must hold to be considered as ready for normal operation.
@@ -433,41 +433,41 @@ The specifics of every term varies depending on the technology, but we enumerate
   * EAP-NOOB: Establishing  necessary information for the device to operate.
   * LPWAN: In LoRaWAN, the information related to the working of the device and protocol.
 
-- discovery: 
+- discovery:
   * DPP: Exchange that allows obtaining specific information such as SSID, operating channel and band.
   * OCF: Making the different resources available through URIs.
   * BRSKI: Locating an entity that needs to take part of the bootstrapping process (e.g., Join proxy)
 
-- enrollment: 
+- enrollment:
   * EST: The process of obtaining the credentials needed to perform the device normal operation.
   * BRSKI: Same process describe as EST.
   * SZTP: The process of an owner joining a manufacturer's SZTP program.
 
 
-- provisioning: 
-  * DPP: Securely enabling a device to establish secure associations with other devices in a network. 
+- provisioning:
+  * DPP: Securely enabling a device to establish secure associations with other devices in a network.
   * OMA: Establishing security credentials and access control lists by a dedicated LwM2M bootstrap server.
   * OCF: A set of processes that take place both during and after the ownership transfer. These entail configuration of credentials, and security-related resources for any services or devices that the provisioned device needs to interact with in the future.
   * Bluetooth: The procedure by which a device is authenticated, and a secure link is established, becoming a trustworthy node in the network.
   * FIDO: Same as FIDO onboarding.
   * SZTP: The set of steps that take place to enable a device to establish secure connections with other systems.
   * LPWAN: In LoRaWAN, the establishment of configuration data and credentials.
-  
 
-- intialization: 
+
+- intialization:
   * OMA: When Bootstrap-Delete operation is used, to restore a device.
   * FIDO: Protocol (DI), establishing basic information at manufacture.
 
-- registration: 
+- registration:
   * OMA: Establishing a registration session, which is an association between the client and the server.
   * EAP-NOOB: Add information about an IoT device in a server database.
 
-- onboarding: 
+- onboarding:
   * OCF:  The device is considered to complete the onboarding after the ownership of the Device has been transferred and the Device provisioned.
   * FIDO: The procedure of installing configuration information and secret to a device so that it may safely connect to and communicate with an IoT platform.
   * SZTP: information related to the boot image a device must be running, an initial configuration the device must commit, and scripts that the device must successfully execute.
 
-- commissioning: 
+- commissioning:
   * Thread: The process of a Thread device joining a Thread network.
 
 
@@ -480,7 +480,7 @@ The specifics of every term varies depending on the technology, but we enumerate
 ## Comparison of players {#comp-players}
 
 
-In this section we classify the different players. 
+In this section we classify the different players.
 
 Human User: user
 
@@ -519,13 +519,13 @@ Bluetooth devices start as unprovisioned. Initial trust is established as a cons
 
 These credentials may very from the time of installing, and the entity to which it related. In this sense, they could be from the  manufacturer, owner or other entity.
 
-FIDO devices have installed during the manufacturing process a set of ownership credentials (i.e., ownership voucher) and additional information to determine the current owner of the device. Hence, there is an initial trust from the IoT device and the owner. With this basic setup, and and the cooperation among device, owner and rendezvous server, the onboarding process can take place. 
+FIDO devices have installed during the manufacturing process a set of ownership credentials (i.e., ownership voucher) and additional information to determine the current owner of the device. Hence, there is an initial trust from the IoT device and the owner. With this basic setup, and and the cooperation among device, owner and rendezvous server, the onboarding process can take place.
 
 EST devices are configured with the needed information to perform mutual authentication and for authorization between the EST client and server.
 
 BRSKI have manufacturer-installed certificates as starting point to establish trust.
 
-SZTP have pre-configured initial state which provides the basis for trust. 
+SZTP have pre-configured initial state which provides the basis for trust.
 
 LPWAN specifics depends on the technology, but they all have in common some pre-installed credentials that allows the establishment of trust and to secure the communications.
 
@@ -540,12 +540,12 @@ DPP initial trust is established during the bootstrapping where the public key i
 
 Analyzing the different terms used over the different solutions reviewed in this document, we can identify several processes. These are named differently in some cases, and not every technologies considers them all as part of their the following common concepts:
 
-* To refer to the process previous to the device being turned on, in which some information, or credentials are installed into the device. This process is commonly referred to as manufacture. Is in this phase where the IoT devices have installed the needed information (specifics depend on the technology) to provide the basis for trust and to authenticate other entities. 
+* To refer to the process previous to the device being turned on, in which some information, or credentials are installed into the device. This process is commonly referred to as manufacture. Is in this phase where the IoT devices have installed the needed information (specifics depend on the technology) to provide the basis for trust and to authenticate other entities.
 
 
 * To refer to the process after the device is turned on and intends to locate the entity with which it has to communicate to start the authentication process to be integrated into the security domain. Here is where the device start the process to get to perform its normal operation.
-  
-  
+
+
 * To the process by which the device obtains additional credentials, in addition to what it already had installed before being turned on.
 
 * To the process by which the device is authenticated and established a trust relation.
@@ -556,19 +556,19 @@ Analyzing the different terms used over the different solutions reviewed in this
 
 Even though the devices might start from a different place, in terms of initial credentials as basis for trust, when they finish their processes, they become trusted parties within the domain they are deployed or at least have a trust relation with a specific entity. The difference may strive in the number of trust relations are stablished during the process, as they may have not only established a trust relation with local entities where they perform their operation, but other external entities as well.
 
-In FIDO, once the onboarding process has taken place, the IoT device is mutually authenticated with the current owner, and the needed secrets and configuration data is installed into the device, which as a result is able to connect and interact securely with the target IoT platform. 
+In FIDO, once the onboarding process has taken place, the IoT device is mutually authenticated with the current owner, and the needed secrets and configuration data is installed into the device, which as a result is able to connect and interact securely with the target IoT platform.
 
 In EAP-NOOB, once the bootstrapping is completed, the IoT device not only has a trust relation with the EAP server, but the EAP authenticator can be established as well, based on the shared credentials that are derived during the authentication process.
 
-In Bluetooth the trust is expanded to the local network as there is key material shared among the different entities of the network. 
+In Bluetooth the trust is expanded to the local network as there is key material shared among the different entities of the network.
 
 In Thread once the joiner has successfully completed the process, it can communicate directly with all Thread devices in the network.
 
-LPWAN has a more limited scope and they usually have specific keys for applications and network communications. 
+LPWAN has a more limited scope and they usually have specific keys for applications and network communications.
 
 EST provides the devices with the enrollment information such as certificates and symmetric keys that can be used to establish trust with different peers.
 
-BRSKI after running it is able to verify that the communicating entities are who they claim to be, and obtain domain specific certificates to act as trustworhty entities within the domain.  
+BRSKI after running it is able to verify that the communicating entities are who they claim to be, and obtain domain specific certificates to act as trustworhty entities within the domain.
 
 SZTP after running, the device has obtained onboarding information and is equipped to establish secure connections with other systems.
 
