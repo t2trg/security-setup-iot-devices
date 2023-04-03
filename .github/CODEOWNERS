@@ -1,3 +1,2 @@
-# Automatically generated CODEOWNERS
-# Regenerate with `make update-codeowners`
-draft-irtf-t2trg-secure-bootstrapping.md mohit@iki.fi sarikaya@ieee.org garciadan@uniovi.es
+# Automatically generated CODEOWNERS file.
+draft-irtf-t2trg-security-setup-iot-devices.md mohit@iki.fisarikaya@ieee.orggarciadan@uniovi.es
