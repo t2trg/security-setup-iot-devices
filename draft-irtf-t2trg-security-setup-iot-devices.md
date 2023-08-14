@@ -111,13 +111,13 @@ informative:
     seriesinfo:
       'Approved Version': 1.2.1
   ocf:
-    target: https://openconnectivity.org/specs/OCF_Security_Specification_v2.2.2.pdf
+    target: https://openconnectivity.org/specs/OCF_Security_Specification.pdf
     title: OCF Security Specification
     author:
     - org: Open Connectivity Foundation
-    date: 2021-02
+    date: 2022-10
     seriesinfo:
-      Version: 2.2.2
+      Version: 2.2.6
   threadcommissioning:
     title: Thread Commissioning
     author:
