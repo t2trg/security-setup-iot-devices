@@ -118,6 +118,18 @@ informative:
     date: 2022-10
     seriesinfo:
       Version: 2.2.6
+  ieee8021ar:
+    target: https://1.ieee802.org/security/802-1ar/
+    title: IEEE Standard for Local and metropolitan area networks–Secure Device Identity
+    author:
+    - org: IEEE
+    date: 2018
+  ieee8021x:
+    target: https://1.ieee802.org/security/802-1x/
+    title: IEEE Standard for Local and metropolitan area networks–Port-Based Network Access Control
+    author:
+    - org: IEEE
+    date: 2020
   threadcommissioning:
     title: Thread Commissioning
     author:
@@ -140,7 +152,7 @@ This document provides an overview of terms that are commonly used when discussi
 
 # Introduction
 
-Initial security setup for a device refers to any process that takes place before a device can become operational. The phrase "initial security setup" intentionally includes the term "security" as setup of devices without adequate security or with insecure processes is no longer acceptable. The initial security setup process, among other things, involves network discovery and selection, access authentication, configuration of necessary credentials and parameters.
+Initial security setup for a device refers to any process that takes place before a device can become fully operational. The phrase **initial security setup** intentionally includes the term *security* as setup of devices without adequate security or with insecure processes is no longer acceptable. The initial security setup process, among other things, involves network discovery and selection, access authentication, configuration of necessary credentials and parameters.
 
 Initial security setup for IoT devices is challenging because the size of an IoT network varies from a couple of devices to tens of thousands, depending on the application. Moreover, devices in IoT networks are produced by a variety of vendors and are typically heterogeneous in terms of the constraints on their power supply, communication capability, computation capacity, and user interfaces available. This challenge of initial security setup in IoT was identified by [Sethi et al.](#Sethi14) while developing a solution for smart displays.
 
@@ -327,7 +339,7 @@ EST has the following characteristics:
 
 ## Bootstrapping Remote Secure Key Infrastructures (BRSKI)
 
-The ANIMA working group is working on a bootstrapping solution for devices that relies on 802.1AR vendor certificates called Bootstrapping Remote Secure Key Infrastructures (BRSKI) {{RFC8995}}. In addition to vendor installed IEEE 802.1AR certificates, a vendor based service on the Internet is required. Before being authenticated, a new device only needs link-local connectivity, and does not require a routable address. When a vendor provides an Internet based service, devices can be forced to join only specific domains. The document highlights that the described solution is aimed in general at non-constrained (i.e. class 2+ defined in {{RFC7228}}) devices operating in a non-challenged network. It claims to scale to thousands of devices located in hostile environments, such as ISP provided CPE devices which are drop-shipped to the end user.
+The ANIMA working group is working on a bootstrapping solution for devices that relies on 802.1AR {{ieee8021ar}} vendor certificates called Bootstrapping Remote Secure Key Infrastructures (BRSKI) {{RFC8995}}. In addition to vendor installed IEEE 802.1AR certificates, a vendor based service on the Internet is required. Before being authenticated, a new device only needs link-local connectivity, and does not require a routable address. When a vendor provides an Internet based service, devices can be forced to join only specific domains. The document highlights that the described solution is aimed in general at non-constrained (i.e. class 2+ defined in {{RFC7228}}) devices operating in a non-challenged network. It claims to scale to thousands of devices located in hostile environments, such as ISP provided CPE devices which are drop-shipped to the end user.
 
 BRSKI has the following characteristics:
 
@@ -339,7 +351,7 @@ BRSKI has the following characteristics:
 
 ## Secure Zero Touch Provisioning (SZTP)
 
- {{RFC8572}} defines a bootstrapping strategy for enabling devices to securely obtain all the configuration information with no installer input, beyond the actual physical placement and connection of cables. Their goal is to enable a secure NETCONF {{RFC6241}} or RESTCONF {{RFC8040}} connection to the deployment specific network management system (NMS). This bootstrapping method requires the devices to be configured with trust anchors in the form of X.509 certificates. {{RFC8572}} is similar to BRSKI based on {{RFC8366}}.
+ {{RFC8572}} defines a bootstrapping strategy for enabling devices to securely obtain all the configuration information with no installer input, beyond the actual physical placement and connection of cables. Their goal is to enable a secure NETCONF {{RFC6241}} or RESTCONF {{RFC8040}} connection to the deployment specific network management system (NMS). SZTP requires the devices to be configured with trust anchors in the form of X.509 certificates. {{RFC8572}} is similar to BRSKI based on {{RFC8366}}.
 
 SZTP has the following characteristics:
 
@@ -352,16 +364,20 @@ SZTP has the following characteristics:
 
 ## Nimble out-of-band authentication for EAP (EAP-NOOB)
 
-EAP-NOOB {{RFC9140}} defines an EAP method where the authentication is based on a user-assisted out-of-band (OOB) channel between the server and peer. It is intended as a generic bootstrapping solution for IoT devices which have no pre-configured authentication credentials and which are not yet registered on the authentication server. This method claims to be more generic than most ad-hoc bootstrapping solutions in that it supports many types of OOB channels. The exact in-band messages and OOB message contents are specified and not the OOB channel details. EAP-NOOB also supports IoT devices with only output (e.g. display) or only input (e.g. camera). It makes combined use of both secrecy and integrity of the OOB channel for more robust security than the ad-hoc solutions.
+Extensible Authentication Protocol (EAP) framework provides support for multiple authentication methods. EAP-NOOB {{RFC9140}} defines an EAP method where the authentication is based on a user-assisted out-of-band (OOB) channel between the IoT device (peer in EAP terminology) and the server. It is intended as a generic bootstrapping solution for IoT devices which have no pre-configured authentication credentials and which are not yet registered on the authentication server.
+
+The authentication server where the IoT device is registered once EAP-NOOB is completed may belong to the manufacturer or the local network where the device is being deployed. EAP-NOOB uses the flexibility of the Authentication, Authorization, and Accounting (AAA) {{RFC2904}} architecture to allow routing of EAP-NOOB sessions to a specific authentication server.
+
+EAP-NOOB claims to be more generic than most ad-hoc bootstrapping solutions in that it supports many types of OOB channels and supports IoT devices with only output (e.g. display) or only input (e.g. camera).
 
 
 EAP-NOOB has the following characteristics:
 
-  * Terms: Bootstrapping, configuration, registration.
-  * Players: Administrator, Authenticator, Client, Device, Manufacturer, Owner, Peer, Server, User
-  * Initial beliefs assumed in the device: The device does not have to have pre-installed credentials as in other EAP methods.
-  * Processes: This EAP exchange is encompassed by Initial Exchange, OOB step, Completion Exchange and Waiting Exchange.
-  * Beliefs imparted to the device after protocol execution: After EAP-NOOB is run, the device is able to trust the EAP server and the EAP authenticator by extension.
+  * **Terms**: EAP-NOOB specification uses the term *bootstrapping* for the entire processes involved during the initial security setup of the device. EAP-NOOB does not distinguish between the as both are . configuration, registration.
+  * **Players**: Device owner or user is responsible for completing the . A local network administrator.
+  * **Initial beliefs assumed in the device**: EAP-NOOB does not require devices to have any pre-installed credentials.
+  * **Processes**: The IoT device performs network discovery and one or more OOB outputs maybe generated. The user is expected EAP exchange is encompassed by Initial Exchange, OOB step, Completion Exchange and Waiting Exchange.
+  * **Beliefs imparted to the device after protocol execution**: After EAP-NOOB botstrapping process is complete, the device and server establish a long-term secret which can renewed without further user involvement. As a side-effect, the device also obtains network and Internet connectivity via the authenticator.
 
 ## LPWAN {#lpwan}
 
@@ -369,7 +385,7 @@ Low Power Wide Area Network (LPWAN) encompasses a wide variety of technologies w
 
 * LoRaWAN {{LoRaWAN}} describes its own protocol to authenticate nodes before allowing them join a LoRaWAN network. This process is called as joining and it is based on pre-shared keys (called AppKeys in the standard). The joining procedure comprises only one exchange (join-request and join-accept) between the joining node and the network server. There are several adaptations to this joining procedure that allow network servers to delegate authentication and authorization to a backend AAA infrastructure {{RFC2904}}.
 
-* Wi-SUN Alliance Field Area Network (FAN) uses IEEE 802.1X and EAP-TLS for network access authentication. It performs a 4-way handshake to establish a session keys after EAP-TLS authentication.
+* Wi-SUN Alliance Field Area Network (FAN) uses IEEE 802.1X {{ieee8021x}} and EAP-TLS for network access authentication. It performs a 4-way handshake to establish a session keys after EAP-TLS authentication.
 
 * NB-IoT relies on the traditional 3GPP mutual authentication scheme based on a shared-secret in the Subscriber Identity Module (SIM) of the device and the mobile operator.
 
