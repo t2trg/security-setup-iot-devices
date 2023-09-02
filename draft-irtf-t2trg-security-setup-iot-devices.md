@@ -227,9 +227,9 @@ DPP has the following characteristics:
 
 
 
-## Open Mobile Alliance (OMA) Lightweight M2M (LwM2M)
+## Open Mobile Alliance (OMA) Lightweight Machine to Machine specification (LwM2M)
 
-The OMA, (recently succeeded by OMA SpecWorks) LwM2M specification (which includes NB-IoT) {{oma}} defines an architecture where a new device (LwM2M client) contacts a bootstrap server which is responsible for provisioning essential information such as credentials. After receiving this essential information, the LwM2M client device registers itself with one or more LwM2M Servers which will manage the device during its lifecycle. The current standard defines the following four bootstrapping modes:
+LwM2M specification developed by OMA {{oma}} defines an architecture where a new device (LwM2M client) contacts a bootstrap server which is responsible for provisioning essential information such as credentials. After receiving this essential information, the LwM2M client device registers itself with one or more LwM2M Servers which will manage the device during its lifecycle. The current standard defines the following four bootstrapping modes:
 
 * Factory Bootstrap: An IoT device in this case is configured with all the necessary bootstrap information during manufacturing and prior to its deployment.
 
@@ -366,18 +366,18 @@ SZTP has the following characteristics:
 
 Extensible Authentication Protocol (EAP) framework provides support for multiple authentication methods. EAP-NOOB {{RFC9140}} defines an EAP method where the authentication is based on a user-assisted out-of-band (OOB) channel between the IoT device (peer in EAP terminology) and the server. It is intended as a generic bootstrapping solution for IoT devices which have no pre-configured authentication credentials and which are not yet registered on the authentication server.
 
-The authentication server where the IoT device is registered once EAP-NOOB is completed may belong to the manufacturer or the local network where the device is being deployed. EAP-NOOB uses the flexibility of the Authentication, Authorization, and Accounting (AAA) {{RFC2904}} architecture to allow routing of EAP-NOOB sessions to a specific authentication server.
+The application server where the IoT device is registered once EAP-NOOB is completed may belong to the manufacturer or the local network where the device is being deployed. EAP-NOOB uses the flexibility of the Authentication, Authorization, and Accounting (AAA) {{RFC2904}} architecture to allow routing of EAP-NOOB sessions to a specific application server.
 
 EAP-NOOB claims to be more generic than most ad-hoc bootstrapping solutions in that it supports many types of OOB channels and supports IoT devices with only output (e.g. display) or only input (e.g. camera).
 
 
 EAP-NOOB has the following characteristics:
 
-  * **Terms**: EAP-NOOB specification uses the term *bootstrapping* for the entire processes involved during the initial security setup of the device. EAP-NOOB does not distinguish between the as both are . configuration, registration.
-  * **Players**: Device owner or user is responsible for completing the . A local network administrator.
-  * **Initial beliefs assumed in the device**: EAP-NOOB does not require devices to have any pre-installed credentials.
+  * **Terms**: EAP-NOOB uses the term *bootstrapping* for the entire process involved during the initial security setup of an IoT device. The specification does not use separate terms or distinguish the process of obtaining identifier and credentials for communicating with an application server where the user has an account or for network connectivity. However, EAP-NOOB does often use the term *registration* for describing the process of associating the device with a user account on an application server.
+  * **Players**: The device owner/user is responsible for transferring an OOB message necessary for protocol completion. The application server where the device is registered may be provided by different service providers including the device manufacturer or device owner. The local network needs standard AAA configuration for routing EAP-NOOB sessions to the application server chosen by the device owner/user.
+  * **Initial beliefs assumed in the device**: EAP-NOOB does not require devices to have any pre-installed credentials but expects all devices to use a standard identifier (noob@eap-noob.arpa) during initial network discovery.
   * **Processes**: The IoT device performs network discovery and one or more OOB outputs maybe generated. The user is expected EAP exchange is encompassed by Initial Exchange, OOB step, Completion Exchange and Waiting Exchange.
-  * **Beliefs imparted to the device after protocol execution**: After EAP-NOOB botstrapping process is complete, the device and server establish a long-term secret which can renewed without further user involvement. As a side-effect, the device also obtains network and Internet connectivity via the authenticator.
+  * **Beliefs imparted to the device after protocol execution**: After EAP-NOOB botstrapping process is complete, the device and server establish a long-term secret which can renewed without further user involvement. As a side-effect, the device also obtains identifier and credentials for network and Internet connectivity (via the EAP authenticator).
 
 ## LPWAN {#lpwan}
 
