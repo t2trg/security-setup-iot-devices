@@ -110,6 +110,14 @@ informative:
     date: 2022-12
     seriesinfo:
       'Approved Version': 1.2.1
+  oma-transport:
+    target: https://www.openmobilealliance.org/release/LightweightM2M/V1_2_1-20221209-A/OMA-TS-LightweightM2M_Transport-V1_2_1-20221209-A.pdf
+    title: 'Lightweight Machine to Machine Technical Specification: Transport Bindings'
+    author:
+    - org: Open Mobile Alliance
+    date: 2022-12
+    seriesinfo:
+      'Approved Version': 1.2.1      
   ocf:
     target: https://openconnectivity.org/specs/OCF_Security_Specification.pdf
     title: OCF Security Specification
@@ -140,9 +148,9 @@ informative:
     title: FIDO Device Onboard Specification
     author:
     - org: Fast Identity Online Alliance
-    date: 2021-03
+    date: 2022-04
     seriesinfo:
-      Fido Alliance: 'Version: 1.0'
+      Fido Alliance: 'Version: 1.1'
 --- abstract
 
 
@@ -198,6 +206,32 @@ The next section provides an overview of some standards and protocols for initia
 # Standards and Protocols {#usage}
 
 
+## Bluetooth
+
+Bluetooth mesh specifies a provisioning protocol.  The goal of the provisioning phase is to securely incorporate a new Bluetooth mesh node, by completing two critical tasks. First, to authenticate the unprovisioned device and second, to create a secure link with said device to share information.
+
+The provisioning process is divided into five distinct stages summarize next:
+
+   * Beaconing for discover: The new unprovisioned device is discovered by the provisioner
+
+   * Negotiation: The unprovisioned device indicates to the provisioner a set of capabilities such as the security algorithms supported, the availability of its public key using an Out-of-Band (OOB) channel and the input/output interfaces supported
+
+   * Public-key exchange: The authentication method is selected by the provisioner and both devices exchange Elliptic-curve Diffie–Hellman (ECDH) public keys. These keys may be static or ephemeral. Their exchange can be done in two ways, either via Out-of-Band or directly through a Bluetooth link. Each device then generates a symmetric key, named ECDHSecret, by combining its own private key and the public key of the peer device. The EDCHSecret is used to protect communication between the two devices.
+
+
+  * Authentication: During this phase, the ECDH key exchange is authenticated. The authentication method can be Output OOB, Input OOB, static OOB, or No OOB. With Output OOB, the unprovisioned device chooses a random number and outputs that number in manner consistent with its capabilities. The provisioner then inputs this number. Then, a check confirmation value operation is performed. This involves a cryptographic exchange regarding (in this case) the random number to complete the authentication. With Input OOB, the roles are reversed, being the provisioner the entity that generates the random number. When neither of the previous authentication procedures are feasible, both the provisioner and unprovisioned device generate a random number and require the user supervising the setup to verify that values on the device and provisioner are the same.
+
+
+  * Distribution of provisioning data: At this point, the provisioning process can be protected. This involves the distribution of data such as a Network key, to secure the communications at network layer and a unicast address among other information.
+
+
+Bluetooth mesh has the following characteristics:
+
+  * Terms: Configuration, discovery, provisioning.
+  * Players: Client, Device, Manager, Manufacturer, Peer, Server, User
+  * Initial beliefs assumed in the device: Previously to the provisioning phase, there is no pre-shared credentials for a trust relation.
+  * Processes: Provisioning
+  * Beliefs imparted to the device after protocol execution: After the provisiong, the device trusts the provisioner entity and any other device in the network sharing its network key.
 
 ## Device Provisioning Protocol (DPP)
 
@@ -224,12 +258,26 @@ DPP has the following characteristics:
 
   * Beliefs imparted to the device after protocol execution: DPP bootstrapping relies on the transfer of the public-key that is expected to be trusted. The beliefs when mutual authentication is run, relies on the trust of a succesful DPP bootstrapping. When mutual authentication is not supported, a device that can control when and how its own public key is bootstrapped, can perform a weak authentication to any entity that knows its public key.
 
+## Enrollment over Secure Transport (EST)
+
+Enrollment over Secure Transport (EST) {{RFC7030}} defines a profile of Certificate Management over CMS (CMC) {{RFC5272}}. EST relies on Hypertext Transfer Protocol (HTTP) and Transport Layer Security (TLS) for exchanging CMC messages and allows client devices to obtain client certificates and associated Certification Authority (CA) certificates. A companion specification for using EST over secure CoAP has also been standardized {{RFC9148}}. EST assumes that some initial information is already distributed so that EST client and servers can perform mutual authentication before continuing with protocol. {{RFC7030}} further defines "Bootstrap Distribution of CA Certificates" which allows minimally configured EST clients to obtain initial trust anchors. It relies on human users to verify information such as the CA certificate "fingerprint" received over the unauthenticated TLS connection setup. After successful completion of this bootstrapping step, clients can proceed to the enrollment step during which they obtain client certificates and associated CA certificates.
+
+EST has the following characteristics:
+
+  * Terms: Bootstrapping, enrollment, initialization, configuration.
+  * Players: Administrator, Client, Device, Manufacturer, Owner, Peer, Server, User
+  * Initial beliefs assumed in the device: There is a process of distribution of initial information which provides both the EST client and server with the information for the EST client and server to perform mutual authentication as well as for authorization.
+  * Processes: Distribution of Certificates, Bootstrap, Enrollment
+  * Beliefs imparted to the device after protocol execution: The EST enrollment process is designed to make establishing automated certificate issuing from a trustworthy CA as simple as possible. After the processe have finished, the device is able to automatically renew its certificates through re-enrollment as it has a trust relation with the ESP server.
+
 
 
 
 ## Open Mobile Alliance (OMA) Lightweight Machine to Machine specification (LwM2M)
 
-LwM2M specification developed by OMA {{oma}} defines an architecture where a new device (LwM2M client) contacts a bootstrap server which is responsible for provisioning essential information such as credentials. After receiving this essential information, the LwM2M client device registers itself with one or more LwM2M Servers which will manage the device during its lifecycle. The current standard defines the following four bootstrapping modes:
+LwM2M specification developed by OMA {{oma}} defines an architecture for a new IoT device (LwM2M client) to register with one or more LwM2M Servers from where the device will be managed during its lifecycle. The IoT devicecontacts a LwM2M Bootstrap-Server which provides essential information such as credentials for eventual registration with LwM2M Servers. OMA is quite flexible in the terms of the credentials and can communicate with Bootstrap-Sever.  Does not deal with the initial network configuration and instead, LwM2M assumes that the client can reach the sever.
+
+The current standard defines the following four bootstrapping modes:
 
 * Factory Bootstrap: An IoT device in this case is configured with all the necessary bootstrap information during manufacturing and prior to its deployment.
 
@@ -240,13 +288,15 @@ LwM2M specification developed by OMA {{oma}} defines an architecture where a new
 * Server Initiated Bootstrap: In this bootstrapping mode, the bootstrapping server configures all the bootstrap information on the IoT device without receiving a request from the client. This means that the bootstrap server
   needs to know if a client IoT Device is ready for bootstrapping before it can be configured. For example, a network may inform the bootstrap server of a new connecting IoT client device.
 
+EST
+
 OMA has the following characteristics:
 
-  * Terms: Bootstrapping, provisioning, intialization, configuration, registration.
-  * Players: Bootstrap Server, Client, Device, Manufacturer, Owner, Server, User
+  * Terms: Bootstrapping, Unbootstrapping. Register and De-register.   provisioning, intialization, configuration, registration
+  * Players: Device manufacturer or Smartcard manufacturer containing information and credential
   * Initial beliefs assumed in the device: The client has as a starting point, the necessary information to trust the LwM2M bootstrap server in the bootstrapping process and later in the registration (with the LwM2M management server).
   The client has all the necessary information to either get the bootstrap information, from the factory bootstrap (pre-installed), a smartcard, or it has key material to establish a secure communication (DTLS/OSCORE) with the LwM2M bootstrap server and perform the bootstrapping.
-  * Processes: Factory Bootstrap, Bootstrap from Smartcard, Client Initiated Bootstrap and Server Initiated Bootstrap.
+  * Processes: LwM2M does not require any actions from the device owner/user. Once the device is registered with the LwM2M server, various actions related to device management can be performed via the LwM2M server.
   * Beliefs imparted to the device after protocol execution: After the bootstrapping is performed, the LwM2M client can register with the LwM2M servers.
 
 ## Open Connectivity Foundation (OCF)
@@ -275,32 +325,7 @@ OCF has the following characteristics:
   * Processes: Onboarding, provisioning.
   * Beliefs imparted to the device after protocol execution: In the provisioning phase the device receives the necessary credentials to interact with provisioning services and any other services or devices that are part of the normal operation of the device.
 
-## Bluetooth
 
-  Bluetooth mesh specifies a provisioning protocol.  The goal of the provisioning phase is to securely incorporate a new Bluetooth mesh node, by completing two critical tasks. First, to authenticate the unprovisioned device and second, to create a secure link with said device to share information.
-
-  The provisioning process is divided into five distinct stages summarize next:
-
-   * Beaconing for discover: The new unprovisioned device is discovered by the provisioner
-
-   * Negotiation: The unprovisioned device indicates to the provisioner a set of capabilities such as the security algorithms supported, the availability of its public key using an Out-of-Band (OOB) channel and the input/output interfaces supported
-
-   * Public-key exchange: The authentication method is selected by the provisioner and both devices exchange Elliptic-curve Diffie–Hellman (ECDH) public keys. These keys may be static or ephemeral. Their exchange can be done in two ways, either via Out-of-Band or directly through a Bluetooth link. Each device then generates a symmetric key, named ECDHSecret, by combining its own private key and the public key of the peer device. The EDCHSecret is used to protect communication between the two devices.
-
-
-  * Authentication: During this phase, the ECDH key exchange is authenticated. The authentication method can be Output OOB, Input OOB, static OOB, or No OOB. With Output OOB, the unprovisioned device chooses a random number and outputs that number in manner consistent with its capabilities. The provisioner then inputs this number. Then, a check confirmation value operation is performed. This involves a cryptographic exchange regarding (in this case) the random number to complete the authentication. With Input OOB, the roles are reversed, being the provisioner the entity that generates the random number. When neither of the previous authentication procedures are feasible, both the provisioner and unprovisioned device generate a random number and require the user supervising the setup to verify that values on the device and provisioner are the same.
-
-
-  * Distribution of provisioning data: At this point, the provisioning process can be protected. This involves the distribution of data such as a Network key, to secure the communications at network layer and a unicast address among other information.
-
-
-Bluetooth mesh has the following characteristics:
-
-  * Terms: Configuration, discovery, provisioning.
-  * Players: Client, Device, Manager, Manufacturer, Peer, Server, User
-  * Initial beliefs assumed in the device: Previously to the provisioning phase, there is no pre-shared credentials for a trust relation.
-  * Processes: Provisioning
-  * Beliefs imparted to the device after protocol execution: After the provisiong, the device trusts the provisioner entity and any other device in the network sharing its network key.
 
 
 ## Fast IDentity Online (FIDO) alliance
@@ -323,18 +348,6 @@ FIDO has the following characteristics:
   * Processes: Device Initialize Protocol (DI), Transfer Ownership Protocol 0 (TO0), Transfer Ownership Protocol 1 (TO1), Transfer Ownership Protocol 2 (TO2)
   * Beliefs imparted to the device after protocol execution: When the device is powered on, and all TO protocols run, the device figures out by contacting with the rendezvous server, who the owner is, authenticate with the owner. At this point the rendezvous server, and owner are able to authenticate the device.
 
-
-## Enrollment over Secure Transport (EST)
-
-Enrollment over Secure Transport (EST) {{RFC7030}} defines a profile of Certificate Management over CMS (CMC) {{RFC5272}}. EST relies on Hypertext Transfer Protocol (HTTP) and Transport Layer Security (TLS) for exchanging CMC messages and allows client devices to obtain client certificates and associated Certification Authority (CA) certificates. A companion specification for using EST over secure CoAP has also been standardized {{RFC9148}}. EST assumes that some initial information is already distributed so that EST client and servers can perform mutual authentication before continuing with protocol. {{RFC7030}} further defines "Bootstrap Distribution of CA Certificates" which allows minimally configured EST clients to obtain initial trust anchors. It relies on human users to verify information such as the CA certificate "fingerprint" received over the unauthenticated TLS connection setup. After successful completion of this bootstrapping step, clients can proceed to the enrollment step during which they obtain client certificates and associated CA certificates.
-
-EST has the following characteristics:
-
-  * Terms: Bootstrapping, enrollment, initialization, configuration.
-  * Players: Administrator, Client, Device, Manufacturer, Owner, Peer, Server, User
-  * Initial beliefs assumed in the device: There is a process of distribution of initial information which provides both the EST client and server with the information for the EST client and server to perform mutual authentication as well as for authorization.
-  * Processes: Distribution of Certificates, Bootstrap, Enrollment
-  * Beliefs imparted to the device after protocol execution: The EST enrollment process is designed to make establishing automated certificate issuing from a trustworthy CA as simple as possible. After the processe have finished, the device is able to automatically renew its certificates through re-enrollment as it has a trust relation with the ESP server.
 
 
 ## Bootstrapping Remote Secure Key Infrastructures (BRSKI)
