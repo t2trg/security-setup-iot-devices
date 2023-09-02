@@ -117,7 +117,7 @@ informative:
     - org: Open Mobile Alliance
     date: 2022-12
     seriesinfo:
-      'Approved Version': 1.2.1      
+      'Approved Version': 1.2.1
   ocf:
     target: https://openconnectivity.org/specs/OCF_Security_Specification.pdf
     title: OCF Security Specification
