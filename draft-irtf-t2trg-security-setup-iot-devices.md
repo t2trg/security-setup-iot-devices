@@ -275,29 +275,56 @@ EST has the following characteristics:
 
 ## Open Mobile Alliance (OMA) Lightweight Machine to Machine specification (LwM2M)
 
-LwM2M specification developed by OMA {{oma}} defines an architecture for a new IoT device (LwM2M client) to register with one or more LwM2M Servers from where the device will be managed during its lifecycle. The IoT devicecontacts a LwM2M Bootstrap-Server which provides essential information such as credentials for eventual registration with LwM2M Servers. OMA is quite flexible in the terms of the credentials and can communicate with Bootstrap-Sever.  Does not deal with the initial network configuration and instead, LwM2M assumes that the client can reach the sever.
+
+LwM2M specification developed by OMA {{oma}} defines a RESTful architecture where a new IoT device (LwM2M client) first contacts an LwM2M Bootstrap-Server for obtaining essential information such credentials for subsequently registering with one or more LwM2M Servers. These one or more LwM2M servers are used for performing device management actions during the device lifecycle (reading sensor data, controlling an actuator, modifying access controls etc.). LwM2M specification does not deal with the initial network configuration of IoT devices and assumes that the IoT client device has network reachability to the LwM2M Bootstrap-Server and LwM2M Server.
 
 The current standard defines the following four bootstrapping modes:
 
-* Factory Bootstrap: An IoT device in this case is configured with all the necessary bootstrap information during manufacturing and prior to its deployment.
+* Factory Bootstrap: An IoT device is configured with all the information necessary for securely communicating with an LwM2M Bootstrap-Server and/or LwM2M Serverwhile it is manufactured and prior to its deployment.
 
-* Bootstrap from Smartcard: An IoT device retrieves and processes all the necessary bootstrap data from a Smartcard.
+* Bootstrap from Smartcard: An IoT device retrieves all the information necessary for securely communicating with an LwM2M Bootstrap-Server and/or LwM2M Server from a Smartcard.
 
-* Client Initiated Bootstrap: This mode provides a mechanism for an IoT client device to retrieve the bootstrap information from a bootstrap server. This requires the client device to have an account at the bootstrap server and credentials to obtain the necessary information securely.
+* Client Initiated Bootstrap: If the IoT device in one of the above bootstrapping modes is only configured with information about an LwM2M Bootstrap-Server, then the client device must first communicate securely with the configured LwM2M Bootstrap-Server and obtain necessary information and credentials to subsequently register with one or more LwM2M Servers.
 
-* Server Initiated Bootstrap: In this bootstrapping mode, the bootstrapping server configures all the bootstrap information on the IoT device without receiving a request from the client. This means that the bootstrap server
-  needs to know if a client IoT Device is ready for bootstrapping before it can be configured. For example, a network may inform the bootstrap server of a new connecting IoT client device.
+* Server Initiated Bootstrap: In this bootstrapping mode, the LwM2M server triggers the client device to begin the client initiated bootstrap sequence described above.
 
-EST
+The LwM2M specification is also quite flexible in terms of the credentials and the transport security mechanism used between the client device and the LwM2M Server or the LwM2M Bootstrap-Server. Credentials such as a pre-shared symmetric key, a raw public key (RPK), or x.509 certificates can be used with various transport protocols such as Transport Layer Security (TLS) or Datagram Transport Layer Security (DTLS) as specified in LwM2M transport bindings specification {{oma-transport}}.
+
+As explained earlier, an LwM2M Bootstrap-Server is responsible for provisioning credentials into an LwM2M Client. When x509 certificates are being provisioned, the asymmetric key pair is generated on the Bootstrap-Server and then sent to the LwM2M client device. This approach is not acceptable in all scenarios and therefore, LwM2M specification also supports a mode where the client device uses the Enrollment over Secure Transport (EST) certificate management protocol for provisioning certificates from the LwM2M Bootstrap-Server to the LwM2M Client.
+
 
 OMA has the following characteristics:
 
-  * Terms: Bootstrapping, Unbootstrapping. Register and De-register.   provisioning, intialization, configuration, registration
-  * Players: Device manufacturer or Smartcard manufacturer containing information and credential
-  * Initial beliefs assumed in the device: The client has as a starting point, the necessary information to trust the LwM2M bootstrap server in the bootstrapping process and later in the registration (with the LwM2M management server).
-  The client has all the necessary information to either get the bootstrap information, from the factory bootstrap (pre-installed), a smartcard, or it has key material to establish a secure communication (DTLS/OSCORE) with the LwM2M bootstrap server and perform the bootstrapping.
-  * Processes: LwM2M does not require any actions from the device owner/user. Once the device is registered with the LwM2M server, various actions related to device management can be performed via the LwM2M server.
-  * Beliefs imparted to the device after protocol execution: After the bootstrapping is performed, the LwM2M client can register with the LwM2M servers.
+  * **Terms**:
+    * *Bootstrapping* and *Unbootstrapping*: Bootstrapping is used for describing the process of providing an IoT device with credentials and information of one or more LwM2M server. Interestingly, the transport bindings specification {{oma-transport}} also uses the term unbootstrapping for the process where objects corresponding to an LwM2M Server are deleted on the client.
+    * *Provisioning* and *configuration*: terms used to refer to the process of providing some infomration to a LwM2M client.
+    * *Discovery*: term for the process by which a LwM2M Bootstrap-Server or LwM2M Server discovers objects, object instances, resources, and attributes supported by RESTful interfaces of a LwM2M Client.
+    * *Register* and *De-register*: Register is the process by which a client device sets up a secure association with an LwM2M Server and provides the server with information about objects and existing object instances of the client. De-register is the process by which the client deletes information about itself provided to the LwM2M server during the registration process.
+    * *Intialization*: term for the process by which an LwM2M Bootstrap-Server or LwM2M Server deletes objects on the client before performing any write operations.
+  * **Players**: Device manufacturers or Smartcard manufacturers are responsible for providing client IoT devices with initial information and credentials of LwM2M Bootstrap-Server and/or LwM2M server.
+  * **Initial beliefs assumed in the device**: The client at the very least has necessary information to trust the LwM2M bootstrap server in the .
+  * **Processes**: LwM2M does not require any actions from the device owner/user. Once the device is registered with the LwM2M server, various actions related to device management can be performed by device owner/user via the LwM2M server.
+  * **Beliefs imparted to the device after protocol execution**: After the bootstrapping is performed, the LwM2M client can register (Security object and Server object) with the LwM2M servers.
+
+
+## Nimble out-of-band authentication for EAP (EAP-NOOB)
+
+Extensible Authentication Protocol (EAP) framework provides support for multiple authentication methods. EAP-NOOB {{RFC9140}} defines an EAP method where the authentication is based on a user-assisted out-of-band (OOB) channel between the IoT device (peer in EAP terminology) and the server. It is intended as a generic bootstrapping solution for IoT devices which have no pre-configured authentication credentials and which are not yet registered on the authentication server.
+
+The application server where the IoT device is registered once EAP-NOOB is completed may belong to the manufacturer or the local network where the device is being deployed. EAP-NOOB uses the flexibility of the Authentication, Authorization, and Accounting (AAA) {{RFC2904}} architecture to allow routing of EAP-NOOB sessions to a specific application server.
+
+EAP-NOOB claims to be more generic than most ad-hoc bootstrapping solutions in that it supports many types of OOB channels and supports IoT devices with only output (e.g. display) or only input (e.g. camera).
+
+
+EAP-NOOB has the following characteristics:
+
+  * **Terms**:
+    * *Bootstrapping*: term used to describe the entire process involved during the initial security setup of an IoT device. The specification does not use separate terms or distinguish the process of obtaining identifier and credentials for communicating with an application server where the user has an account or for network connectivity.
+    * *Registration*: term used for describing the process of associating the device with a user account on an application server.
+  * **Players**: The device owner/user is responsible for transferring an OOB message necessary for protocol completion. The application server where the device is registered may be provided by different service providers including the device manufacturer or device owner. The local network needs standard AAA configuration for routing EAP-NOOB sessions to the application server chosen by the device owner/user.
+  * **Initial beliefs assumed in the device**: EAP-NOOB does not require devices to have any pre-installed credentials but expects all devices to use a standard identifier (noob@eap-noob.arpa) during initial network discovery.
+  * **Processes**: The IoT device performs network discovery and one or more OOB outputs maybe generated. The user is expected EAP exchange is encompassed by Initial Exchange, OOB step, Completion Exchange and Waiting Exchange.
+  * **Beliefs imparted to the device after protocol execution**: After EAP-NOOB botstrapping process is complete, the device and server establish a long-term secret which can renewed without further user involvement. As a side-effect, the device also obtains identifier and credentials for network and Internet connectivity (via the EAP authenticator).
 
 ## Open Connectivity Foundation (OCF)
 
@@ -375,22 +402,7 @@ SZTP has the following characteristics:
   * Beliefs imparted to the device after protocol execution: The bootstrapping process provides the device with all the necessary information (onboarding information) to create a trust relation between the device and the bootstrap server. This allows the device to download its boot image and the necessary initial configuration. The enrollment information will allow a device to be bootstrapped and operate establishing secure connections with other systems.
 
 
-## Nimble out-of-band authentication for EAP (EAP-NOOB)
 
-Extensible Authentication Protocol (EAP) framework provides support for multiple authentication methods. EAP-NOOB {{RFC9140}} defines an EAP method where the authentication is based on a user-assisted out-of-band (OOB) channel between the IoT device (peer in EAP terminology) and the server. It is intended as a generic bootstrapping solution for IoT devices which have no pre-configured authentication credentials and which are not yet registered on the authentication server.
-
-The application server where the IoT device is registered once EAP-NOOB is completed may belong to the manufacturer or the local network where the device is being deployed. EAP-NOOB uses the flexibility of the Authentication, Authorization, and Accounting (AAA) {{RFC2904}} architecture to allow routing of EAP-NOOB sessions to a specific application server.
-
-EAP-NOOB claims to be more generic than most ad-hoc bootstrapping solutions in that it supports many types of OOB channels and supports IoT devices with only output (e.g. display) or only input (e.g. camera).
-
-
-EAP-NOOB has the following characteristics:
-
-  * **Terms**: EAP-NOOB uses the term *bootstrapping* for the entire process involved during the initial security setup of an IoT device. The specification does not use separate terms or distinguish the process of obtaining identifier and credentials for communicating with an application server where the user has an account or for network connectivity. However, EAP-NOOB does often use the term *registration* for describing the process of associating the device with a user account on an application server.
-  * **Players**: The device owner/user is responsible for transferring an OOB message necessary for protocol completion. The application server where the device is registered may be provided by different service providers including the device manufacturer or device owner. The local network needs standard AAA configuration for routing EAP-NOOB sessions to the application server chosen by the device owner/user.
-  * **Initial beliefs assumed in the device**: EAP-NOOB does not require devices to have any pre-installed credentials but expects all devices to use a standard identifier (noob@eap-noob.arpa) during initial network discovery.
-  * **Processes**: The IoT device performs network discovery and one or more OOB outputs maybe generated. The user is expected EAP exchange is encompassed by Initial Exchange, OOB step, Completion Exchange and Waiting Exchange.
-  * **Beliefs imparted to the device after protocol execution**: After EAP-NOOB botstrapping process is complete, the device and server establish a long-term secret which can renewed without further user involvement. As a side-effect, the device also obtains identifier and credentials for network and Internet connectivity (via the EAP authenticator).
 
 ## LPWAN {#lpwan}
 
