@@ -87,16 +87,16 @@ informative:
     seriesinfo:
       Proceedings: of ACM International Joint Conference on Pervasive and Ubiquitous Computing (UbiComp 2014), pp. 739-750, Seattle, USA
   dpp:
-    target: https://www.wi-fi.org/download.php?file=/sites/default/files/private/Wi-Fi_Easy_Connect_Specification_v2.0.pdf
-    title: Wi-Fi Device Provisioning Protocol (DPP)
+    target: https://www.wi-fi.org/wi-fi-download/35330
+    title: Wi-Fi Easy Connect Specification
     author:
     - org: Wi-Fi Alliance
     date: 2018
     seriesinfo:
-      Wi-Fi Alliance: Specification version 1.1
+      Wi-Fi Alliance: 'Version 3.0'
   LoRaWAN:
     target: https://lora-alliance.org/resource_hub/lorawan-specification-v1-1/
-    title: LoRa Specification V1.1
+    title: LoRa Specification
     author:
     - org: LoRa Alliance
     date: 2017-10
