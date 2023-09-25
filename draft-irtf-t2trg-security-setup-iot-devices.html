@@ -1,0 +1,2017 @@
+<!DOCTYPE html>
+<html lang="en" class="Internet-Draft">
+<head>
+<meta charset="utf-8">
+<meta content="Common,Latin" name="scripts">
+<meta content="initial-scale=1.0" name="viewport">
+<title>Terminology and processes for initial security setup of IoT devices</title>
+<meta content="Mohit Sethi" name="author">
+<meta content="Behcet Sarikaya" name="author">
+<meta content="Dan Garcia-Carrillo" name="author">
+<meta content="
+       This document provides an overview of terms that are commonly used when discussing the initial security setup of Internet of Things (IoT) devices. This document also presents a brief but illustrative survey of protocols and standards available for initial security setup of IoT devices. For each protocol, we identify the terminology used, the entities involved, the initial assumptions, the processes necessary for completion, and the knowledge imparted to the IoT devices after the setup is complete. 
+    " name="description">
+<meta content="xml2rfc 3.18.0" name="generator">
+<meta content="draft-irtf-t2trg-security-setup-iot-devices-latest" name="ietf.draft">
+<!-- Generator version information:
+  xml2rfc 3.18.0
+    Python 3.11.5
+    ConfigArgParse 1.5.3
+    google-i18n-address 3.1.0
+    intervaltree 3.1.0
+    Jinja2 3.1.2
+    lxml 4.9.3
+    platformdirs 3.10.0
+    pycountry 22.3.5
+    PyYAML 6.0
+    requests 2.31.0
+    setuptools 67.7.2
+    six 1.16.0
+    wcwidth 0.2.6
+-->
+<link href="draft-irtf-t2trg-security-setup-iot-devices.xml" rel="alternate" type="application/rfc+xml">
+<link href="#copyright" rel="license">
+<style type="text/css">@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Lora SemiBold'), local('Lora-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-semibold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Cabin Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Cabin Condensed SemiBold'), local('CabinCondensed-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/cabincondensed-semibold-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Cabin Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Cabin Condensed SemiBold'), local('CabinCondensed-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/cabincondensed-semibold-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Cabin Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Cabin Condensed SemiBold'), local('CabinCondensed-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/cabincondensed-semibold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  color-scheme: light dark;
+  --background-color: #fff;
+  --text-color: #222;
+  --title-color: #191919;
+  --link-color: #2a6496;
+  --highlight-color: #f9f9f9;
+  --line-color: #eee;
+  --pilcrow-weak: #ddd;
+  --pilcrow-strong: #bbb;
+  --small-font-size: 14.5px;
+  --font-mono: 'Oxygen Mono', monospace;
+  scrollbar-color: #bbb #eee;
+}
+body {
+  max-width: 600px;
+  margin: 75px auto;
+  padding: 0 5px;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  font: 16px/22px "Lora", serif;
+  scroll-behavior: smooth;
+}
+
+.ears {
+  display: none;
+}
+
+/* headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Cabin Condensed", sans-serif;
+  font-weight: 600;
+  margin: 0.8em 0 0.3em;
+  font-size-adjust: 0.5;
+  color: var(--title-color);
+}
+h1#title {
+  font-size: 32px;
+  line-height: 40px;
+  clear: both;
+}
+h1#title, h1#rfcnum {
+  margin: 1.5em 0 0.2em;
+}
+h1#rfcnum + h1#title {
+  margin: 0.2em 0;
+}
+
+h1, h2, h3 {
+  font-size: 22px;
+  line-height: 27px;
+}
+h4, h5, h6 {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+/* general structure */
+.author {
+  padding-bottom: 0.3em;
+}
+#abstract+p {
+  font-size: 18px;
+  line-height: 24px;
+}
+#abstract+p code, #abstract+p samp, #abstract+p tt {
+  font-size: 16px;
+  line-height: 0;
+}
+
+p {
+  padding: 0;
+  margin: 0.5em 0;
+  text-align: left;
+}
+div {
+  margin: 0;
+}
+.alignRight.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignRight.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignRight {
+  margin: 1em 0;
+}
+.alignRight > *:first-child {
+  border: none;
+  margin: 0;
+  float: right;
+  clear: both;
+}
+.alignRight > *:nth-child(2) {
+  clear: both;
+  display: block;
+  border: none;
+}
+svg {
+  display: block;
+}
+/* font-family isn't space-separated, but =~ will have to do */
+svg[font-family~="monospace" i], svg [font-family~="monospace" i] {
+  font-family: var(--font-mono);
+}
+.alignCenter.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignCenter.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignCenter {
+  margin: 1em 0;
+}
+.alignCenter > *:first-child {
+  border: none;
+  /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
+     support flexbox yet.
+  */
+  display: table;
+  margin: 0 auto;
+}
+
+/* lists */
+ol, ul {
+  padding: 0;
+  margin: 0 0 0.5em 2em;
+}
+:is(ol, ul) :is(ol, ul) {
+  margin-left: 1em;
+}
+li {
+  margin: 0 0 0.25em 0;
+}
+.ulCompact li {
+  margin: 0;
+}
+ul.empty, .ulEmpty {
+  list-style-type: none;
+}
+ul.empty li, .ulEmpty li {
+  margin-top: 0.5em;
+}
+:is(ul, ol).compact, .ulCompact, .olCompact {
+  line-height: 1;
+  margin: 0 0 0 2em;
+}
+
+/* definition lists */
+dl {
+  clear: left;
+  --indent: 3ch;
+  /* --indent: attr(indent ch); not supported in any browser, but we can dream */
+}
+dl.olPercent {
+  --indent: 5ch;
+}
+dl > dt {
+  float: left;
+  margin-right: 2ch;
+  min-width: 8ch;
+}
+dl.dlNewline > dt {
+  float: none;
+}
+dl > dd {
+  margin-bottom: .8em;
+  margin-left: var(--indent) !important; /* stupid element overrides */
+  min-height: 2ex;
+}
+dl.olPercent > dt {
+  min-width: calc(var(--indent) - 2ch);
+}
+:is(dl.compact, .dlCompact) > dd {
+  margin-bottom: 0;
+}
+:is(dl.compact, .dlCompact) > dd > :is(:first-child, .break:first-child + *) {
+  margin-top: 0;
+}
+:is(dl.compact, .dlCompact) > dd > :is(:last-child) {
+  margin-bottom: 0;
+}
+dl > dd > dl {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+}
+:is(dd, span).break {
+  display: none;
+}
+
+/* links */
+a, a[href].selfRef:hover {
+  text-decoration: none;
+}
+a[href] {
+  color: var(--link-color);
+}
+a[href].selfRef, .iref + a[href].internal {
+  color: var(--text-color);
+}
+a[href]:hover {
+  text-decoration: underline;
+}
+a[href].selfRef:hover {
+  background-color: var(--highlight-color);
+}
+a.xref:is(.cite, .auto), :is(#status-of-memo, #copyright) a {
+  white-space: nowrap;
+}
+
+/* Figures */
+tt, code, pre {
+  background-color: var(--highlight-color);
+  font: 14px/22px var(--font-mono);
+}
+tt, code {
+  /* changing the font for inline elements leads to different ascender
+     and descender heights; as we want to retain baseline alignment,
+     remove leading to avoid altering the final height of lines
+     note: this fails if these blocks take an entire line,
+     a different solution would be great */
+  line-height: 0;
+}
+:is(h1, h2, h3, h4, h5, h6) :is(tt, code) {
+  font-size: 84%;
+}
+pre {
+  border: 1px solid var(--line-color);
+  font-size: 13.5px;
+  line-height: 16px;
+  letter-spacing: -0.2px;
+  margin: 5px;
+  padding: 5px;
+}
+img {
+  max-width: 100%;
+}
+figure {
+  margin: 0.5em 0;
+  padding: 0;
+}
+figure blockquote {
+  margin: 0.8em 0.4em 0.4em;
+}
+figcaption, caption {
+  font-style: italic;
+  margin: 0.5em 1.5em;
+  text-align: left;
+}
+@media screen {
+  /* Auto-collapse boilerplate. */
+  :is(#status-of-memo, #copyright) p {
+    margin: -2px 0;
+    max-height: 0;
+    transition: max-height 2s ease, margin 0.5s ease 0.5s;
+    overflow: hidden;
+  }
+  :is(#status-of-memo, #copyright):hover p,
+  :is(#status-of-memo, #copyright) h2:target ~ p {
+    margin: 0.5em 0;
+    max-height: 500px;
+    overflow: auto;
+  }
+  pre, svg {
+    display: inline-block;
+    overflow-x: auto;
+  }
+  pre {
+    max-width: 100%;
+    width: calc(100% - 22px - 1em);
+  }
+  svg {
+    max-width: calc(100% - 22px - 1em);
+  }
+  figure pre {
+    display: block;
+    width: calc(100% - 25px);
+  }
+  :is(pre, svg) + .pilcrow {
+    display: inline-block;
+    vertical-align: text-bottom;
+    padding-bottom: 8px;
+  }
+}
+
+/* aside, blockquote */
+aside, blockquote {
+  margin-left: 0;
+  padding: 0 2em;
+  font-style: italic;
+}
+blockquote {
+  margin: 1em 0;
+}
+cite {
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+
+/* tables */
+table {
+  max-width: 100%;
+  margin: 0 0 1em;
+  border-collapse: collapse;
+}
+table.right {
+  margin-left: auto;
+}
+table.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+table.left {
+  margin-right: auto;
+}
+thead, tbody {
+  border: 1px solid var(--line-color);
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 5px 10px;
+}
+th {
+  background-color: var(--line-color);
+}
+:is(tr:nth-child(2n), thead+tbody > tr:nth-child(2n+1)) > td {
+  background-color: var(--background-color);
+}
+:is(tr:nth-child(2n+1), thead+tbody > tr:nth-child(2n)) > td {
+  background-color: var(--highlight-color);
+}
+table caption {
+  margin: 0;
+  padding: 3px 0 3px 1em;
+}
+table p {
+  margin: 0;
+}
+
+/* pilcrow */
+a.pilcrow {
+  margin-left: 3px;
+  opacity: 0.2;
+  user-select: none;
+}
+a.pilcrow[href] { color: var(--pilcrow-weak); }
+a.pilcrow[href]:hover { text-decoration: none; }
+@media not print {
+  :hover > a.pilcrow {
+    opacity: 1;
+  }
+  a.pilcrow[href]:hover {
+    color: var(--pilcrow-strong);
+    background-color: transparent;
+  }
+}
+@media print {
+  a.pilcrow {
+    display: none;
+  }
+}
+
+/* misc */
+hr {
+  border: 0;
+  border-top: 1px solid var(--line-color);
+}
+.bcp14 {
+  font-variant: small-caps;
+  font-weight: 600;
+  font-size: var(--small-font-size);
+}
+.role {
+  font-variant: all-small-caps;
+}
+sub, sup {
+  line-height: 1;
+  font-size: 80%;
+}
+
+/* info block */
+#identifiers {
+  margin: 0;
+  font-size: var(--small-font-size);
+  line-height: 18px;
+  --identifier-width: 15ch;
+}
+#identifiers dt {
+  width: var(--identifier-width);
+  min-width: var(--identifier-width);
+  clear: left;
+  float: left;
+  text-align: right;
+  margin-right: 1ch;
+}
+#identifiers dd {
+  margin: 0;
+  margin-left: calc(1em + var(--identifier-width)) !important;
+  min-width: 5em;
+}
+#identifiers .authors .author {
+  display: inline-block;
+  margin-right: 1.5em;
+}
+#identifiers .authors .org {
+  font-style: italic;
+}
+
+/* The prepared/rendered info at the very bottom of the page */
+.docInfo {
+  color: #999;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 2em;
+}
+.docInfo .prepared {
+  float: left;
+}
+.docInfo .prepared {
+  float: right;
+}
+
+/* table of contents */
+#toc {
+  padding: 0.75em 0 2em 0;
+  margin-bottom: 1em;
+}
+#toc nav ul {
+  margin: 0 0.5em 0 0;
+  padding: 0;
+  list-style: none;
+}
+#toc nav li {
+  line-height: 1.3em;
+  margin: 2px 0;
+  padding-left: 1.2em;
+  text-indent: -1.2em;
+}
+#toc a.xref {
+  white-space: normal;
+}
+/* references */
+.references dt {
+  text-align: right;
+  font-weight: bold;
+  min-width: 10ch;
+  margin-right: 1.5ch;
+}
+.references dt:target::before {
+  content: "⇒";
+  width: 15px;
+  margin: 0 10px 0 -25px;
+}
+.references dd {
+  margin-left: 12ch !important;
+  overflow: auto;
+}
+
+.refInstance {
+  margin-bottom: 1.25em;
+}
+
+.references .ascii {
+  margin-bottom: 0.25em;
+}
+
+/* index */
+#rfc\.index\.index + ul {
+  margin-left: 0;
+}
+
+/* authors */
+address.vcard {
+  font-style: normal;
+  margin: 1em 0;
+}
+address.vcard .nameRole {
+  font-weight: 700;
+  margin-left: 0;
+}
+address.vcard .label {
+  margin: 0.5em 0;
+}
+address.vcard .type {
+  display: none;
+}
+.alternative-contact {
+  margin: 1.5em 0 1em;
+}
+hr.addr {
+  border-top: 1px dashed;
+  margin: 0;
+  color: #ddd;
+  max-width: calc(100% - 16px);
+}
+@media (min-width: 500px) {
+  #authors-addresses > section {
+    column-count: 2;
+    column-gap: 20px;
+  }
+  #authors-addresses > section > h2 {
+    column-span: all;
+  }
+  /* hack for break-inside: avoid-column */
+  #authors-addresses address {
+    display: inline-block;
+    break-inside: avoid-column;
+  }
+}
+
+.rfcEditorRemove p:first-of-type {
+  font-style: italic;
+}
+.cref {
+  background-color: rgba(249, 232, 105, 0.3);
+  padding: 2px 4px;
+}
+.crefSource {
+  font-style: italic;
+}
+/* alternative layout for smaller screens */
+@media screen and (max-width: 929px) {
+  #toc {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding: 1px 0 0 0;
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+    opacity: 0.6;
+  }
+  #toc.active {
+      opacity: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 2px 0 2px 6px;
+    padding-right: 1em;
+    font-size: 18px;
+    line-height: 24px;
+    min-width: 190px;
+    text-align: right;
+    background-color: #444;
+    color: white;
+    cursor: pointer;
+  }
+  #toc h2::before { /* css hamburger */
+    float: right;
+    position: relative;
+    width: 1em;
+    height: 1px;
+    left: -164px;
+    margin: 8px 0 0 0;
+    background: white none repeat scroll 0 0;
+    box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+    content: "";
+  }
+  #toc nav {
+    display: none;
+    background-color: var(--background-color);
+    padding: 0.5em 1em 1em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    height: calc(100vh - 48px);
+    border-left: 1px solid #ddd;
+  }
+  #toc.active nav {
+    display: block;
+  }
+  /* Make the collapsed ToC header render white on gray also when it's a link */
+  #toc h2 a,
+  #toc h2 a:link,
+  #toc h2 a:focus,
+  #toc h2 a:hover,
+  #toc a.toplink,
+  #toc a.toplink:hover {
+    color: white;
+    background-color: #444;
+    text-decoration: none;
+  }
+  #toc a.toplink {
+    margin-top: 2px;
+  }
+}
+
+/* alternative layout for wide screens */
+@media screen and (min-width: 930px) {
+  body {
+    padding-right: 360px;
+    padding-right: calc(min(180px + 20%, 500px));
+  }
+  #toc {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    right: calc(50vw - 480px);
+    width: 312px;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 0.25em 1em 1em 0;
+  }
+  #toc nav {
+    display: block;
+    height: calc(90vh - 84px);
+    bottom: 0;
+    padding: 0.5em 0 2em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+  #toc nav > ul  {
+    margin-bottom: 2em;
+  }
+  #toc ul {
+    margin: 0 0 0 4px;
+    font-size: var(--small-font-size);
+  }
+  #toc ul :is(p, li) {
+    margin: 2px 0;
+    line-height: 22px;
+  }
+  img { /* future proofing */
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* pagination */
+@media print {
+  body {
+    width: 100%;
+  }
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  #n-copyright-notice {
+    border-bottom: none;
+  }
+  #toc, #n-introduction {
+    page-break-before: always;
+  }
+  #toc {
+    border-top: none;
+    padding-top: 0;
+  }
+  figure, pre, .vcard {
+    page-break-inside: avoid;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  :is(h2, h3, h4, h5, h6)+*, dd {
+    page-break-before: avoid;
+  }
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 10pt;
+  }
+  table {
+    border: 1px solid #ddd;
+  }
+  td {
+    border-top: 1px solid #ddd;
+  }
+  .toplink {
+    display: none;
+  }
+}
+
+@page :first {
+  padding-top: 0;
+  @top-left {
+    content: normal;
+    border: none;
+  }
+  @top-center {
+    content: normal;
+    border: none;
+  }
+  @top-right {
+    content: normal;
+    border: none;
+  }
+}
+
+@page {
+  size: A4;
+  margin-bottom: 45mm;
+  padding-top: 20px;
+}
+
+/* Changes introduced to fix issues found during implementation */
+
+/* Separate body from document info even without intervening H1 */
+section {
+  clear: both;
+}
+
+/* Top align author divs, to avoid names without organization dropping level with org names */
+.author {
+  vertical-align: top;
+}
+
+/* Style section numbers with more space between number and title */
+.section-number {
+  padding-right: 0.5em;
+}
+
+/* Add styling for a link in the ToC that points to the top of the document */
+a.toplink {
+  float: right;
+  margin: 8px 0.5em 0;
+}
+
+/* Provide styling for table cell text alignment */
+table .text-left {
+  text-align: left;
+}
+table .text-center {
+  text-align: center;
+}
+table .text-right {
+  text-align: right;
+}
+
+/* Make the alternative author contact information look less like just another
+   author, and group it closer with the primary author contact information */
+.alternative-contact {
+  margin: 0.5em 0 0.25em 0;
+}
+address .non-ascii {
+  margin: 0 0 0 2em;
+}
+
+/* With it being possible to set tables with alignment
+  left, center, and right, { width: 100%; } does not make sense */
+table {
+  width: auto;
+}
+
+/* Avoid reference text that sits in a block with very wide left margin,
+   because of a long floating dt label.*/
+.references dd {
+  overflow: visible;
+}
+
+/* Control caption placement */
+caption {
+  caption-side: bottom;
+}
+
+/* Limit the width of the author address vcard, so names in right-to-left
+   script don't end up on the other side of the page. */
+
+address.vcard {
+  max-width: 20em;
+  margin-right: auto;
+}
+
+/* For address alignment dependent on LTR or RTL scripts */
+address div.left {
+  text-align: left;
+}
+address div.right {
+  text-align: right;
+}
+
+/* Dark mode. */
+@media (prefers-color-scheme: dark) {
+:root {
+  --background-color: #121212;
+  --text-color: #f0f0f0;
+  --title-color: #fff;
+  --link-color: #4da4f0;
+  --highlight-color: #282828;
+  --line-color: #444;
+  --pilcrow-weak: #444;
+  --pilcrow-strong: #666;
+  scrollbar-color: #777 #333;
+}
+}
+
+/* SVG Trick: a prefix match works because only black and white are allowed */
+svg :is([stroke="black"], [stroke^="#000"]) {
+  stroke: var(--text-color);
+}
+svg :is([stroke="white"], [stroke^="#fff"]) {
+  stroke: var(--background-color);
+}
+svg :is([fill="black"], [fill^="#000"], :not([fill])) {
+  fill: var(--text-color);
+}
+svg :is([fill="white"], [fill^="#fff"]) {
+  fill: var(--background-color);
+}
+</style>
+
+</head>
+<body class="xml2rfc">
+<table class="ears">
+<thead><tr>
+<td class="left">Internet-Draft</td>
+<td class="center">IoT initial security setup</td>
+<td class="right">September 2023</td>
+</tr></thead>
+<tfoot><tr>
+<td class="left">Sethi, et al.</td>
+<td class="center">Expires 28 March 2024</td>
+<td class="right">[Page]</td>
+</tr></tfoot>
+</table>
+<div id="external-metadata" class="document-information"></div>
+<div id="internal-metadata" class="document-information">
+<dl id="identifiers">
+<dt class="label-workgroup">Workgroup:</dt>
+<dd class="workgroup">Network Working Group</dd>
+<dt class="label-internet-draft">Internet-Draft:</dt>
+<dd class="internet-draft">draft-irtf-t2trg-security-setup-iot-devices-latest</dd>
+<dt class="label-published">Published:</dt>
+<dd class="published">
+<time datetime="2023-09-25" class="published">25 September 2023</time>
+    </dd>
+<dt class="label-intended-status">Intended Status:</dt>
+<dd class="intended-status">Informational</dd>
+<dt class="label-expires">Expires:</dt>
+<dd class="expires"><time datetime="2024-03-28">28 March 2024</time></dd>
+<dt class="label-authors">Authors:</dt>
+<dd class="authors">
+<div class="author">
+      <div class="author-name">M. Sethi</div>
+<div class="org">Aalto University</div>
+</div>
+<div class="author">
+      <div class="author-name">B. Sarikaya</div>
+</div>
+<div class="author">
+      <div class="author-name">D. Garcia-Carrillo</div>
+<div class="org">University of Oviedo</div>
+</div>
+</dd>
+</dl>
+</div>
+<h1 id="title">Terminology and processes for initial security setup of IoT devices</h1>
+<section id="section-abstract">
+      <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
+<p id="section-abstract-1">This document provides an overview of terms that are commonly used when discussing the initial security setup of Internet of Things (IoT) devices. This document also presents a brief but illustrative survey of protocols and standards available for initial security setup of IoT devices. For each protocol, we identify the terminology used, the entities involved, the initial assumptions, the processes necessary for completion, and the knowledge imparted to the IoT devices after the setup is complete.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+</section>
+<section class="note rfcEditorRemove" id="section-note.1">
+      <h2 id="name-discussion-venues">
+<a href="#name-discussion-venues" class="section-name selfRef">Discussion Venues</a>
+      </h2>
+<p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
+<p id="section-note.1-2">Source for this draft and an issue tracker can be found at
+    <span><a href="https://github.com/t2trg/sbootstrapping">https://github.com/t2trg/sbootstrapping</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
+</section>
+<div id="status-of-memo">
+<section id="section-boilerplate.1">
+        <h2 id="name-status-of-this-memo">
+<a href="#name-status-of-this-memo" class="section-name selfRef">Status of This Memo</a>
+        </h2>
+<p id="section-boilerplate.1-1">
+        This Internet-Draft is submitted in full conformance with the
+        provisions of BCP 78 and BCP 79.<a href="#section-boilerplate.1-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-2">
+        Internet-Drafts are working documents of the Internet Engineering Task
+        Force (IETF). Note that other groups may also distribute working
+        documents as Internet-Drafts. The list of current Internet-Drafts is
+        at <span><a href="https://datatracker.ietf.org/drafts/current/">https://datatracker.ietf.org/drafts/current/</a></span>.<a href="#section-boilerplate.1-2" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-3">
+        Internet-Drafts are draft documents valid for a maximum of six months
+        and may be updated, replaced, or obsoleted by other documents at any
+        time. It is inappropriate to use Internet-Drafts as reference
+        material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-4">
+        This Internet-Draft will expire on 28 March 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="copyright">
+<section id="section-boilerplate.2">
+        <h2 id="name-copyright-notice">
+<a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
+        </h2>
+<p id="section-boilerplate.2-1">
+            Copyright (c) 2023 IETF Trust and the persons identified as the
+            document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.2-2">
+            This document is subject to BCP 78 and the IETF Trust's Legal
+            Provisions Relating to IETF Documents
+            (<span><a href="https://trustee.ietf.org/license-info">https://trustee.ietf.org/license-info</a></span>) in effect on the date of
+            publication of this document. Please review these documents
+            carefully, as they describe your rights and restrictions with
+            respect to this document. Code Components extracted from this
+            document must include Revised BSD License text as described in
+            Section 4.e of the Trust Legal Provisions and are provided without
+            warranty as described in the Revised BSD License.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="toc">
+<section id="section-toc.1">
+        <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
+<a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
+        </h2>
+<nav class="toc"><ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
+            <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-standards-and-protocols" class="internal xref">Standards and Protocols</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
+                <p id="section-toc.1-1.2.2.1.1" class="keepWithNext"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-bluetooth" class="internal xref">Bluetooth</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2">
+                <p id="section-toc.1-1.2.2.2.1" class="keepWithNext"><a href="#section-2.2" class="auto internal xref">2.2</a>.  <a href="#name-device-provisioning-protoco" class="internal xref">Device Provisioning Protocol (DPP)</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3">
+                <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="auto internal xref">2.3</a>.  <a href="#name-enrollment-over-secure-tran" class="internal xref">Enrollment over Secure Transport (EST)</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.4">
+                <p id="section-toc.1-1.2.2.4.1"><a href="#section-2.4" class="auto internal xref">2.4</a>.  <a href="#name-open-mobile-alliance-oma-li" class="internal xref">Open Mobile Alliance (OMA) Lightweight Machine to Machine specification (LwM2M)</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.5">
+                <p id="section-toc.1-1.2.2.5.1"><a href="#section-2.5" class="auto internal xref">2.5</a>.  <a href="#name-nimble-out-of-band-authenti" class="internal xref">Nimble out-of-band authentication for EAP (EAP-NOOB)</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.6">
+                <p id="section-toc.1-1.2.2.6.1"><a href="#section-2.6" class="auto internal xref">2.6</a>.  <a href="#name-open-connectivity-foundatio" class="internal xref">Open Connectivity Foundation (OCF)</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.7">
+                <p id="section-toc.1-1.2.2.7.1"><a href="#section-2.7" class="auto internal xref">2.7</a>.  <a href="#name-fast-identity-online-fido-a" class="internal xref">Fast IDentity Online (FIDO) alliance</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.8">
+                <p id="section-toc.1-1.2.2.8.1"><a href="#section-2.8" class="auto internal xref">2.8</a>.  <a href="#name-bootstrapping-remote-secure" class="internal xref">Bootstrapping Remote Secure Key Infrastructures (BRSKI)</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.9">
+                <p id="section-toc.1-1.2.2.9.1"><a href="#section-2.9" class="auto internal xref">2.9</a>.  <a href="#name-secure-zero-touch-provision" class="internal xref">Secure Zero Touch Provisioning (SZTP)</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.10">
+                <p id="section-toc.1-1.2.2.10.1"><a href="#section-2.10" class="auto internal xref">2.10</a>. <a href="#name-lpwan" class="internal xref">LPWAN</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.11">
+                <p id="section-toc.1-1.2.2.11.1"><a href="#section-2.11" class="auto internal xref">2.11</a>. <a href="#name-thread" class="internal xref">Thread</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-comparison" class="internal xref">Comparison</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-comparison-of-terminology" class="internal xref">Comparison of terminology</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-comparison-of-players" class="internal xref">Comparison of players</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
+                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-comparison-of-initial-belie" class="internal xref">Comparison of initial beliefs</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3.2.1">
+                    <p id="section-toc.1-1.3.2.3.2.1.1"><a href="#section-3.3.1" class="auto internal xref">3.3.1</a>.  <a href="#name-no-initial-trust-establishe" class="internal xref">No initial trust established</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3.2.2">
+                    <p id="section-toc.1-1.3.2.3.2.2.1"><a href="#section-3.3.2" class="auto internal xref">3.3.2</a>.  <a href="#name-initial-trust-based-on-the-" class="internal xref">Initial trust based on the credentials installed</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4">
+                <p id="section-toc.1-1.3.2.4.1"><a href="#section-3.4" class="auto internal xref">3.4</a>.  <a href="#name-comparison-of-processes" class="internal xref">Comparison of processes</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.5">
+                <p id="section-toc.1-1.3.2.5.1"><a href="#section-3.5" class="auto internal xref">3.5</a>.  <a href="#name-comparison-of-knowledge-imp" class="internal xref">Comparison of knowledge imparted to the device</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-acknowledgements" class="internal xref">Acknowledgements</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
+</li>
+        </ul>
+</nav>
+</section>
+</div>
+<div id="introduction">
+<section id="section-1">
+      <h2 id="name-introduction">
+<a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
+      </h2>
+<p id="section-1-1">Initial security setup for a device refers to any process that takes place before a device can become fully operational. The phrase <strong>initial security setup</strong> intentionally includes the term <em>security</em> as setup of devices without adequate security or with insecure processes is no longer acceptable. The initial security setup process, among other things, involves network discovery and selection, access authentication, configuration of necessary credentials and parameters.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">Initial security setup for IoT devices is challenging because the size of an IoT network varies from a couple of devices to tens of thousands, depending on the application. Moreover, devices in IoT networks are produced by a variety of vendors and are typically heterogeneous in terms of the constraints on their power supply, communication capability, computation capacity, and user interfaces available. This challenge of initial security setup in IoT was identified by <span><a href="#Sethi14" class="internal xref">Sethi et al.</a> [<a href="#Sethi14" class="cite xref">Sethi14</a>]</span> while developing a solution for smart displays.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">Initial security setup of devices typically also involves providing them with some sort of network connectivity. The functionality of a disconnected device is rather limited. Initial security setup of devices often assumes that some network has been setup a-priori. Setting up and maintaining a network itself is challenging. For example, users may need to configure the network name (called as Service Set Identifier (SSID) in Wi-Fi networks) and passphrase before new devices can be setup. Specifications such as the Wi-Fi Alliance Simple Configuration <span>[<a href="#simpleconn" class="cite xref">simpleconn</a>]</span> help users setup networks. However, this document is only focused on terminology and processes associated with initial security setup of devices and excludes any discussion on setting up networks.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-4">There are several terms that are used in the context of initial security setup of devices:<a href="#section-1-4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1-5.1">Bootstrapping<a href="#section-1-5.1" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-1-5.2">Provisioning<a href="#section-1-5.2" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-1-5.3">Onboarding<a href="#section-1-5.3" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-1-5.4">Enrollment<a href="#section-1-5.4" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-1-5.5">Commissioning<a href="#section-1-5.5" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-1-5.6">Initialization<a href="#section-1-5.6" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-1-5.7">Configuration<a href="#section-1-5.7" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-1-5.8">Registration<a href="#section-1-5.8" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-1-5.9">Discovery<a href="#section-1-5.9" class="pilcrow">¶</a>
+</li>
+      </ul>
+<p id="section-1-6">In addition to using a variety of different terms, initial security setup mechanisms can rely on a number of entities. For example, a companion smartphone device maybe necessary for some initial security setup mechanisms. Moreover, security setup procedures have diverse initial assumptions about the device being setup. As an example, an initial security setup mechanism may assume that the device is provisioned with a pre-shared key and a list of trusted network identifiers. Finally, initial security setup mechanisms impart different information to the device after completion. For example, some mechanisms may only provide a key for use with an authorization server, while others may configure elaborate access control lists directly.<a href="#section-1-6" class="pilcrow">¶</a></p>
+<p id="section-1-7">The next section provides an overview of some standards and protocols for initial security setup of IoT devices. For each mechanism, the following are explicitly identified:<a href="#section-1-7" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1-8.1">Terminology used<a href="#section-1-8.1" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-1-8.2">Entities or "players" involved<a href="#section-1-8.2" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-1-8.3">Initial assumptions about the device<a href="#section-1-8.3" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-1-8.4">Processes necessary for completion<a href="#section-1-8.4" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-1-8.5">Knowledge imparted to the device after completion<a href="#section-1-8.5" class="pilcrow">¶</a>
+</li>
+      </ul>
+</section>
+</div>
+<div id="usage">
+<section id="section-2">
+      <h2 id="name-standards-and-protocols">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-standards-and-protocols" class="section-name selfRef">Standards and Protocols</a>
+      </h2>
+<div id="bluetooth">
+<section id="section-2.1">
+        <h3 id="name-bluetooth">
+<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-bluetooth" class="section-name selfRef">Bluetooth</a>
+        </h3>
+<p id="section-2.1-1">Bluetooth mesh specifies a provisioning protocol.  The goal of the provisioning phase is to securely incorporate a new Bluetooth mesh node, by completing two critical tasks. First, to authenticate the unprovisioned device and second, to create a secure link with said device to share information.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-2">The provisioning process is divided into five distinct stages summarize next:<a href="#section-2.1-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.1-3.1">Beaconing for discover: The new unprovisioned device is discovered by the provisioner<a href="#section-2.1-3.1" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.1-3.2">Negotiation: The unprovisioned device indicates to the provisioner a set of capabilities such as the security algorithms supported, the availability of its public key using an Out-of-Band (OOB) channel and the input/output interfaces supported<a href="#section-2.1-3.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.1-3.3">Public-key exchange: The authentication method is selected by the provisioner and both devices exchange Elliptic-curve Diffie–Hellman (ECDH) public keys. These keys may be static or ephemeral. Their exchange can be done in two ways, either via Out-of-Band or directly through a Bluetooth link. Each device then generates a symmetric key, named ECDHSecret, by combining its own private key and the public key of the peer device. The EDCHSecret is used to protect communication between the two devices.<a href="#section-2.1-3.3" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.1-3.4">Authentication: During this phase, the ECDH key exchange is authenticated. The authentication method can be Output OOB, Input OOB, static OOB, or No OOB. With Output OOB, the unprovisioned device chooses a random number and outputs that number in manner consistent with its capabilities. The provisioner then inputs this number. Then, a check confirmation value operation is performed. This involves a cryptographic exchange regarding (in this case) the random number to complete the authentication. With Input OOB, the roles are reversed, being the provisioner the entity that generates the random number. When neither of the previous authentication procedures are feasible, both the provisioner and unprovisioned device generate a random number and require the user supervising the setup to verify that values on the device and provisioner are the same.<a href="#section-2.1-3.4" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.1-3.5">Distribution of provisioning data: At this point, the provisioning process can be protected. This involves the distribution of data such as a Network key, to secure the communications at network layer and a unicast address among other information.<a href="#section-2.1-3.5" class="pilcrow">¶</a>
+</li>
+        </ul>
+<p id="section-2.1-4">Bluetooth mesh has the following characteristics:<a href="#section-2.1-4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.1-5.1">Terms: Configuration, discovery, provisioning.<a href="#section-2.1-5.1" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.1-5.2">Players: Client, Device, Manager, Manufacturer, Peer, Server, User<a href="#section-2.1-5.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.1-5.3">Initial beliefs assumed in the device: Previously to the provisioning phase, there is no pre-shared credentials for a trust relation.<a href="#section-2.1-5.3" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.1-5.4">Processes: Provisioning<a href="#section-2.1-5.4" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.1-5.5">Beliefs imparted to the device after protocol execution: After the provisiong, the device trusts the provisioner entity and any other device in the network sharing its network key.<a href="#section-2.1-5.5" class="pilcrow">¶</a>
+</li>
+        </ul>
+</section>
+</div>
+<div id="device-provisioning-protocol-dpp">
+<section id="section-2.2">
+        <h3 id="name-device-provisioning-protoco">
+<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-device-provisioning-protoco" class="section-name selfRef">Device Provisioning Protocol (DPP)</a>
+        </h3>
+<p id="section-2.2-1">The Wi-Fi Alliance Device provisioning protocol (DPP) <span>[<a href="#dpp" class="cite xref">dpp</a>]</span> describes itself as a standardized protocol for providing user friendly Wi-Fi setup while maintaining or increasing the security. DPP relies on a configurator, e.g. a smartphone application, for setting up all other devices, called enrollees, in the network. DPP has the following three phases/sub-protocols:<a href="#section-2.2-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.2-2.1">Bootstrapping: The configurator obtains bootstrapping information from the enrollee using an out-of-band channel such as scanning a QR code or tapping NFC. The bootstrapping information includes the public-key of the device and metadata such as the radio channel on which the device is listening.<a href="#section-2.2-2.1" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.2-2.2">Authentication: In DPP, either the configurator or the enrollee can initiate the authentication protocol. The side initiating the authentication protocol is called as the initiator while the other side is called the responder. The authentication sub-protocol provides authentication of the responder to an initiator. It can optionally authenticate the initiator to the responder (only if the bootstrapping information was exchange out-of-band in both directions).<a href="#section-2.2-2.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.2-2.3">Configuration: Using the key established from the authentication protocol, the enrollee asks the configurator for network information such as the SSID and passphrase of the access point.<a href="#section-2.2-2.3" class="pilcrow">¶</a>
+</li>
+        </ul>
+<p id="section-2.2-3">DPP has the following characteristics:<a href="#section-2.2-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.2-4.1">Terms: Bootstrapping, configuration, discovery, enrollment, provisioning.<a href="#section-2.2-4.1" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.2-4.2">Players: Authenticator, Client, Configurator, Device, Initiator, Manufacturer, Owner, Peer, Persona, Responder, User, Enrollee<a href="#section-2.2-4.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.2-4.3">Initial beliefs assumed in the device: There are two entities involved in the DPP protocol, the Initiator and Responder. These entities as a starting point do not have a trust relation, nor do they share credentials or key material. DPP uses a decentralized architecture with no central authority to coordinate or control authentication and rely on a direct trust model.
+ In DPP, authentication does not rely on a pre-existing trust relation with a third-party or centralized entity, hence all entities involved in DPP need to perform the required validation.<a href="#section-2.2-4.3" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.2-4.4">Processes: Bootstrapping, authentication,  provisioning, and network access.
+Bootstrapping: To establish a secure provisioning connection, the devices exchange public bootstrapping keys.
+Authentication: To establish trust and build a secure channel, the devices employ the DPP Authentication protocol's bootstrapping keys.
+Configuration: The Configurator uses the DPP Configuration protocol to provision the Enrollee through the secure channel created during DPP Authentication.
+Network access: The Enrollee establishes network access using the newly provisioned credentials.<a href="#section-2.2-4.4" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.2-4.5">Beliefs imparted to the device after protocol execution: DPP bootstrapping relies on the transfer of the public-key that is expected to be trusted. The beliefs when mutual authentication is run, relies on the trust of a succesful DPP bootstrapping. When mutual authentication is not supported, a device that can control when and how its own public key is bootstrapped, can perform a weak authentication to any entity that knows its public key.<a href="#section-2.2-4.5" class="pilcrow">¶</a>
+</li>
+        </ul>
+</section>
+</div>
+<div id="enrollment-over-secure-transport-est">
+<section id="section-2.3">
+        <h3 id="name-enrollment-over-secure-tran">
+<a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-enrollment-over-secure-tran" class="section-name selfRef">Enrollment over Secure Transport (EST)</a>
+        </h3>
+<p id="section-2.3-1">Enrollment over Secure Transport (EST) <span>[<a href="#RFC7030" class="cite xref">RFC7030</a>]</span> defines a profile of Certificate Management over CMS (CMC) <span>[<a href="#RFC5272" class="cite xref">RFC5272</a>]</span>. EST relies on Hypertext Transfer Protocol (HTTP) and Transport Layer Security (TLS) for exchanging CMC messages and allows client devices to obtain client certificates and associated Certification Authority (CA) certificates. A companion specification for using EST over secure CoAP has also been standardized <span>[<a href="#RFC9148" class="cite xref">RFC9148</a>]</span>. EST assumes that some initial information is already distributed so that EST client and servers can perform mutual authentication before continuing with protocol. <span>[<a href="#RFC7030" class="cite xref">RFC7030</a>]</span> further defines "Bootstrap Distribution of CA Certificates" which allows minimally configured EST clients to obtain initial trust anchors. It relies on human users to verify information such as the CA certificate "fingerprint" received over the unauthenticated TLS connection setup. After successful completion of this bootstrapping step, clients can proceed to the enrollment step during which they obtain client certificates and associated CA certificates.<a href="#section-2.3-1" class="pilcrow">¶</a></p>
+<p id="section-2.3-2">EST has the following characteristics:<a href="#section-2.3-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.3-3.1">Terms: Bootstrapping, enrollment, initialization, configuration.<a href="#section-2.3-3.1" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.3-3.2">Players: Administrator, Client, Device, Manufacturer, Owner, Peer, Server, User<a href="#section-2.3-3.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.3-3.3">Initial beliefs assumed in the device: There is a process of distribution of initial information which provides both the EST client and server with the information for the EST client and server to perform mutual authentication as well as for authorization.<a href="#section-2.3-3.3" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.3-3.4">Processes: Distribution of Certificates, Bootstrap, Enrollment<a href="#section-2.3-3.4" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.3-3.5">Beliefs imparted to the device after protocol execution: The EST enrollment process is designed to make establishing automated certificate issuing from a trustworthy CA as simple as possible. After the processe have finished, the device is able to automatically renew its certificates through re-enrollment as it has a trust relation with the ESP server.<a href="#section-2.3-3.5" class="pilcrow">¶</a>
+</li>
+        </ul>
+</section>
+</div>
+<div id="open-mobile-alliance-oma-lightweight-machine-to-machine-specification-lwm2m">
+<section id="section-2.4">
+        <h3 id="name-open-mobile-alliance-oma-li">
+<a href="#section-2.4" class="section-number selfRef">2.4. </a><a href="#name-open-mobile-alliance-oma-li" class="section-name selfRef">Open Mobile Alliance (OMA) Lightweight Machine to Machine specification (LwM2M)</a>
+        </h3>
+<p id="section-2.4-1">LwM2M specification developed by OMA <span>[<a href="#oma" class="cite xref">oma</a>]</span> defines a RESTful architecture where a new IoT device (LwM2M client) first contacts an LwM2M Bootstrap-Server for obtaining essential information such credentials for subsequently registering with one or more LwM2M Servers. These one or more LwM2M servers are used for performing device management actions during the device lifecycle (reading sensor data, controlling an actuator, modifying access controls etc.). LwM2M specification does not deal with the initial network configuration of IoT devices and assumes that the IoT client device has network reachability to the LwM2M Bootstrap-Server and LwM2M Server.<a href="#section-2.4-1" class="pilcrow">¶</a></p>
+<p id="section-2.4-2">The current standard defines the following four bootstrapping modes:<a href="#section-2.4-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.4-3.1">Factory Bootstrap: An IoT device is configured with all the information necessary for securely communicating with an LwM2M Bootstrap-Server and/or LwM2M Serverwhile it is manufactured and prior to its deployment.<a href="#section-2.4-3.1" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.4-3.2">Bootstrap from Smartcard: An IoT device retrieves all the information necessary for securely communicating with an LwM2M Bootstrap-Server and/or LwM2M Server from a Smartcard.<a href="#section-2.4-3.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.4-3.3">Client Initiated Bootstrap: If the IoT device in one of the above bootstrapping modes is only configured with information about an LwM2M Bootstrap-Server, then the client device must first communicate securely with the configured LwM2M Bootstrap-Server and obtain necessary information and credentials to subsequently register with one or more LwM2M Servers.<a href="#section-2.4-3.3" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.4-3.4">Server Initiated Bootstrap: In this bootstrapping mode, the LwM2M server triggers the client device to begin the client initiated bootstrap sequence described above.<a href="#section-2.4-3.4" class="pilcrow">¶</a>
+</li>
+        </ul>
+<p id="section-2.4-4">The LwM2M specification is also quite flexible in terms of the credentials and the transport security mechanism used between the client device and the LwM2M Server or the LwM2M Bootstrap-Server. Credentials such as a pre-shared symmetric key, a raw public key (RPK), or x.509 certificates can be used with various transport protocols such as Transport Layer Security (TLS) or Datagram Transport Layer Security (DTLS) as specified in LwM2M transport bindings specification <span>[<a href="#oma-transport" class="cite xref">oma-transport</a>]</span>.<a href="#section-2.4-4" class="pilcrow">¶</a></p>
+<p id="section-2.4-5">As explained earlier, an LwM2M Bootstrap-Server is responsible for provisioning credentials into an LwM2M Client. When x509 certificates are being provisioned, the asymmetric key pair is generated on the Bootstrap-Server and then sent to the LwM2M client device. This approach is not acceptable in all scenarios and therefore, LwM2M specification also supports a mode where the client device uses the Enrollment over Secure Transport (EST) certificate management protocol for provisioning certificates from the LwM2M Bootstrap-Server to the LwM2M Client.<a href="#section-2.4-5" class="pilcrow">¶</a></p>
+<p id="section-2.4-6">OMA has the following characteristics:<a href="#section-2.4-6" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.4-7.1">
+            <p id="section-2.4-7.1.1"><strong>Terms</strong>:<a href="#section-2.4-7.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.4-7.1.2.1">
+                <em>Bootstrapping</em> and <em>Unbootstrapping</em>: Bootstrapping is used for describing the process of providing an IoT device with credentials and information of one or more LwM2M server. Interestingly, the transport bindings specification <span>[<a href="#oma-transport" class="cite xref">oma-transport</a>]</span> also uses the term unbootstrapping for the process where objects corresponding to an LwM2M Server are deleted on the client.<a href="#section-2.4-7.1.2.1" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-2.4-7.1.2.2">
+                <em>Provisioning</em> and <em>configuration</em>: terms used to refer to the process of providing some infomration to a LwM2M client.<a href="#section-2.4-7.1.2.2" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-2.4-7.1.2.3">
+                <em>Discovery</em>: term for the process by which a LwM2M Bootstrap-Server or LwM2M Server discovers objects, object instances, resources, and attributes supported by RESTful interfaces of a LwM2M Client.<a href="#section-2.4-7.1.2.3" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-2.4-7.1.2.4">
+                <em>Register</em> and <em>De-register</em>: Register is the process by which a client device sets up a secure association with an LwM2M Server and provides the server with information about objects and existing object instances of the client. De-register is the process by which the client deletes information about itself provided to the LwM2M server during the registration process.<a href="#section-2.4-7.1.2.4" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-2.4-7.1.2.5">
+                <em>Intialization</em>: term for the process by which an LwM2M Bootstrap-Server or LwM2M Server deletes objects on the client before performing any write operations.<a href="#section-2.4-7.1.2.5" class="pilcrow">¶</a>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="section-2.4-7.2">
+            <strong>Players</strong>: Device manufacturers or Smartcard manufacturers are responsible for providing client IoT devices with initial information and credentials of LwM2M Bootstrap-Server and/or LwM2M server.<a href="#section-2.4-7.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.4-7.3">
+            <strong>Initial beliefs assumed in the device</strong>: The client at the very least has necessary information to trust the LwM2M bootstrap server in the .<a href="#section-2.4-7.3" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.4-7.4">
+            <strong>Processes</strong>: LwM2M does not require any actions from the device owner/user. Once the device is registered with the LwM2M server, various actions related to device management can be performed by device owner/user via the LwM2M server.<a href="#section-2.4-7.4" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.4-7.5">
+            <strong>Beliefs imparted to the device after protocol execution</strong>: After the bootstrapping is performed, the LwM2M client can register (Security object and Server object) with the LwM2M servers.<a href="#section-2.4-7.5" class="pilcrow">¶</a>
+</li>
+        </ul>
+</section>
+</div>
+<div id="nimble-out-of-band-authentication-for-eap-eap-noob">
+<section id="section-2.5">
+        <h3 id="name-nimble-out-of-band-authenti">
+<a href="#section-2.5" class="section-number selfRef">2.5. </a><a href="#name-nimble-out-of-band-authenti" class="section-name selfRef">Nimble out-of-band authentication for EAP (EAP-NOOB)</a>
+        </h3>
+<p id="section-2.5-1">Extensible Authentication Protocol (EAP) framework provides support for multiple authentication methods. EAP-NOOB <span>[<a href="#RFC9140" class="cite xref">RFC9140</a>]</span> defines an EAP method where the authentication is based on a user-assisted out-of-band (OOB) channel between the IoT device (peer in EAP terminology) and the server. It is intended as a generic bootstrapping solution for IoT devices which have no pre-configured authentication credentials and which are not yet registered on the authentication server.<a href="#section-2.5-1" class="pilcrow">¶</a></p>
+<p id="section-2.5-2">The application server where the IoT device is registered once EAP-NOOB is completed may belong to the manufacturer or the local network where the device is being deployed. EAP-NOOB uses the flexibility of the Authentication, Authorization, and Accounting (AAA) <span>[<a href="#RFC2904" class="cite xref">RFC2904</a>]</span> architecture to allow routing of EAP-NOOB sessions to a specific application server.<a href="#section-2.5-2" class="pilcrow">¶</a></p>
+<p id="section-2.5-3">EAP-NOOB claims to be more generic than most ad-hoc bootstrapping solutions in that it supports many types of OOB channels and supports IoT devices with only output (e.g. display) or only input (e.g. camera).<a href="#section-2.5-3" class="pilcrow">¶</a></p>
+<p id="section-2.5-4">EAP-NOOB has the following characteristics:<a href="#section-2.5-4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.5-5.1">
+            <p id="section-2.5-5.1.1"><strong>Terms</strong>:<a href="#section-2.5-5.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.5-5.1.2.1">
+                <em>Bootstrapping</em>: term used to describe the entire process involved during the initial security setup of an IoT device. The specification does not use separate terms or distinguish the process of obtaining identifier and credentials for communicating with an application server where the user has an account or for network connectivity.<a href="#section-2.5-5.1.2.1" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-2.5-5.1.2.2">
+                <em>Registration</em>: term used for describing the process of associating the device with a user account on an application server.<a href="#section-2.5-5.1.2.2" class="pilcrow">¶</a>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="section-2.5-5.2">
+            <strong>Players</strong>: The device owner/user is responsible for transferring an OOB message necessary for protocol completion. The application server where the device is registered may be provided by different service providers including the device manufacturer or device owner. The local network needs standard AAA configuration for routing EAP-NOOB sessions to the application server chosen by the device owner/user.<a href="#section-2.5-5.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.5-5.3">
+            <strong>Initial beliefs assumed in the device</strong>: EAP-NOOB does not require devices to have any pre-installed credentials but expects all devices to use a standard identifier (noob@eap-noob.arpa) during initial network discovery.<a href="#section-2.5-5.3" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.5-5.4">
+            <strong>Processes</strong>: The IoT device performs network discovery and one or more OOB outputs maybe generated. The user is expected EAP exchange is encompassed by Initial Exchange, OOB step, Completion Exchange and Waiting Exchange.<a href="#section-2.5-5.4" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.5-5.5">
+            <strong>Beliefs imparted to the device after protocol execution</strong>: After EAP-NOOB botstrapping process is complete, the device and server establish a long-term secret which can renewed without further user involvement. As a side-effect, the device also obtains identifier and credentials for network and Internet connectivity (via the EAP authenticator).<a href="#section-2.5-5.5" class="pilcrow">¶</a>
+</li>
+        </ul>
+</section>
+</div>
+<div id="open-connectivity-foundation-ocf">
+<section id="section-2.6">
+        <h3 id="name-open-connectivity-foundatio">
+<a href="#section-2.6" class="section-number selfRef">2.6. </a><a href="#name-open-connectivity-foundatio" class="section-name selfRef">Open Connectivity Foundation (OCF)</a>
+        </h3>
+<p id="section-2.6-1">The Open Connectivity Foundation (OCF) <span>[<a href="#ocf" class="cite xref">ocf</a>]</span> defines the process before a device is operational as onboarding.  The first step of this onboarding process is configuring the ownership, i.e., establishing a legitimate user that owns the device. For this, the user is supposed to use an Onboarding tool (OBT) and an Owner Transfer Method (OTM).<a href="#section-2.6-1" class="pilcrow">¶</a></p>
+<p id="section-2.6-2">The OBT is described as a logical entity that may be implemented on a single or multiple entities such as a home gateway, a device management tool, etc. OCF lists several optional OTMs. At the end of the execution of an OTM, the onboarding tool must have provisioned an Owner Credential onto the device. The following owner transfer methods are specified:<a href="#section-2.6-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.6-3.1">Just works: Performs an un-authenticated Diffie-Hellman key exchange over Datagram Transport Layer Security (DTLS). The key exchange results in a symmetric session key which is later used for provisioning. Naturally, this mode is vulnerable to on-path attackers.<a href="#section-2.6-3.1" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.6-3.2">Random PIN: The device generates a PIN code that is entered into the onboarding tool by the user. This pin code is used together with TLS-PSK ciphersuites for establishing a symmetric session key. OCF recommends PIN codes to have an entropy of 40 bits.<a href="#section-2.6-3.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.6-3.3">Manufacturer certificate: An onboarding tool authenticates the device by verifying a manufacturer installed certificate. Similarly, the device may authenticate the onboarding tool by verifying its signature.<a href="#section-2.6-3.3" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.6-3.4">Vendor specific: Vendors implement their own transfer method that accommodates any specific device constraints.<a href="#section-2.6-3.4" class="pilcrow">¶</a>
+</li>
+        </ul>
+<p id="section-2.6-4">Once the onboarding tool and the new device have authenticated and established secure communication, the onboarding tool provisions/configures the device with Owner credentials. Owner credentials may consist of certificates, shared keys, or Kerberos tickets for example.<a href="#section-2.6-4" class="pilcrow">¶</a></p>
+<p id="section-2.6-5">The OBT additionally configures/provisions information about the Access Management Service (AMS), the Credential Management  Service (CMS), and the credentials for interacting with them. The AMS is responsible for provisioning access control entries, while the CMS provisions security credentials necessary for device operation.<a href="#section-2.6-5" class="pilcrow">¶</a></p>
+<p id="section-2.6-6">OCF has the following characteristics:<a href="#section-2.6-6" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.6-7.1">Terms: Configuration, discovery, enrollment, onboarding, provisioning, registration,<a href="#section-2.6-7.1" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.6-7.2">Players: Client, Device, Manager, Manufacturer, Owner, Peer, Server, User<a href="#section-2.6-7.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.6-7.3">Initial beliefs assumed in the device: The device needs to be associated with an owner in the onboarding process and then go through the provisioning process before being considered as trustworty.<a href="#section-2.6-7.3" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.6-7.4">Processes: Onboarding, provisioning.<a href="#section-2.6-7.4" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.6-7.5">Beliefs imparted to the device after protocol execution: In the provisioning phase the device receives the necessary credentials to interact with provisioning services and any other services or devices that are part of the normal operation of the device.<a href="#section-2.6-7.5" class="pilcrow">¶</a>
+</li>
+        </ul>
+</section>
+</div>
+<div id="fast-identity-online-fido-alliance">
+<section id="section-2.7">
+        <h3 id="name-fast-identity-online-fido-a">
+<a href="#section-2.7" class="section-number selfRef">2.7. </a><a href="#name-fast-identity-online-fido-a" class="section-name selfRef">Fast IDentity Online (FIDO) alliance</a>
+        </h3>
+<p id="section-2.7-1">The Fast IDentity Online Alliance (FIDO) is currently specifying an automatic onboarding protocol for IoT devices <span>[<a href="#fidospec" class="cite xref">fidospec</a>]</span>. The goal of this protocol is to provide a new IoT device with information for interacting securely with an online IoT platform. This protocol allows owners to choose the IoT platform for their devices at a late stage in the device lifecycle. The draft specification refers to this feature as "late binding".<a href="#section-2.7-1" class="pilcrow">¶</a></p>
+<p id="section-2.7-2">The FIDO IoT protocol itself is composed of one Device Initialization (DI) protocol and 3 Transfer of Ownership (TO) protocols TO0, TO1, TO2. Protocol messages are encoded in Concise Binary Object Representation (CBOR) <span>[<a href="#RFC8949" class="cite xref">RFC8949</a>]</span> and can be transported over application layer protocols such as Constrained Application Protocol (CoAP) <span>[<a href="#RFC7252" class="cite xref">RFC7252</a>]</span> or directly over TCP, Bluetooth etc. FIDO IoT however assumes that the device already has IP connectivity to a rendezvous server. Establishing this initial IP connectivity is explicitly stated as "out-of-scope" but the draft specification hints at the usage of Hypertext Transfer Protocol (HTTP) <span>[<a href="#RFC7230" class="cite xref">RFC7230</a>]</span> proxies for IP networks and other forms of tunnelling for non-IP networks.<a href="#section-2.7-2" class="pilcrow">¶</a></p>
+<p id="section-2.7-3">The specification only provides a non-normative example of the DI protocol which must be executed in the factory during device manufacture. This protocol embeds initial ownership and manufacturing credentials into Restricted Operation Environment (ROE) on the device. The initial information embedded also includes a unique device identifier (called as GUID in the specification). After DI is executed, the manufacturer has an ownership voucher which is passed along the supply chain to the device owner.<a href="#section-2.7-3" class="pilcrow">¶</a></p>
+<p id="section-2.7-4">When a device is unboxed and powered on by the new owner, the device discovers a network-local or an Internet-based rendezvous server. Protocols (TO0, TO1, and TO2) between the device, the rendezvous server, and the new owner (as the owner onboarding service) ensure that the device and the new owner are able to authenticate each other. Thereafter, the new owner establishes cryptographic control of the device and provides it with credentials of the IoT platform which the device should used.<a href="#section-2.7-4" class="pilcrow">¶</a></p>
+<p id="section-2.7-5">FIDO has the following characteristics:<a href="#section-2.7-5" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.7-6.1">Terms: Provisioning, onboarding, commissioning, initialisation.<a href="#section-2.7-6.1" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.7-6.2">Players: Device, Manager, Manufacturer, Owner, Rendezvous Server,  User<a href="#section-2.7-6.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.7-6.3">Initial beliefs assumed in the device: In the initial state the device is not yet associated with a specific owner. The DI process has to take place to embed owndership and manufacturing credentials in the device, the first in a chaim to create an ownership voucher that will be used to perform the transfer of ownership of the device.<a href="#section-2.7-6.3" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.7-6.4">Processes: Device Initialize Protocol (DI), Transfer Ownership Protocol 0 (TO0), Transfer Ownership Protocol 1 (TO1), Transfer Ownership Protocol 2 (TO2)<a href="#section-2.7-6.4" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.7-6.5">Beliefs imparted to the device after protocol execution: When the device is powered on, and all TO protocols run, the device figures out by contacting with the rendezvous server, who the owner is, authenticate with the owner. At this point the rendezvous server, and owner are able to authenticate the device.<a href="#section-2.7-6.5" class="pilcrow">¶</a>
+</li>
+        </ul>
+</section>
+</div>
+<div id="bootstrapping-remote-secure-key-infrastructures-brski">
+<section id="section-2.8">
+        <h3 id="name-bootstrapping-remote-secure">
+<a href="#section-2.8" class="section-number selfRef">2.8. </a><a href="#name-bootstrapping-remote-secure" class="section-name selfRef">Bootstrapping Remote Secure Key Infrastructures (BRSKI)</a>
+        </h3>
+<p id="section-2.8-1">The ANIMA working group is working on a bootstrapping solution for devices that relies on 802.1AR <span>[<a href="#ieee8021ar" class="cite xref">ieee8021ar</a>]</span> vendor certificates called Bootstrapping Remote Secure Key Infrastructures (BRSKI) <span>[<a href="#RFC8995" class="cite xref">RFC8995</a>]</span>. In addition to vendor installed IEEE 802.1AR certificates, a vendor based service on the Internet is required. Before being authenticated, a new device only needs link-local connectivity, and does not require a routable address. When a vendor provides an Internet based service, devices can be forced to join only specific domains. The document highlights that the described solution is aimed in general at non-constrained (i.e. class 2+ defined in <span>[<a href="#RFC7228" class="cite xref">RFC7228</a>]</span>) devices operating in a non-challenged network. It claims to scale to thousands of devices located in hostile environments, such as ISP provided CPE devices which are drop-shipped to the end user.<a href="#section-2.8-1" class="pilcrow">¶</a></p>
+<p id="section-2.8-2">BRSKI has the following characteristics:<a href="#section-2.8-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.8-3.1">Terms: Bootstrapping, provisioning, enrollment, onboarding.<a href="#section-2.8-3.1" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.8-3.2">Players: Administrator, Client, Cloud Registrar, Configurator, Device, Domain Registrar, Initiator, Join Proxy, JRC, Manufacturer, Owner, Peer, Pledge, Server, User<a href="#section-2.8-3.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.8-3.3">Initial beliefs assumed in the device: Every device has an IDevID, installed and signed by the manufacturer, which is used as a basis for establishing further trust relations. In the initial stage, when the device is deployed in a specific location it cannot securely communicate with the registrar or JRC, to be integrated into the network, so  the device and the registrar need to establish mutual trust.<a href="#section-2.8-3.3" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.8-3.4">Processes: Discover, self-Identify, joint registrar, imprint registrar, enroll.<a href="#section-2.8-3.4" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.8-3.5">Beliefs imparted to the device after protocol execution: After the process has finished and the device is imprinted, and trusts the registrar/JRC, through a voucher issued by the manufacturer and verified by the device.<a href="#section-2.8-3.5" class="pilcrow">¶</a>
+</li>
+        </ul>
+</section>
+</div>
+<div id="secure-zero-touch-provisioning-sztp">
+<section id="section-2.9">
+        <h3 id="name-secure-zero-touch-provision">
+<a href="#section-2.9" class="section-number selfRef">2.9. </a><a href="#name-secure-zero-touch-provision" class="section-name selfRef">Secure Zero Touch Provisioning (SZTP)</a>
+        </h3>
+<p id="section-2.9-1"><span>[<a href="#RFC8572" class="cite xref">RFC8572</a>]</span> defines a bootstrapping strategy for enabling devices to securely obtain all the configuration information with no installer input, beyond the actual physical placement and connection of cables. Their goal is to enable a secure NETCONF <span>[<a href="#RFC6241" class="cite xref">RFC6241</a>]</span> or RESTCONF <span>[<a href="#RFC8040" class="cite xref">RFC8040</a>]</span> connection to the deployment specific network management system (NMS). SZTP requires the devices to be configured with trust anchors in the form of X.509 certificates. <span>[<a href="#RFC8572" class="cite xref">RFC8572</a>]</span> is similar to BRSKI based on <span>[<a href="#RFC8366" class="cite xref">RFC8366</a>]</span>.<a href="#section-2.9-1" class="pilcrow">¶</a></p>
+<p id="section-2.9-2">SZTP has the following characteristics:<a href="#section-2.9-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.9-3.1">Terms: Bootstrapping, provisioning, onboarding, enrollment, configuration, discovery.<a href="#section-2.9-3.1" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.9-3.2">Players: Administrator, Bootstrap Server, Client, Device, Manufacturer, Onboarding Server, Owner, Redirect Server, Bootstrap Server, User, Owner<a href="#section-2.9-3.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.9-3.3">Initial beliefs assumed in the device: Initially, the device needs have pre-configured a state that allows allows the bootstrap processs. Among other information, the trust anchor for ownership voucher, client &amp; intermediaries certificates, and list of trusted bootstrap servers and their trust anchors.<a href="#section-2.9-3.3" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.9-3.4">Processes: Initial state, Boot sequence, Processing bootstrapping data, validating signed data, processing redirect information, processing onboarding information.<a href="#section-2.9-3.4" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.9-3.5">Beliefs imparted to the device after protocol execution: The bootstrapping process provides the device with all the necessary information (onboarding information) to create a trust relation between the device and the bootstrap server. This allows the device to download its boot image and the necessary initial configuration. The enrollment information will allow a device to be bootstrapped and operate establishing secure connections with other systems.<a href="#section-2.9-3.5" class="pilcrow">¶</a>
+</li>
+        </ul>
+</section>
+</div>
+<div id="lpwan">
+<section id="section-2.10">
+        <h3 id="name-lpwan">
+<a href="#section-2.10" class="section-number selfRef">2.10. </a><a href="#name-lpwan" class="section-name selfRef">LPWAN</a>
+        </h3>
+<p id="section-2.10-1">Low Power Wide Area Network (LPWAN) encompasses a wide variety of technologies whose link-layer characteristics are severely constrained in comparison to other typical IoT link-layer technologies such as Bluetooth or IEEE 802.15.4. While some LPWAN technologies rely on proprietary bootstrapping solutions which are not publicly accessible, others simply ignore the challenge of bootstrapping and key distribution. In this section, we discuss the bootstrapping methods used by LPWAN technologies covered in <span>[<a href="#RFC8376" class="cite xref">RFC8376</a>]</span>.<a href="#section-2.10-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.10-2.1">LoRaWAN <span>[<a href="#LoRaWAN" class="cite xref">LoRaWAN</a>]</span> describes its own protocol to authenticate nodes before allowing them join a LoRaWAN network. This process is called as joining and it is based on pre-shared keys (called AppKeys in the standard). The joining procedure comprises only one exchange (join-request and join-accept) between the joining node and the network server. There are several adaptations to this joining procedure that allow network servers to delegate authentication and authorization to a backend AAA infrastructure <span>[<a href="#RFC2904" class="cite xref">RFC2904</a>]</span>.<a href="#section-2.10-2.1" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.10-2.2">Wi-SUN Alliance Field Area Network (FAN) uses IEEE 802.1X <span>[<a href="#ieee8021x" class="cite xref">ieee8021x</a>]</span> and EAP-TLS for network access authentication. It performs a 4-way handshake to establish a session keys after EAP-TLS authentication.<a href="#section-2.10-2.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.10-2.3">NB-IoT relies on the traditional 3GPP mutual authentication scheme based on a shared-secret in the Subscriber Identity Module (SIM) of the device and the mobile operator.<a href="#section-2.10-2.3" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.10-2.4">Sigfox security is based on unique device identifiers and cryptographic keys. As stated in <span>[<a href="#RFC8376" class="cite xref">RFC8376</a>]</span>, although the algorithms and keying details are not publicly available, there is sufficient information to indicate that bootstrapping in Sigfox is based on pre-established credentials between the device and the Sigfox network.<a href="#section-2.10-2.4" class="pilcrow">¶</a>
+</li>
+        </ul>
+<p id="section-2.10-3">From the above, it is clear that all LPWAN technologies rely on pre-provisioned credentials for authentication between a new device and the network.<a href="#section-2.10-3" class="pilcrow">¶</a></p>
+<p id="section-2.10-4">LPWAN has the following characteristics:<a href="#section-2.10-4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.10-5.1">Terms: Provisioning, configuration, discovery.<a href="#section-2.10-5.1" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.10-5.2">Players: Administrator, Authenticator, Border Router, Client, Device, Manager, Network Server, User<a href="#section-2.10-5.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.10-5.3">Initial beliefs assumed in the device: The device normally has credentials that are used to directly secure the communications or to device key material to do so. There is a basic trust in the network server.<a href="#section-2.10-5.3" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.10-5.4">Processes: Provisioning<a href="#section-2.10-5.4" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.10-5.5">Beliefs imparted to the device after protocol execution: Either because of an authentication process that results in newly derived key material or the pre-provisioned key material is used, the device is able to exchange information securely through the network server.<a href="#section-2.10-5.5" class="pilcrow">¶</a>
+</li>
+        </ul>
+</section>
+</div>
+<div id="thread">
+<section id="section-2.11">
+        <h3 id="name-thread">
+<a href="#section-2.11" class="section-number selfRef">2.11. </a><a href="#name-thread" class="section-name selfRef">Thread</a>
+        </h3>
+<p id="section-2.11-1">Thread Group commissioning <span>[<a href="#threadcommissioning" class="cite xref">threadcommissioning</a>]</span> introduces a two phased process i.e. Petitioning and Joining. Entities involved are leader, joiner, commissioner, joiner router, and border router. Leader is the first device in Thread network that must be commissioned using out-of-band process and is used to inject correct user generated Commissioning Credentials (can be changed later) into Thread Network. Joiner is the node that intends to get authenticated and authorized on Thread Network. Commissioner is either within the Thread Network (Native) or connected with Thread Network via a WLAN (External).<a href="#section-2.11-1" class="pilcrow">¶</a></p>
+<p id="section-2.11-2">Under some topologies, Joiner Router and Border Router facilitate the Joiner node to reach Native and External Commissioner, respectively. Petitioning begins before Joining process and is used to grant sole commissioning authority to a Commissioner. After an authorized Commissioner is designated, eligible thread devices can join network. Pair-wise key is shared between Commissioner and Joiner, network parameters (such as network name, security policy, etc.,) are sent out securely (using pair-wise key) by Joiner Router to Joiner for letting Joiner to join the Thread Network. Entities involved in Joining process depends on system topology i.e. location of Commissioner and Joiner. Thread networks only operate using IPv6. Thread devices can devise GUAs (Global Unicast Addresses) <span>[<a href="#RFC4291" class="cite xref">RFC4291</a>]</span>. Provision also exist via Border Router, for Thread device to acquire individual global address by means of DHCPv6 or using SLAAC (Stateless Address Autoconfiguration) address derived with advertised network prefix.<a href="#section-2.11-2" class="pilcrow">¶</a></p>
+<p id="section-2.11-3">Thread has the following characteristics:<a href="#section-2.11-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.11-4.1">Terms: Commissioning, discovery, provisioning.<a href="#section-2.11-4.1" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.11-4.2">Players: Administrator, Border Agent, Border Router, Commissioner, Commissioner Candidate, Configurator, Device, End Device, End Device, Endpoint Identifier, Initiator, Joiner, Joiner Router, Owner, Peer, Responder, Server, User<a href="#section-2.11-4.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.11-4.3">Initial beliefs assumed in the device: The joiner needs to share credentials with an entity that belongs to the Thread network, prior to the authentication process.<a href="#section-2.11-4.3" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.11-4.4">Processes: Petitioning, Joining<a href="#section-2.11-4.4" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.11-4.5">Beliefs imparted to the device after protocol execution: Once the authentication takes place, a trust relation is established between the Joiner and the Commissioner it receives the network parameters needed to be attached to the Thread network.<a href="#section-2.11-4.5" class="pilcrow">¶</a>
+</li>
+        </ul>
+</section>
+</div>
+</section>
+</div>
+<div id="comp">
+<section id="section-3">
+      <h2 id="name-comparison">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-comparison" class="section-name selfRef">Comparison</a>
+      </h2>
+<p id="section-3-1">There are several stages before a device becomes fully operational. There is typically a stage where some sort of credential is installed. The nature or purpose of this credential can be varied, form being part of the IoT device authentication, to a credential from a 3rd trusted party, be it the manufacturer or the owner. Solution differ on this initial process, and in some cases this can even be done in an out-of-band fashion.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-2">After some initial credential is installed, there is a process that typically involves authentication establishing initial trust, after which  credentials and/or parameters are configured or installed into the device.<a href="#section-3-2" class="pilcrow">¶</a></p>
+<p id="section-3-3">Finally, when the entities involved in the process are authenticated and the configuration and key material established, the normal operation of the IoT device can take place.<a href="#section-3-3" class="pilcrow">¶</a></p>
+<div id="comp-term">
+<section id="section-3.1">
+        <h3 id="name-comparison-of-terminology">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-comparison-of-terminology" class="section-name selfRef">Comparison of terminology</a>
+        </h3>
+<p id="section-3.1-1">The specifics of every term varies depending on the technology, but we enumerate here the basic terminology and what it means for the different solutions.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.1-2.1">
+            <p id="section-3.1-2.1.1">Bootstrapping:<a href="#section-3.1-2.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.1-2.1.2.1">DPP: Client obtains the Controller’s public bootstrapping key and IP address<a href="#section-3.1-2.1.2.1" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-3.1-2.1.2.2">OMA: An IoT device retrieves and processes all the bootstrap data<a href="#section-3.1-2.1.2.2" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-3.1-2.1.2.3">EST: installation of the Explicit TA database<a href="#section-3.1-2.1.2.3" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-3.1-2.1.2.4">BRSKI: A protocol to obtain a local trust anchor.<a href="#section-3.1-2.1.2.4" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-3.1-2.1.2.5">SZTP: The process by which obtains "bootstrapping data" such as conveyed information, owner certificate and owner voucher.<a href="#section-3.1-2.1.2.5" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-3.1-2.1.2.6">EAP-NOOB: For an IoT device to be registered, authenticated, authorized and for it to derive key material to act as a trustworty entity in the security domain where it is deployed.<a href="#section-3.1-2.1.2.6" class="pilcrow">¶</a>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="section-3.1-2.2">
+            <p id="section-3.1-2.2.1">configuration:<a href="#section-3.1-2.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.1-2.2.2.1">DPP: The process performed by a Configurator by which the Enrollee is provisioned.<a href="#section-3.1-2.2.2.1" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-3.1-2.2.2.2">OMA: Adding or removing an LwM2M Server Account to or from the LwM2M Client configuration.<a href="#section-3.1-2.2.2.2" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-3.1-2.2.2.3">OCF: The necessary information the Device must hold to be considered as ready for normal operation.<a href="#section-3.1-2.2.2.3" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-3.1-2.2.2.4">EST: The basic information (e.g., TA database) needed to initiate protocol operation.<a href="#section-3.1-2.2.2.4" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-3.1-2.2.2.5">SZTP: The system configuration  to be installed into the device by the bootstrapping process.<a href="#section-3.1-2.2.2.5" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-3.1-2.2.2.6">EAP-NOOB: Establishing  necessary information for the device to operate.<a href="#section-3.1-2.2.2.6" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-3.1-2.2.2.7">LPWAN: In LoRaWAN, the information related to the working of the device and protocol.<a href="#section-3.1-2.2.2.7" class="pilcrow">¶</a>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="section-3.1-2.3">
+            <p id="section-3.1-2.3.1">discovery:<a href="#section-3.1-2.3.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.1-2.3.2.1">DPP: Exchange that allows obtaining specific information such as SSID, operating channel and band.<a href="#section-3.1-2.3.2.1" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-3.1-2.3.2.2">OCF: Making the different resources available through URIs.<a href="#section-3.1-2.3.2.2" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-3.1-2.3.2.3">BRSKI: Locating an entity that needs to take part of the bootstrapping process (e.g., Join proxy)<a href="#section-3.1-2.3.2.3" class="pilcrow">¶</a>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="section-3.1-2.4">
+            <p id="section-3.1-2.4.1">enrollment:<a href="#section-3.1-2.4.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.1-2.4.2.1">EST: The process of obtaining the credentials needed to perform the device normal operation.<a href="#section-3.1-2.4.2.1" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-3.1-2.4.2.2">BRSKI: Same process describe as EST.<a href="#section-3.1-2.4.2.2" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-3.1-2.4.2.3">SZTP: The process of an owner joining a manufacturer's SZTP program.<a href="#section-3.1-2.4.2.3" class="pilcrow">¶</a>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="section-3.1-2.5">
+            <p id="section-3.1-2.5.1">provisioning:<a href="#section-3.1-2.5.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.1-2.5.2.1">DPP: Securely enabling a device to establish secure associations with other devices in a network.<a href="#section-3.1-2.5.2.1" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-3.1-2.5.2.2">OMA: Establishing security credentials and access control lists by a dedicated LwM2M bootstrap server.<a href="#section-3.1-2.5.2.2" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-3.1-2.5.2.3">OCF: A set of processes that take place both during and after the ownership transfer. These entail configuration of credentials, and security-related resources for any services or devices that the provisioned device needs to interact with in the future.<a href="#section-3.1-2.5.2.3" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-3.1-2.5.2.4">Bluetooth: The procedure by which a device is authenticated, and a secure link is established, becoming a trustworthy node in the network.<a href="#section-3.1-2.5.2.4" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-3.1-2.5.2.5">FIDO: Same as FIDO onboarding.<a href="#section-3.1-2.5.2.5" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-3.1-2.5.2.6">SZTP: The set of steps that take place to enable a device to establish secure connections with other systems.<a href="#section-3.1-2.5.2.6" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-3.1-2.5.2.7">LPWAN: In LoRaWAN, the establishment of configuration data and credentials.<a href="#section-3.1-2.5.2.7" class="pilcrow">¶</a>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="section-3.1-2.6">
+            <p id="section-3.1-2.6.1">intialization:<a href="#section-3.1-2.6.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.1-2.6.2.1">OMA: When Bootstrap-Delete operation is used, to restore a device.<a href="#section-3.1-2.6.2.1" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-3.1-2.6.2.2">FIDO: Protocol (DI), establishing basic information at manufacture.<a href="#section-3.1-2.6.2.2" class="pilcrow">¶</a>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="section-3.1-2.7">
+            <p id="section-3.1-2.7.1">registration:<a href="#section-3.1-2.7.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.1-2.7.2.1">OMA: Establishing a registration session, which is an association between the client and the server.<a href="#section-3.1-2.7.2.1" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-3.1-2.7.2.2">EAP-NOOB: Add information about an IoT device in a server database.<a href="#section-3.1-2.7.2.2" class="pilcrow">¶</a>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="section-3.1-2.8">
+            <p id="section-3.1-2.8.1">onboarding:<a href="#section-3.1-2.8.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.1-2.8.2.1">OCF:  The device is considered to complete the onboarding after the ownership of the Device has been transferred and the Device provisioned.<a href="#section-3.1-2.8.2.1" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-3.1-2.8.2.2">FIDO: The procedure of installing configuration information and secret to a device so that it may safely connect to and communicate with an IoT platform.<a href="#section-3.1-2.8.2.2" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-3.1-2.8.2.3">SZTP: information related to the boot image a device must be running, an initial configuration the device must commit, and scripts that the device must successfully execute.<a href="#section-3.1-2.8.2.3" class="pilcrow">¶</a>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="section-3.1-2.9">
+            <p id="section-3.1-2.9.1">commissioning:<a href="#section-3.1-2.9.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.1-2.9.2.1">Thread: The process of a Thread device joining a Thread network.<a href="#section-3.1-2.9.2.1" class="pilcrow">¶</a>
+</li>
+            </ul>
+</li>
+          <li class="normal" id="section-3.1-2.10">
+            <p id="section-3.1-2.10.1">imprint:<a href="#section-3.1-2.10.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.1-2.10.2.1">BRSKI: The process by which a device obtains the needed information to act as trustworthy entity within the network or domain<a href="#section-3.1-2.10.2.1" class="pilcrow">¶</a>
+</li>
+            </ul>
+</li>
+        </ul>
+</section>
+</div>
+<div id="comp-players">
+<section id="section-3.2">
+        <h3 id="name-comparison-of-players">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-comparison-of-players" class="section-name selfRef">Comparison of players</a>
+        </h3>
+<p id="section-3.2-1">In this section we classify the different players.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.2-2">Human User: user<a href="#section-3.2-2" class="pilcrow">¶</a></p>
+<p id="section-3.2-3">Device that intends to securely join a network: pledge, device, client, peer, persona, enrollee, candidate<a href="#section-3.2-3" class="pilcrow">¶</a></p>
+<p id="section-3.2-4">Entity that makes the device: Manufacturer<a href="#section-3.2-4" class="pilcrow">¶</a></p>
+<p id="section-3.2-5">Entity that owns the device: owner, manager<a href="#section-3.2-5" class="pilcrow">¶</a></p>
+<p id="section-3.2-6">Entity with which the device establishes a connection: IoT platform, Rendezvous Server, Server,<a href="#section-3.2-6" class="pilcrow">¶</a></p>
+<p id="section-3.2-7">Entity that aids in  the process: Join Proxy, Bootstrap Server, Onboarding Server, Border Router<a href="#section-3.2-7" class="pilcrow">¶</a></p>
+<p id="section-3.2-8">Person that manages a deployment or system: Administrator<a href="#section-3.2-8" class="pilcrow">¶</a></p>
+<p id="section-3.2-9">Entity that steers the process for the IoT device to securely join the network: Configurator, Bootstrap Server, Rendezvous Server, JRC, Onboarding/Redirect Server, Commissioner.<a href="#section-3.2-9" class="pilcrow">¶</a></p>
+<p id="section-3.2-10">External or third-party entity that intervenes in the process:  Registrar, MASA<a href="#section-3.2-10" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="comp-beliefs">
+<section id="section-3.3">
+        <h3 id="name-comparison-of-initial-belie">
+<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-comparison-of-initial-belie" class="section-name selfRef">Comparison of initial beliefs</a>
+        </h3>
+<p id="section-3.3-1">The IoT devices may have different initial beliefs depending on the credentials pre-installed, during the manufacturing process or prior to being turned on. There are cases where the initial credentials that need to be shared to establish basic trust, or they are exchanged during one of the procedures after the device is turned on, not installed during manufacturing.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+<div id="no-initial-trust-established">
+<section id="section-3.3.1">
+          <h4 id="name-no-initial-trust-establishe">
+<a href="#section-3.3.1" class="section-number selfRef">3.3.1. </a><a href="#name-no-initial-trust-establishe" class="section-name selfRef">No initial trust established</a>
+          </h4>
+<p id="section-3.3.1-1">EAP-NOOB does not require initial configuration of credentials to establish trust, since its done using the out-of-band process.<a href="#section-3.3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.3.1-2">The OCF device starts as unowned. It has to perform an ownership transfer, to establish basic trust to perform onboarding and  provisioning. Depending on the Owener Transfer Mode (OTM) it can be considered to have not initial trust based on the credentials installed.<a href="#section-3.3.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.3.1-3">Bluetooth devices start as unprovisioned. Initial trust is established as a consequence of exchanging public keys and performing the authentication. If the public keys are ephemeral, there is no initial credential establishment.<a href="#section-3.3.1-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="initial-trust-based-on-the-credentials-installed">
+<section id="section-3.3.2">
+          <h4 id="name-initial-trust-based-on-the-">
+<a href="#section-3.3.2" class="section-number selfRef">3.3.2. </a><a href="#name-initial-trust-based-on-the-" class="section-name selfRef">Initial trust based on the credentials installed</a>
+          </h4>
+<p id="section-3.3.2-1">These credentials may very from the time of installing, and the entity to which it related. In this sense, they could be from the  manufacturer, owner or other entity.<a href="#section-3.3.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.3.2-2">FIDO devices have installed during the manufacturing process a set of ownership credentials (i.e., ownership voucher) and additional information to determine the current owner of the device. Hence, there is an initial trust from the IoT device and the owner. With this basic setup, and and the cooperation among device, owner and rendezvous server, the onboarding process can take place.<a href="#section-3.3.2-2" class="pilcrow">¶</a></p>
+<p id="section-3.3.2-3">EST devices are configured with the needed information to perform mutual authentication and for authorization between the EST client and server.<a href="#section-3.3.2-3" class="pilcrow">¶</a></p>
+<p id="section-3.3.2-4">BRSKI have manufacturer-installed certificates as starting point to establish trust.<a href="#section-3.3.2-4" class="pilcrow">¶</a></p>
+<p id="section-3.3.2-5">SZTP have pre-configured initial state which provides the basis for trust.<a href="#section-3.3.2-5" class="pilcrow">¶</a></p>
+<p id="section-3.3.2-6">LPWAN specifics depends on the technology, but they all have in common some pre-installed credentials that allows the establishment of trust and to secure the communications.<a href="#section-3.3.2-6" class="pilcrow">¶</a></p>
+<p id="section-3.3.2-7">Thread devices, share credentials as well to establish trust.<a href="#section-3.3.2-7" class="pilcrow">¶</a></p>
+<p id="section-3.3.2-8">OMA devices can have all the necessary information to start working on the network where they are deployed, if they have the factory bootstrap, hence all needed credentials to establish trust. There need to be installed some basic credentials to establish trust with the bootstrap server and perform the bootstrapping.<a href="#section-3.3.2-8" class="pilcrow">¶</a></p>
+<p id="section-3.3.2-9">DPP initial trust is established during the bootstrapping where the public key is transmitted.<a href="#section-3.3.2-9" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="comp-process">
+<section id="section-3.4">
+        <h3 id="name-comparison-of-processes">
+<a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-comparison-of-processes" class="section-name selfRef">Comparison of processes</a>
+        </h3>
+<p id="section-3.4-1">Analyzing the different terms used over the different solutions reviewed in this document, we can identify several processes. These are named differently in some cases, and not every technologies considers them all as part of their the following common concepts:<a href="#section-3.4-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.4-2.1">To refer to the process previous to the device being turned on, in which some information, or credentials are installed into the device. This process is commonly referred to as manufacture. Is in this phase where the IoT devices have installed the needed information (specifics depend on the technology) to provide the basis for trust and to authenticate other entities.<a href="#section-3.4-2.1" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-3.4-2.2">To refer to the process after the device is turned on and intends to locate the entity with which it has to communicate to start the authentication process to be integrated into the security domain. Here is where the device start the process to get to perform its normal operation.<a href="#section-3.4-2.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-3.4-2.3">To the process by which the device obtains additional credentials, in addition to what it already had installed before being turned on.<a href="#section-3.4-2.3" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-3.4-2.4">To the process by which the device is authenticated and established a trust relation.<a href="#section-3.4-2.4" class="pilcrow">¶</a>
+</li>
+        </ul>
+</section>
+</div>
+<div id="comp-impart">
+<section id="section-3.5">
+        <h3 id="name-comparison-of-knowledge-imp">
+<a href="#section-3.5" class="section-number selfRef">3.5. </a><a href="#name-comparison-of-knowledge-imp" class="section-name selfRef">Comparison of knowledge imparted to the device</a>
+        </h3>
+<p id="section-3.5-1">Even though the devices might start from a different place, in terms of initial credentials as basis for trust, when they finish their processes, they become trusted parties within the domain they are deployed or at least have a trust relation with a specific entity. The difference may strive in the number of trust relations are stablished during the process, as they may have not only established a trust relation with local entities where they perform their operation, but other external entities as well.<a href="#section-3.5-1" class="pilcrow">¶</a></p>
+<p id="section-3.5-2">In FIDO, once the onboarding process has taken place, the IoT device is mutually authenticated with the current owner, and the needed secrets and configuration data is installed into the device, which as a result is able to connect and interact securely with the target IoT platform.<a href="#section-3.5-2" class="pilcrow">¶</a></p>
+<p id="section-3.5-3">In EAP-NOOB, once the bootstrapping is completed, the IoT device not only has a trust relation with the EAP server, but the EAP authenticator can be established as well, based on the shared credentials that are derived during the authentication process.<a href="#section-3.5-3" class="pilcrow">¶</a></p>
+<p id="section-3.5-4">In Bluetooth the trust is expanded to the local network as there is key material shared among the different entities of the network.<a href="#section-3.5-4" class="pilcrow">¶</a></p>
+<p id="section-3.5-5">In Thread once the joiner has successfully completed the process, it can communicate directly with all Thread devices in the network.<a href="#section-3.5-5" class="pilcrow">¶</a></p>
+<p id="section-3.5-6">LPWAN has a more limited scope and they usually have specific keys for applications and network communications.<a href="#section-3.5-6" class="pilcrow">¶</a></p>
+<p id="section-3.5-7">EST provides the devices with the enrollment information such as certificates and symmetric keys that can be used to establish trust with different peers.<a href="#section-3.5-7" class="pilcrow">¶</a></p>
+<p id="section-3.5-8">BRSKI after running it is able to verify that the communicating entities are who they claim to be, and obtain domain specific certificates to act as trustworhty entities within the domain.<a href="#section-3.5-8" class="pilcrow">¶</a></p>
+<p id="section-3.5-9">SZTP after running, the device has obtained onboarding information and is equipped to establish secure connections with other systems.<a href="#section-3.5-9" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="security-considerations">
+<section id="section-4">
+      <h2 id="name-security-considerations">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+      </h2>
+<p id="section-4-1">This draft does not take any posture on the security properties of the different bootstrapping protocols discussed. Specific security considerations of bootstrapping protocols are present in the respective specifications.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-2">Nonetheless, we briefly discuss some important security aspects which are not fully explored in various specifications.<a href="#section-4-2" class="pilcrow">¶</a></p>
+<p id="section-4-3">Firstly, an IoT system may deal with authorization for resources and services separately from initial security setup in terms of timing as well as protocols. As an example, two resource-constrained devices A and B may perform mutual authentication using credentials provided by an offline third-party X before device A obtains authorization for running a particular application on device B from an online third-party Y. In some cases, authentication and authorization maybe tightly coupled, e.g., successful authentication also means successful authorization.<a href="#section-4-3" class="pilcrow">¶</a></p>
+<p id="section-4-4">Secondly, initial security setup of IoT devices may be necessary several times during the device lifecycle since keys have limited lifetimes and devices may be lost or resold. Protocols and systems must have adequate provisions for revocation and fresh security setup. A rerun of the security setup mechanism must be as secure as the initial security setup regardless of whether it is done manually or automatically over the network.<a href="#section-4-4" class="pilcrow">¶</a></p>
+<p id="section-4-5">Lastly, some IoT networks use a common group key for multicast and broadcast traffic. As the number of devices in a network increase over time, a common group key may not be scalable and the same network may need to be split into separate groups with different keys. Bootstrapping and provisioning protocols may need appropriate mechanisms for identifying and distributing keys to the current member devices of each group.<a href="#section-4-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="iana-considerations">
+<section id="section-5">
+      <h2 id="name-iana-considerations">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+      </h2>
+<p id="section-5-1">There are no IANA considerations for this document.<a href="#section-5-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="acknowledgements">
+<section id="section-6">
+      <h2 id="name-acknowledgements">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-acknowledgements" class="section-name selfRef">Acknowledgements</a>
+      </h2>
+<p id="section-6-1">We would like to thank Tuomas Aura, Hannes Tschofenig, and Michael Richardson for providing extensive feedback as well as Rafa Marin-Lopez for his support.<a href="#section-6-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<section id="section-7">
+      <h2 id="name-informative-references">
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+      </h2>
+<dl class="references">
+<dt id="dpp">[dpp]</dt>
+      <dd>
+<span class="refAuthor">Wi-Fi Alliance</span>, <span class="refTitle">"Wi-Fi Easy Connect Specification"</span>, <span class="seriesInfo">Wi-Fi Alliance Version 3.0</span>, <time datetime="2018" class="refDate">2018</time>, <span>&lt;<a href="https://www.wi-fi.org/wi-fi-download/35330">https://www.wi-fi.org/wi-fi-download/35330</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="fidospec">[fidospec]</dt>
+      <dd>
+<span class="refAuthor">Fast Identity Online Alliance</span>, <span class="refTitle">"FIDO Device Onboard Specification"</span>, <span class="seriesInfo">Fido Alliance Version: 1.1</span>, <time datetime="2022-04" class="refDate">April 2022</time>, <span>&lt;<a href="https://fidoalliance.org/specifications/download-iot-specifications/">https://fidoalliance.org/specifications/download-iot-specifications/</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="ieee8021ar">[ieee8021ar]</dt>
+      <dd>
+<span class="refAuthor">IEEE</span>, <span class="refTitle">"IEEE Standard for Local and metropolitan area networks–Secure Device Identity"</span>, <time datetime="2018" class="refDate">2018</time>, <span>&lt;<a href="https://1.ieee802.org/security/802-1ar/">https://1.ieee802.org/security/802-1ar/</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="ieee8021x">[ieee8021x]</dt>
+      <dd>
+<span class="refAuthor">IEEE</span>, <span class="refTitle">"IEEE Standard for Local and metropolitan area networks–Port-Based Network Access Control"</span>, <time datetime="2020" class="refDate">2020</time>, <span>&lt;<a href="https://1.ieee802.org/security/802-1x/">https://1.ieee802.org/security/802-1x/</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="LoRaWAN">[LoRaWAN]</dt>
+      <dd>
+<span class="refAuthor">LoRa Alliance</span>, <span class="refTitle">"LoRa Specification"</span>, <span class="seriesInfo">LoRa Alliance Version: 1.1</span>, <time datetime="2017-10" class="refDate">October 2017</time>, <span>&lt;<a href="https://lora-alliance.org/resource_hub/lorawan-specification-v1-1/">https://lora-alliance.org/resource_hub/lorawan-specification-v1-1/</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="ocf">[ocf]</dt>
+      <dd>
+<span class="refAuthor">Open Connectivity Foundation</span>, <span class="refTitle">"OCF Security Specification"</span>, <span class="seriesInfo">Version 2.2.6</span>, <time datetime="2022-10" class="refDate">October 2022</time>, <span>&lt;<a href="https://openconnectivity.org/specs/OCF_Security_Specification.pdf">https://openconnectivity.org/specs/OCF_Security_Specification.pdf</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="oma">[oma]</dt>
+      <dd>
+<span class="refAuthor">Open Mobile Alliance</span>, <span class="refTitle">"Lightweight Machine to Machine Technical Specification: Core"</span>, <span class="seriesInfo">Approved Version 1.2.1</span>, <time datetime="2022-12" class="refDate">December 2022</time>, <span>&lt;<a href="https://openmobilealliance.org/release/LightweightM2M/V1_2_1-20221209-A/OMA-TS-LightweightM2M_Core-V1_2_1-20221209-A.pdf">https://openmobilealliance.org/release/LightweightM2M/V1_2_1-20221209-A/OMA-TS-LightweightM2M_Core-V1_2_1-20221209-A.pdf</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="oma-transport">[oma-transport]</dt>
+      <dd>
+<span class="refAuthor">Open Mobile Alliance</span>, <span class="refTitle">"Lightweight Machine to Machine Technical Specification: Transport Bindings"</span>, <span class="seriesInfo">Approved Version 1.2.1</span>, <time datetime="2022-12" class="refDate">December 2022</time>, <span>&lt;<a href="https://www.openmobilealliance.org/release/LightweightM2M/V1_2_1-20221209-A/OMA-TS-LightweightM2M_Transport-V1_2_1-20221209-A.pdf">https://www.openmobilealliance.org/release/LightweightM2M/V1_2_1-20221209-A/OMA-TS-LightweightM2M_Transport-V1_2_1-20221209-A.pdf</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC2904">[RFC2904]</dt>
+      <dd>
+<span class="refAuthor">Vollbrecht, J.</span>, <span class="refAuthor">Calhoun, P.</span>, <span class="refAuthor">Farrell, S.</span>, <span class="refAuthor">Gommans, L.</span>, <span class="refAuthor">Gross, G.</span>, <span class="refAuthor">de Bruijn, B.</span>, <span class="refAuthor">de Laat, C.</span>, <span class="refAuthor">Holdrege, M.</span>, and <span class="refAuthor">D. Spence</span>, <span class="refTitle">"AAA Authorization Framework"</span>, <span class="seriesInfo">RFC 2904</span>, <span class="seriesInfo">DOI 10.17487/RFC2904</span>, <time datetime="2000-08" class="refDate">August 2000</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2904">https://www.rfc-editor.org/rfc/rfc2904</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC4291">[RFC4291]</dt>
+      <dd>
+<span class="refAuthor">Hinden, R.</span> and <span class="refAuthor">S. Deering</span>, <span class="refTitle">"IP Version 6 Addressing Architecture"</span>, <span class="seriesInfo">RFC 4291</span>, <span class="seriesInfo">DOI 10.17487/RFC4291</span>, <time datetime="2006-02" class="refDate">February 2006</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4291">https://www.rfc-editor.org/rfc/rfc4291</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC5272">[RFC5272]</dt>
+      <dd>
+<span class="refAuthor">Schaad, J.</span> and <span class="refAuthor">M. Myers</span>, <span class="refTitle">"Certificate Management over CMS (CMC)"</span>, <span class="seriesInfo">RFC 5272</span>, <span class="seriesInfo">DOI 10.17487/RFC5272</span>, <time datetime="2008-06" class="refDate">June 2008</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5272">https://www.rfc-editor.org/rfc/rfc5272</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6241">[RFC6241]</dt>
+      <dd>
+<span class="refAuthor">Enns, R., Ed.</span>, <span class="refAuthor">Bjorklund, M., Ed.</span>, <span class="refAuthor">Schoenwaelder, J., Ed.</span>, and <span class="refAuthor">A. Bierman, Ed.</span>, <span class="refTitle">"Network Configuration Protocol (NETCONF)"</span>, <span class="seriesInfo">RFC 6241</span>, <span class="seriesInfo">DOI 10.17487/RFC6241</span>, <time datetime="2011-06" class="refDate">June 2011</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6241">https://www.rfc-editor.org/rfc/rfc6241</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7030">[RFC7030]</dt>
+      <dd>
+<span class="refAuthor">Pritikin, M., Ed.</span>, <span class="refAuthor">Yee, P., Ed.</span>, and <span class="refAuthor">D. Harkins, Ed.</span>, <span class="refTitle">"Enrollment over Secure Transport"</span>, <span class="seriesInfo">RFC 7030</span>, <span class="seriesInfo">DOI 10.17487/RFC7030</span>, <time datetime="2013-10" class="refDate">October 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7030">https://www.rfc-editor.org/rfc/rfc7030</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7228">[RFC7228]</dt>
+      <dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refAuthor">Ersue, M.</span>, and <span class="refAuthor">A. Keranen</span>, <span class="refTitle">"Terminology for Constrained-Node Networks"</span>, <span class="seriesInfo">RFC 7228</span>, <span class="seriesInfo">DOI 10.17487/RFC7228</span>, <time datetime="2014-05" class="refDate">May 2014</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7228">https://www.rfc-editor.org/rfc/rfc7228</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7230">[RFC7230]</dt>
+      <dd>
+<span class="refAuthor">Fielding, R., Ed.</span> and <span class="refAuthor">J. Reschke, Ed.</span>, <span class="refTitle">"Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing"</span>, <span class="seriesInfo">RFC 7230</span>, <span class="seriesInfo">DOI 10.17487/RFC7230</span>, <time datetime="2014-06" class="refDate">June 2014</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7230">https://www.rfc-editor.org/rfc/rfc7230</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7252">[RFC7252]</dt>
+      <dd>
+<span class="refAuthor">Shelby, Z.</span>, <span class="refAuthor">Hartke, K.</span>, and <span class="refAuthor">C. Bormann</span>, <span class="refTitle">"The Constrained Application Protocol (CoAP)"</span>, <span class="seriesInfo">RFC 7252</span>, <span class="seriesInfo">DOI 10.17487/RFC7252</span>, <time datetime="2014-06" class="refDate">June 2014</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7252">https://www.rfc-editor.org/rfc/rfc7252</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8040">[RFC8040]</dt>
+      <dd>
+<span class="refAuthor">Bierman, A.</span>, <span class="refAuthor">Bjorklund, M.</span>, and <span class="refAuthor">K. Watsen</span>, <span class="refTitle">"RESTCONF Protocol"</span>, <span class="seriesInfo">RFC 8040</span>, <span class="seriesInfo">DOI 10.17487/RFC8040</span>, <time datetime="2017-01" class="refDate">January 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8040">https://www.rfc-editor.org/rfc/rfc8040</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8366">[RFC8366]</dt>
+      <dd>
+<span class="refAuthor">Watsen, K.</span>, <span class="refAuthor">Richardson, M.</span>, <span class="refAuthor">Pritikin, M.</span>, and <span class="refAuthor">T. Eckert</span>, <span class="refTitle">"A Voucher Artifact for Bootstrapping Protocols"</span>, <span class="seriesInfo">RFC 8366</span>, <span class="seriesInfo">DOI 10.17487/RFC8366</span>, <time datetime="2018-05" class="refDate">May 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8366">https://www.rfc-editor.org/rfc/rfc8366</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8376">[RFC8376]</dt>
+      <dd>
+<span class="refAuthor">Farrell, S., Ed.</span>, <span class="refTitle">"Low-Power Wide Area Network (LPWAN) Overview"</span>, <span class="seriesInfo">RFC 8376</span>, <span class="seriesInfo">DOI 10.17487/RFC8376</span>, <time datetime="2018-05" class="refDate">May 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8376">https://www.rfc-editor.org/rfc/rfc8376</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8572">[RFC8572]</dt>
+      <dd>
+<span class="refAuthor">Watsen, K.</span>, <span class="refAuthor">Farrer, I.</span>, and <span class="refAuthor">M. Abrahamsson</span>, <span class="refTitle">"Secure Zero Touch Provisioning (SZTP)"</span>, <span class="seriesInfo">RFC 8572</span>, <span class="seriesInfo">DOI 10.17487/RFC8572</span>, <time datetime="2019-04" class="refDate">April 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8572">https://www.rfc-editor.org/rfc/rfc8572</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8949">[RFC8949]</dt>
+      <dd>
+<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">P. Hoffman</span>, <span class="refTitle">"Concise Binary Object Representation (CBOR)"</span>, <span class="seriesInfo">STD 94</span>, <span class="seriesInfo">RFC 8949</span>, <span class="seriesInfo">DOI 10.17487/RFC8949</span>, <time datetime="2020-12" class="refDate">December 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8949">https://www.rfc-editor.org/rfc/rfc8949</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8995">[RFC8995]</dt>
+      <dd>
+<span class="refAuthor">Pritikin, M.</span>, <span class="refAuthor">Richardson, M.</span>, <span class="refAuthor">Eckert, T.</span>, <span class="refAuthor">Behringer, M.</span>, and <span class="refAuthor">K. Watsen</span>, <span class="refTitle">"Bootstrapping Remote Secure Key Infrastructure (BRSKI)"</span>, <span class="seriesInfo">RFC 8995</span>, <span class="seriesInfo">DOI 10.17487/RFC8995</span>, <time datetime="2021-05" class="refDate">May 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8995">https://www.rfc-editor.org/rfc/rfc8995</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9140">[RFC9140]</dt>
+      <dd>
+<span class="refAuthor">Aura, T.</span>, <span class="refAuthor">Sethi, M.</span>, and <span class="refAuthor">A. Peltonen</span>, <span class="refTitle">"Nimble Out-of-Band Authentication for EAP (EAP-NOOB)"</span>, <span class="seriesInfo">RFC 9140</span>, <span class="seriesInfo">DOI 10.17487/RFC9140</span>, <time datetime="2021-12" class="refDate">December 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9140">https://www.rfc-editor.org/rfc/rfc9140</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9148">[RFC9148]</dt>
+      <dd>
+<span class="refAuthor">van der Stok, P.</span>, <span class="refAuthor">Kampanakis, P.</span>, <span class="refAuthor">Richardson, M.</span>, and <span class="refAuthor">S. Raza</span>, <span class="refTitle">"EST-coaps: Enrollment over Secure Transport with the Secure Constrained Application Protocol"</span>, <span class="seriesInfo">RFC 9148</span>, <span class="seriesInfo">DOI 10.17487/RFC9148</span>, <time datetime="2022-04" class="refDate">April 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9148">https://www.rfc-editor.org/rfc/rfc9148</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="Sethi14">[Sethi14]</dt>
+      <dd>
+<span class="refAuthor">Sethi, M.</span>, <span class="refAuthor">Oat, E.</span>, <span class="refAuthor">Di Francesco, M.</span>, and <span class="refAuthor">T. Aura</span>, <span class="refTitle">"Secure Bootstrapping of Cloud-Managed Ubiquitous Displays"</span>, <span class="seriesInfo">Proceedings of ACM International Joint Conference on Pervasive and Ubiquitous Computing (UbiComp 2014), pp. 739-750, Seattle, USA</span>, <time datetime="2014-09" class="refDate">September 2014</time>, <span>&lt;<a href="http://dx.doi.org/10.1145/2632048.2632049">http://dx.doi.org/10.1145/2632048.2632049</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="simpleconn">[simpleconn]</dt>
+      <dd>
+<span class="refAuthor">Wi-Fi Alliance</span>, <span class="refTitle">"Wi-Fi Simple Configuration"</span>, <span class="seriesInfo">Version 2.0.7</span>, <time datetime="2019" class="refDate">2019</time>, <span>&lt;<a href="https://www.wi-fi.org/download.php?file=/sites/default/files/private/Wi-Fi_Simple_Configuration_Technical_Specification_v2.0.7.pdf">https://www.wi-fi.org/download.php?file=/sites/default/files/private/Wi-Fi_Simple_Configuration_Technical_Specification_v2.0.7.pdf</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="threadcommissioning">[threadcommissioning]</dt>
+    <dd>
+<span class="refAuthor">Thread Group</span>, <span class="refTitle">"Thread Commissioning"</span>, <time datetime="2015" class="refDate">2015</time>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+<div id="authors-addresses">
+<section id="appendix-A">
+      <h2 id="name-authors-addresses">
+<a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
+      </h2>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Mohit Sethi</span></div>
+<div dir="auto" class="left"><span class="org">Aalto University</span></div>
+<div dir="auto" class="left">FI-<span class="postal-code">02150</span> <span class="locality">Espoo</span>
+</div>
+<div dir="auto" class="left"><span class="country-name">Finland</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:mohit@iki.fi" class="email">mohit@iki.fi</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Behcet Sarikaya</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:sarikaya@ieee.org" class="email">sarikaya@ieee.org</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Dan Garcia-Carrillo</span></div>
+<div dir="auto" class="left"><span class="org">University of Oviedo</span></div>
+<div dir="auto" class="left">
+<span class="postal-code">33207</span> <span class="locality">Oviedo</span> </div>
+<div dir="auto" class="left"><span class="country-name">Spain</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:garciadan@uniovi.es" class="email">garciadan@uniovi.es</a>
+</div>
+</address>
+</section>
+</div>
+<script>const toc = document.getElementById("toc");
+toc.querySelector("h2").addEventListener("click", e => {
+  toc.classList.toggle("active");
+});
+toc.querySelector("nav").addEventListener("click", e => {
+  toc.classList.remove("active");
+});
+</script>
+</body>
+</html>

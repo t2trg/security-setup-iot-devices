@@ -1,0 +1,257 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2023-04-06T00:35:40.967298+00:00",
+  "repo": "t2trg/security-setup-iot-devices",
+  "labels": [
+    {
+      "name": "bug",
+      "description": null,
+      "color": "fc2929"
+    },
+    {
+      "name": "duplicate",
+      "description": null,
+      "color": "cccccc"
+    },
+    {
+      "name": "enhancement",
+      "description": null,
+      "color": "84b6eb"
+    },
+    {
+      "name": "help wanted",
+      "description": null,
+      "color": "159818"
+    },
+    {
+      "name": "invalid",
+      "description": null,
+      "color": "e6e6e6"
+    },
+    {
+      "name": "question",
+      "description": null,
+      "color": "cc317c"
+    },
+    {
+      "name": "wontfix",
+      "description": null,
+      "color": "ffffff"
+    }
+  ],
+  "issues": [
+    {
+      "number": 1,
+      "id": "MDU6SXNzdWU4NDUxNDg5MTc=",
+      "title": "OCF text and reference",
+      "url": "https://github.com/t2trg/security-setup-iot-devices/issues/1",
+      "state": "OPEN",
+      "author": "ms-s",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From Wouter (https://mailarchive.ietf.org/arch/msg/t2trg/F2m4wb7ZJzB5prAQN4C50Ahz6Ic/): \r\nfor starters current version of specs of OCF is v2.2.2 version 1.0 is a long long time ago.\r\n\r\none can also reference the ISO/IEC version (https://www.iso.org/standard/74239.html ) that is also way better than the v1.0.0 version referenced.\r\n\r\n\r\n",
+      "createdAt": "2021-03-30T19:48:30Z",
+      "updatedAt": "2021-03-30T19:48:30Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 2,
+      "id": "MDU6SXNzdWU4NDUxNDk4MTM=",
+      "title": "add info on fairhair",
+      "url": "https://github.com/t2trg/security-setup-iot-devices/issues/2",
+      "state": "OPEN",
+      "author": "ms-s",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From Wouter (https://mailarchive.ietf.org/arch/msg/t2trg/F2m4wb7ZJzB5prAQN4C50Ahz6Ic/):\r\nAlso the Fairhair spec is not listed in this draft RFC. This document is regarded in the building industry as a guiding document.\r\n\r\nhttps://openconnectivity.org/wp-content/uploads/2019/11/fairhair-specification-version-10_approved_april-2019.pdf",
+      "createdAt": "2021-03-30T19:49:07Z",
+      "updatedAt": "2021-03-30T19:49:07Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
+  "pulls": [
+    {
+      "number": 3,
+      "id": "MDExOlB1bGxSZXF1ZXN0NzI5OTExNTI5",
+      "title": "Update draft-sarikaya-t2trg-sbootstrapping.md",
+      "url": "https://github.com/t2trg/security-setup-iot-devices/pull/3",
+      "state": "MERGED",
+      "author": "dangarciacarrillo",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Added Bluetooth section",
+      "createdAt": "2021-09-08T19:17:24Z",
+      "updatedAt": "2021-09-09T07:43:23Z",
+      "baseRepository": "t2trg/security-setup-iot-devices",
+      "baseRefName": "master",
+      "baseRefOid": "1cda752df946e1d16427486054bcacf6288591b4",
+      "headRepository": null,
+      "headRefName": "bluetooth-section",
+      "headRefOid": "b8b1ca6532d4724a2a20393f1648f5f9c487f80c",
+      "closedAt": "2021-09-09T07:43:23Z",
+      "mergedAt": "2021-09-09T07:43:23Z",
+      "mergedBy": "ms-s",
+      "mergeCommit": {
+        "oid": "fccbec62963165c14ec48d00443d0f2eae92eb57"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 4,
+      "id": "PR_kwDOAz73Zs4smLbV",
+      "title": "updated outdated references",
+      "url": "https://github.com/t2trg/security-setup-iot-devices/pull/4",
+      "state": "MERGED",
+      "author": "dangarciacarrillo",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "updated outdated references",
+      "createdAt": "2021-10-02T22:18:23Z",
+      "updatedAt": "2021-10-04T08:29:16Z",
+      "baseRepository": "t2trg/security-setup-iot-devices",
+      "baseRefName": "master",
+      "baseRefOid": "1a356ab948c735b5468b4b39cd415358f53cf5d4",
+      "headRepository": null,
+      "headRefName": "references-update",
+      "headRefOid": "dd841e949ee81c54fd68ca4e33ffde44c0e5926f",
+      "closedAt": "2021-10-04T08:29:16Z",
+      "mergedAt": "2021-10-04T08:29:16Z",
+      "mergedBy": "ms-s",
+      "mergeCommit": {
+        "oid": "d1ad8a9ef86143c2ad19c84b7c7a624f0956d8eb"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 5,
+      "id": "PR_kwDOAz73Zs4s9gV1",
+      "title": "updated references and added terms",
+      "url": "https://github.com/t2trg/security-setup-iot-devices/pull/5",
+      "state": "MERGED",
+      "author": "dangarciacarrillo",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2021-10-08T20:36:07Z",
+      "updatedAt": "2021-10-09T09:16:09Z",
+      "baseRepository": "t2trg/security-setup-iot-devices",
+      "baseRefName": "master",
+      "baseRefOid": "d1ad8a9ef86143c2ad19c84b7c7a624f0956d8eb",
+      "headRepository": null,
+      "headRefName": "terms_update",
+      "headRefOid": "2a3cab6fad6093ea5f97de78fa612364d5b489cc",
+      "closedAt": "2021-10-09T09:16:08Z",
+      "mergedAt": "2021-10-09T09:16:08Z",
+      "mergedBy": "ms-s",
+      "mergeCommit": {
+        "oid": "eb615a45f58769e5b807b0c8ced58657a409bfc0"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 6,
+      "id": "PR_kwDOAz73Zs4tKOYD",
+      "title": "Terms update: Added players",
+      "url": "https://github.com/t2trg/security-setup-iot-devices/pull/6",
+      "state": "MERGED",
+      "author": "dangarciacarrillo",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2021-10-13T18:11:40Z",
+      "updatedAt": "2021-10-14T07:58:49Z",
+      "baseRepository": "t2trg/security-setup-iot-devices",
+      "baseRefName": "master",
+      "baseRefOid": "eb615a45f58769e5b807b0c8ced58657a409bfc0",
+      "headRepository": null,
+      "headRefName": "terms_update",
+      "headRefOid": "1d6d83e7b8b6dcad74c583caaa252662f9e3e0b2",
+      "closedAt": "2021-10-14T07:58:49Z",
+      "mergedAt": "2021-10-14T07:58:49Z",
+      "mergedBy": "ms-s",
+      "mergeCommit": {
+        "oid": "711173366e34a67a71db773581aea4fdd8901153"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 7,
+      "id": "PR_kwDOAz73Zs44pDbF",
+      "title": "Update draft-irtf-t2trg-secure-bootstrapping.md",
+      "url": "https://github.com/t2trg/security-setup-iot-devices/pull/7",
+      "state": "CLOSED",
+      "author": "dangarciacarrillo",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "updated RFC of EST-CoAPs and DPP beliefs",
+      "createdAt": "2022-05-29T15:14:16Z",
+      "updatedAt": "2022-09-06T10:39:50Z",
+      "baseRepository": "t2trg/security-setup-iot-devices",
+      "baseRefName": "master",
+      "baseRefOid": "771dd18b6438104f1672fa84e9b452f1f7790a23",
+      "headRepository": "dangarciacarrillo/sbootstrapping",
+      "headRefName": "master",
+      "headRefOid": "771dd18b6438104f1672fa84e9b452f1f7790a23",
+      "closedAt": "2022-09-06T10:39:49Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 8,
+      "id": "PR_kwDOAz73Zs5NghTG",
+      "title": "Add files via upload",
+      "url": "https://github.com/t2trg/security-setup-iot-devices/pull/8",
+      "state": "CLOSED",
+      "author": "bsarikaya",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "added .md, .txt and .xml files",
+      "createdAt": "2023-04-03T16:40:03Z",
+      "updatedAt": "2023-04-04T12:57:38Z",
+      "baseRepository": "t2trg/security-setup-iot-devices",
+      "baseRefName": "main",
+      "baseRefOid": "d5ae73b64c05b78dabed83a44546388bdff09d56",
+      "headRepository": "bsarikaya/sbootstrapping",
+      "headRefName": "master",
+      "headRefOid": "6e738cb7741f7a7a0f227cd2b8d9f0a28da696c1",
+      "closedAt": "2023-04-04T12:57:38Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "dangarciacarrillo",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "seems ok",
+          "createdAt": "2023-04-03T16:50:19Z",
+          "updatedAt": "2023-04-03T16:50:19Z"
+        },
+        {
+          "author": "ms-s",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "The md file in the repository is already up-to-date. As agreed, output files .txt and .xml files should not be in git. Closing this pull request.",
+          "createdAt": "2023-04-04T12:57:38Z",
+          "updatedAt": "2023-04-04T12:57:38Z"
+        }
+      ],
+      "reviews": []
+    }
+  ]
+}

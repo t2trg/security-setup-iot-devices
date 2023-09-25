@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>t2trg/security-setup-iot-devices v01 preview</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <style type="text/css">/*<![CDATA[*/
+      body { font-family: "Helvetica Neue","Open Sans", Helvetica, Calibri,sans-serif; }
+      h1, h2, td { font-family: "Helvetica Neue", "Roboto Condensed", "Open Sans", Helvetica, Calibri, sans-serif; }
+      h1 { font-size: 20px; } h2 { font-size: 16px; }
+      table { margin: 5px 10px; border-collapse: collapse; }
+      th, td { font-weight: normal; text-align: left; padding: 2px 5px; }
+      a:link { color: #000; } a:visited { color: #00a; }
+    /*]]>*/</style>
+  </head>
+  <body>
+    <h1>Editor's drafts for v01 branch of <a href="https://github.com/t2trg/security-setup-iot-devices/tree/v01">t2trg/security-setup-iot-devices</a></h1>
+    <table id="branch-v01">
+      <tr>
+        <td><a href="./draft-irtf-t2trg-security-setup-iot-devices.html" class="html draft-irtf-t2trg-security-setup-iot-devices" title="Terminology and processes for initial security setup of IoT devices (HTML)">IoT initial security setup</a></td>
+        <td><a href="./draft-irtf-t2trg-security-setup-iot-devices.txt" class="txt draft-irtf-t2trg-security-setup-iot-devices" title="Terminology and processes for initial security setup of IoT devices (Text)">plain text</a></td>
+        <td>same as main</td>
+      </tr>
+    </table>
+    <script>
+window.onload = function() {
+  var referrer_branch = 'main';
+  // e.g., "https://github.com/user/repo/tree/main"
+  var chunks = document.referrer.split("/");
+  if (chunks[2] === 'github.com' && chunks[5] === 'tree') {
+    referrer_branch = chunks[6];
+  }
+  let branch = document.querySelector('#branch-' + referrer_branch);
+  let h = document.location.hash.substring(1);
+  if (h === 'show') {
+    document.location.hash = '#' + branch.id;
+  } else if (branch && h.startsWith('go')) {
+    let e = branch.querySelector(h.substring(2));
+    if (e && e.href) {
+      document.location = e.href;
+    }
+  }
+};
+    </script>
+  </body>
+</html>
