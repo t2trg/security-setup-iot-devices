@@ -2,16 +2,16 @@
 
 This is the working area for the individual Internet-Draft, "Terminology and processes for initial security setup of IoT devices".
 
-* [Editor's Copy](https://t2trg.github.io/sbootstrapping/#go.draft-irtf-t2trg-security-setup-iot-devices.html)
+* [Editor's Copy](https://t2trg.github.io/security-setup-iot-devices/#go.draft-irtf-t2trg-security-setup-iot-devices.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-irtf-t2trg-security-setup-iot-devices)
-* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-irtf-t2trg-security-setup-iot-devices)
-* [Compare Editor's Copy to Individual Draft](https://t2trg.github.io/sbootstrapping/#go.draft-irtf-t2trg-security-setup-iot-devices.diff)
+* [RG Draft](https://datatracker.ietf.org/doc/html/draft-irtf-t2trg-security-setup-iot-devices)
+* [Compare Editor's Copy to RG Draft](https://t2trg.github.io/security-setup-iot-devices/#go.draft-irtf-t2trg-security-setup-iot-devices.diff)
 
 
 ## Contributing
 
 See the
-[guidelines for contributions](https://github.com/t2trg/sbootstrapping/blob/master/CONTRIBUTING.md).
+[guidelines for contributions](https://github.com/t2trg/security-setup-iot-devices/blob/master/CONTRIBUTING.md).
 
 Contributions can be made by creating pull requests.
 The GitHub interface supports creating pull requests using the Edit (✏) button.
