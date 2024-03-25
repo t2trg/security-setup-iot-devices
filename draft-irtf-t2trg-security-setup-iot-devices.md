@@ -3,6 +3,7 @@ stand_alone: true
 ipr: trust200902
 docname: draft-irtf-t2trg-security-setup-iot-devices-latest
 cat: info
+submission_type: IRTF
 pi:
   toc: 'yes'
   compact: 'yes'
@@ -160,11 +161,11 @@ This document provides an overview of terms that are commonly used when discussi
 
 # Introduction
 
-Initial security setup for a device refers to any process that takes place before a device can become fully operational. The phrase **initial security setup** intentionally includes the term *security* as setup of devices without adequate security or with insecure processes is no longer acceptable. The initial security setup process, among other things, involves network discovery and selection, access authentication, configuration of necessary credentials and parameters.
+Initial security setup for a device refers to any process that takes place before a device can become fully operational. The phrase **initial security setup** intentionally includes the term *security* as setup of devices without adequate security or with insecure processes is no longer acceptable. The initial security setup process, among other things, involves network discovery and selection, access authentication, and configuration of necessary credentials and parameters.
 
 Initial security setup for IoT devices is challenging because the size of an IoT network varies from a couple of devices to tens of thousands, depending on the application. Moreover, devices in IoT networks are produced by a variety of vendors and are typically heterogeneous in terms of the constraints on their power supply, communication capability, computation capacity, and user interfaces available. This challenge of initial security setup in IoT was identified by [Sethi et al.](#Sethi14) while developing a solution for smart displays.
 
-Initial security setup of devices typically also involves providing them with some sort of network connectivity. The functionality of a disconnected device is rather limited. Initial security setup of devices often assumes that some network has been setup a-priori. Setting up and maintaining a network itself is challenging. For example, users may need to configure the network name (called as Service Set Identifier (SSID) in Wi-Fi networks) and passphrase before new devices can be setup. Specifications such as the Wi-Fi Alliance Simple Configuration {{simpleconn}} help users setup networks. However, this document is only focused on terminology and processes associated with initial security setup of devices and excludes any discussion on setting up networks.
+Initial security setup of devices typically also involves providing them with some sort of network connectivity. The functionality of a disconnected device is rather limited. Initial security setup of devices often assumes that some network has been setup a-priori. Setting up and maintaining a network itself is challenging. For example, users may need to configure the network name (called as Service Set Identifier (SSID) in Wi-Fi networks) and passphrase before new devices can be setup. Specifications such as the Wi-Fi Alliance Simple Configuration {{simpleconn}} help users setup networks. However, this document is only focused on terminology and processes associated with the initial security setup of devices and excludes any discussion on setting up networks.
 
 There are several terms that are used in the context of initial security setup of devices:
 
@@ -186,7 +187,7 @@ There are several terms that are used in the context of initial security setup o
 
 * Discovery
 
-In addition to using a variety of different terms, initial security setup mechanisms can rely on a number of entities. For example, a companion smartphone device maybe necessary for some initial security setup mechanisms. Moreover, security setup procedures have diverse initial assumptions about the device being setup. As an example, an initial security setup mechanism may assume that the device is provisioned with a pre-shared key and a list of trusted network identifiers. Finally, initial security setup mechanisms impart different information to the device after completion. For example, some mechanisms may only provide a key for use with an authorization server, while others may configure elaborate access control lists directly.
+In addition to using a variety of different terms, initial security setup mechanisms can rely on several entities. For example, a companion smartphone device may be necessary for some initial security setup mechanisms. Moreover, security setup procedures have diverse initial assumptions about the device being setup. As an example, an initial security setup mechanism may assume that the device is provisioned with a pre-shared key and a list of trusted network identifiers. Finally, initial security setup mechanisms impart different information to the device after completion. For example, some mechanisms may only provide a key for use with an authorization server, while others may configure elaborate access control lists directly.
 
 The next section provides an overview of some standards and protocols for initial security setup of IoT devices. For each mechanism, the following are explicitly identified:
 
@@ -212,7 +213,7 @@ Bluetooth mesh specifies a provisioning protocol.  The goal of the provisioning 
 
 The provisioning process is divided into five distinct stages summarize next:
 
-   * Beaconing for discover: The new unprovisioned device is discovered by the provisioner
+   * Beaconing for discovery: The new unprovisioned device is discovered by the provisioner
 
    * Negotiation: The unprovisioned device indicates to the provisioner a set of capabilities such as the security algorithms supported, the availability of its public key using an Out-of-Band (OOB) channel and the input/output interfaces supported
 
@@ -229,17 +230,17 @@ Bluetooth mesh has the following characteristics:
 
   * Terms: Configuration, discovery, provisioning.
   * Players: Client, Device, Manager, Manufacturer, Peer, Server, User
-  * Initial beliefs assumed in the device: Previously to the provisioning phase, there is no pre-shared credentials for a trust relation.
+  * Initial beliefs assumed in the device: Previously to the provisioning phase, there are no pre-shared credentials for a trust relation.
   * Processes: Provisioning
-  * Beliefs imparted to the device after protocol execution: After the provisiong, the device trusts the provisioner entity and any other device in the network sharing its network key.
+  * Beliefs imparted to the device after protocol execution: After the provisioning, the device trusts the provisioner entity and any other device in the network sharing its network key.
 
 ## Device Provisioning Protocol (DPP)
 
-The Wi-Fi Alliance Device provisioning protocol (DPP) {{dpp}} describes itself as a standardized protocol for providing user friendly Wi-Fi setup while maintaining or increasing the security. DPP relies on a configurator, e.g. a smartphone application, for setting up all other devices, called enrollees, in the network. DPP has the following three phases/sub-protocols:
+The Wi-Fi Alliance Device provisioning protocol (DPP) {{dpp}} describes itself as a standardized protocol for providing user-friendly Wi-Fi setup while maintaining or increasing the security. DPP relies on a configurator, e.g. a smartphone application, for setting up all other devices, called enrollees, in the network. DPP has the following three phases/sub-protocols:
 
 * Bootstrapping: The configurator obtains bootstrapping information from the enrollee using an out-of-band channel such as scanning a QR code or tapping NFC. The bootstrapping information includes the public-key of the device and metadata such as the radio channel on which the device is listening.
 
-* Authentication: In DPP, either the configurator or the enrollee can initiate the authentication protocol. The side initiating the authentication protocol is called as the initiator while the other side is called the responder. The authentication sub-protocol provides authentication of the responder to an initiator. It can optionally authenticate the initiator to the responder (only if the bootstrapping information was exchange out-of-band in both directions).
+* Authentication: In DPP, either the configurator or the enrollee can initiate the authentication protocol. The side initiating the authentication protocol is called the initiator while the other side is called the responder. The authentication sub-protocol provides authentication of the responder to an initiator. It can optionally authenticate the initiator to the responder (only if the bootstrapping information was exchanged out-of-band in both directions).
 
 * Configuration: Using the key established from the authentication protocol, the enrollee asks the configurator for network information such as the SSID and passphrase of the access point.
 
@@ -256,7 +257,7 @@ DPP has the following characteristics:
     Configuration: The Configurator uses the DPP Configuration protocol to provision the Enrollee through the secure channel created during DPP Authentication.
     Network access: The Enrollee establishes network access using the newly provisioned credentials.
 
-  * Beliefs imparted to the device after protocol execution: DPP bootstrapping relies on the transfer of the public-key that is expected to be trusted. The beliefs when mutual authentication is run, relies on the trust of a succesful DPP bootstrapping. When mutual authentication is not supported, a device that can control when and how its own public key is bootstrapped, can perform a weak authentication to any entity that knows its public key.
+  * Beliefs imparted to the device after protocol execution: DPP bootstrapping relies on the transfer of the public-key that is expected to be trusted. The beliefs when mutual authentication is run, relies on the trust of a successful DPP bootstrapping. When mutual authentication is not supported, a device that can control when and how its own public key is bootstrapped, can perform a weak authentication to any entity that knows its public key.
 
 ## Enrollment over Secure Transport (EST)
 
@@ -268,7 +269,7 @@ EST has the following characteristics:
   * Players: Administrator, Client, Device, Manufacturer, Owner, Peer, Server, User
   * Initial beliefs assumed in the device: There is a process of distribution of initial information which provides both the EST client and server with the information for the EST client and server to perform mutual authentication as well as for authorization.
   * Processes: Distribution of Certificates, Bootstrap, Enrollment
-  * Beliefs imparted to the device after protocol execution: The EST enrollment process is designed to make establishing automated certificate issuing from a trustworthy CA as simple as possible. After the processe have finished, the device is able to automatically renew its certificates through re-enrollment as it has a trust relation with the ESP server.
+  * Beliefs imparted to the device after protocol execution: The EST enrollment process is designed to make establishing automated certificate issuing from a trustworthy CA as simple as possible. After the process has finished, the device is able to automatically renew its certificates through re-enrollment as it has a trust relation with the ESP server.
 
 
 
@@ -280,11 +281,11 @@ LwM2M specification developed by OMA {{oma}} defines a RESTful architecture wher
 
 The current standard defines the following four bootstrapping modes:
 
-* Factory Bootstrap: An IoT device is configured with all the information necessary for securely communicating with an LwM2M Bootstrap-Server and/or LwM2M Serverwhile it is manufactured and prior to its deployment.
+* Factory Bootstrap: An IoT device is configured with all the information necessary for securely communicating with an LwM2M Bootstrap-Server and/or LwM2M Server while it is manufactured and prior to its deployment.
 
 * Bootstrap from Smartcard: An IoT device retrieves all the information necessary for securely communicating with an LwM2M Bootstrap-Server and/or LwM2M Server from a Smartcard.
 
-* Client Initiated Bootstrap: If the IoT device in one of the above bootstrapping modes is only configured with information about an LwM2M Bootstrap-Server, then the client device must first communicate securely with the configured LwM2M Bootstrap-Server and obtain necessary information and credentials to subsequently register with one or more LwM2M Servers.
+* Client Initiated Bootstrap: If the IoT device in one of the above bootstrapping modes is only configured with information about an LwM2M Bootstrap-Server, then the client device must first communicate securely with the configured LwM2M Bootstrap-Server and obtain the necessary information and credentials to subsequently register with one or more LwM2M Servers.
 
 * Server Initiated Bootstrap: In this bootstrapping mode, the LwM2M server triggers the client device to begin the client initiated bootstrap sequence described above.
 
@@ -296,13 +297,13 @@ As explained earlier, an LwM2M Bootstrap-Server is responsible for provisioning 
 OMA has the following characteristics:
 
   * **Terms**:
-    * *Bootstrapping* and *Unbootstrapping*: Bootstrapping is used for describing the process of providing an IoT device with credentials and information of one or more LwM2M server. Interestingly, the transport bindings specification {{oma-transport}} also uses the term unbootstrapping for the process where objects corresponding to an LwM2M Server are deleted on the client.
-    * *Provisioning* and *configuration*: terms used to refer to the process of providing some infomration to a LwM2M client.
+    * *Bootstrapping* and *Unbootstrapping*: Bootstrapping is used for describing the process of providing an IoT device with credentials and information of one or more LwM2M servers. Interestingly, the transport bindings specification {{oma-transport}} also uses the term unbootstrapping for the process where objects corresponding to an LwM2M Server are deleted on the client.
+    * *Provisioning* and *configuration*: terms used to refer to the process of providing some information to a LwM2M client.
     * *Discovery*: term for the process by which a LwM2M Bootstrap-Server or LwM2M Server discovers objects, object instances, resources, and attributes supported by RESTful interfaces of a LwM2M Client.
     * *Register* and *De-register*: Register is the process by which a client device sets up a secure association with an LwM2M Server and provides the server with information about objects and existing object instances of the client. De-register is the process by which the client deletes information about itself provided to the LwM2M server during the registration process.
     * *Intialization*: term for the process by which an LwM2M Bootstrap-Server or LwM2M Server deletes objects on the client before performing any write operations.
   * **Players**: Device manufacturers or Smartcard manufacturers are responsible for providing client IoT devices with initial information and credentials of LwM2M Bootstrap-Server and/or LwM2M server.
-  * **Initial beliefs assumed in the device**: The client at the very least has necessary information to trust the LwM2M bootstrap server in the .
+  * **Initial beliefs assumed in the device**: The client at the very least has the necessary information to trust the LwM2M bootstrap server.
   * **Processes**: LwM2M does not require any actions from the device owner/user. Once the device is registered with the LwM2M server, various actions related to device management can be performed by device owner/user via the LwM2M server.
   * **Beliefs imparted to the device after protocol execution**: After the bootstrapping is performed, the LwM2M client can register (Security object and Server object) with the LwM2M servers.
 
@@ -323,8 +324,8 @@ EAP-NOOB has the following characteristics:
     * *Registration*: term used for describing the process of associating the device with a user account on an application server.
   * **Players**: The device owner/user is responsible for transferring an OOB message necessary for protocol completion. The application server where the device is registered may be provided by different service providers including the device manufacturer or device owner. The local network needs standard AAA configuration for routing EAP-NOOB sessions to the application server chosen by the device owner/user.
   * **Initial beliefs assumed in the device**: EAP-NOOB does not require devices to have any pre-installed credentials but expects all devices to use a standard identifier (noob@eap-noob.arpa) during initial network discovery.
-  * **Processes**: The IoT device performs network discovery and one or more OOB outputs maybe generated. The user is expected EAP exchange is encompassed by Initial Exchange, OOB step, Completion Exchange and Waiting Exchange.
-  * **Beliefs imparted to the device after protocol execution**: After EAP-NOOB botstrapping process is complete, the device and server establish a long-term secret which can renewed without further user involvement. As a side-effect, the device also obtains identifier and credentials for network and Internet connectivity (via the EAP authenticator).
+  * **Processes**: The IoT device performs network discovery and one or more OOB outputs may be generated. The user is expected EAP exchange is encompassed by Initial Exchange, OOB step, Completion Exchange and Waiting Exchange.
+  * **Beliefs imparted to the device after protocol execution**: After EAP-NOOB bootstrapping process is complete, the device and server establish a long-term secret, which can be renewed without further user involvement. As a side-effect, the device also obtains identifier and credentials for network and Internet connectivity (via the EAP authenticator).
 
 ## Open Connectivity Foundation (OCF)
 
@@ -336,7 +337,7 @@ The OBT is described as a logical entity that may be implemented on a single or 
 
 * Random PIN: The device generates a PIN code that is entered into the onboarding tool by the user. This pin code is used together with TLS-PSK ciphersuites for establishing a symmetric session key. OCF recommends PIN codes to have an entropy of 40 bits.
 
-* Manufacturer certificate: An onboarding tool authenticates the device by verifying a manufacturer installed certificate. Similarly, the device may authenticate the onboarding tool by verifying its signature.
+* Manufacturer certificate: An onboarding tool authenticates the device by verifying a manufacturer-installed certificate. Similarly, the device may authenticate the onboarding tool by verifying its signature.
 
 * Vendor specific: Vendors implement their own transfer method that accommodates any specific device constraints.
 
@@ -348,7 +349,7 @@ OCF has the following characteristics:
 
   * Terms: Configuration, discovery, enrollment, onboarding, provisioning, registration,
   * Players: Client, Device, Manager, Manufacturer, Owner, Peer, Server, User
-  * Initial beliefs assumed in the device: The device needs to be associated with an owner in the onboarding process and then go through the provisioning process before being considered as trustworty.
+  * Initial beliefs assumed in the device: The device needs to be associated with an owner in the onboarding process and then go through the provisioning process before being considered as trustworthy.
   * Processes: Onboarding, provisioning.
   * Beliefs imparted to the device after protocol execution: In the provisioning phase the device receives the necessary credentials to interact with provisioning services and any other services or devices that are part of the normal operation of the device.
 
@@ -361,25 +362,25 @@ The Fast IDentity Online Alliance (FIDO) is currently specifying an automatic on
 
 The FIDO IoT protocol itself is composed of one Device Initialization (DI) protocol and 3 Transfer of Ownership (TO) protocols TO0, TO1, TO2. Protocol messages are encoded in Concise Binary Object Representation (CBOR) {{RFC8949}} and can be transported over application layer protocols such as Constrained Application Protocol (CoAP) {{RFC7252}} or directly over TCP, Bluetooth etc. FIDO IoT however assumes that the device already has IP connectivity to a rendezvous server. Establishing this initial IP connectivity is explicitly stated as "out-of-scope" but the draft specification hints at the usage of Hypertext Transfer Protocol (HTTP) {{RFC7230}} proxies for IP networks and other forms of tunnelling for non-IP networks.
 
-The specification only provides a non-normative example of the DI protocol which must be executed in the factory during device manufacture. This protocol embeds initial ownership and manufacturing credentials into Restricted Operation Environment (ROE) on the device. The initial information embedded also includes a unique device identifier (called as GUID in the specification). After DI is executed, the manufacturer has an ownership voucher which is passed along the supply chain to the device owner.
+The specification only provides a non-normative example of the DI protocol which must be executed in the factory during device manufacture. This protocol embeds initial ownership and manufacturing credentials into a Restricted Operation Environment (ROE) on the device. The initial information embedded also includes a unique device identifier (called GUID in the specification). After DI is executed, the manufacturer has an ownership voucher which is passed along the supply chain to the device owner.
 
-When a device is unboxed and powered on by the new owner, the device discovers a network-local or an Internet-based rendezvous server. Protocols (TO0, TO1, and TO2) between the device, the rendezvous server, and the new owner (as the owner onboarding service) ensure that the device and the new owner are able to authenticate each other. Thereafter, the new owner establishes cryptographic control of the device and provides it with credentials of the IoT platform which the device should used.
+When a device is unboxed and powered on by the new owner, the device discovers a network-local or an Internet-based rendezvous server. Protocols (TO0, TO1, and TO2) between the device, the rendezvous server, and the new owner (as the owner onboarding service) ensure that the device and the new owner are able to authenticate each other. Thereafter, the new owner establishes cryptographic control of the device and provides it with credentials of the IoT platform which the device should use.
 
 
 FIDO has the following characteristics:
 
   * Terms: Provisioning, onboarding, commissioning, initialisation.
   * Players: Device, Manager, Manufacturer, Owner, Rendezvous Server,  User
-  * Initial beliefs assumed in the device: In the initial state the device is not yet associated with a specific owner. The DI process has to take place to embed owndership and manufacturing credentials in the device, the first in a chaim to create an ownership voucher that will be used to perform the transfer of ownership of the device.
+  * Initial beliefs assumed in the device: In the initial state the device is not yet associated with a specific owner. The DI process has to take place to embed ownership and manufacturing credentials in the device, the first in a chain to create an ownership voucher that will be used to perform the transfer of ownership of the device.
 
   * Processes: Device Initialize Protocol (DI), Transfer Ownership Protocol 0 (TO0), Transfer Ownership Protocol 1 (TO1), Transfer Ownership Protocol 2 (TO2)
-  * Beliefs imparted to the device after protocol execution: When the device is powered on, and all TO protocols run, the device figures out by contacting with the rendezvous server, who the owner is, authenticate with the owner. At this point the rendezvous server, and owner are able to authenticate the device.
+  * Beliefs imparted to the device after protocol execution: When the device is powered on, and all TO protocols run, the device figures out by contacting the rendezvous server, who the owner is, authenticate with the owner. At this point the rendezvous server, and the owner are able to authenticate the device.
 
 
 
 ## Bootstrapping Remote Secure Key Infrastructures (BRSKI)
 
-The ANIMA working group is working on a bootstrapping solution for devices that relies on 802.1AR {{ieee8021ar}} vendor certificates called Bootstrapping Remote Secure Key Infrastructures (BRSKI) {{RFC8995}}. In addition to vendor installed IEEE 802.1AR certificates, a vendor based service on the Internet is required. Before being authenticated, a new device only needs link-local connectivity, and does not require a routable address. When a vendor provides an Internet based service, devices can be forced to join only specific domains. The document highlights that the described solution is aimed in general at non-constrained (i.e. class 2+ defined in {{RFC7228}}) devices operating in a non-challenged network. It claims to scale to thousands of devices located in hostile environments, such as ISP provided CPE devices which are drop-shipped to the end user.
+The ANIMA working group is working on a bootstrapping solution for devices that rely on 802.1AR {{ieee8021ar}} vendor certificates called Bootstrapping Remote Secure Key Infrastructures (BRSKI) {{RFC8995}}. In addition to vendor installed IEEE 802.1AR certificates, a vendor based service on the Internet is required. Before being authenticated, a new device only needs link-local connectivity, and does not require a routable address. When a vendor provides an Internet based service, devices can be forced to join only specific domains. The document highlights that the described solution is aimed in general at non-constrained (i.e. class 2+ defined in {{RFC7228}}) devices operating in a non-challenged network. It claims to scale to thousands of devices located in hostile environments, such as ISP provided CPE devices which are drop-shipped to the end user.
 
 BRSKI has the following characteristics:
 
