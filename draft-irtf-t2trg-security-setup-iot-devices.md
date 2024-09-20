@@ -3,7 +3,7 @@ stand_alone: true
 ipr: trust200902
 docname: draft-irtf-t2trg-security-setup-iot-devices-latest
 cat: info
-submission_type: IRTF
+submissiontype: IRTF
 pi:
   toc: 'yes'
   compact: 'yes'
@@ -17,7 +17,6 @@ author:
 - ins: M. Sethi
   name: Mohit Sethi
   org: Aalto University
-  street:
   city: Espoo
   region: ''
   code: '02150'
@@ -26,9 +25,6 @@ author:
 - ins: B. Sarikaya
   name: Behcet Sarikaya
   org:
-  street:
-  - ''
-  - ''
   city: ''
   region: ''
   code: ''
@@ -37,9 +33,7 @@ author:
 - ins: D. Garcia-Carrillo
   name: Dan Garcia-Carrillo
   org: University of Oviedo
-  street: ''
   city: Oviedo
-  region: ''
   code: '33207'
   country: Spain
   email: garciadan@uniovi.es
@@ -289,9 +283,9 @@ The current standard defines the following four bootstrapping modes:
 
 * Server Initiated Bootstrap: In this bootstrapping mode, the LwM2M server triggers the client device to begin the client initiated bootstrap sequence described above.
 
-The LwM2M specification is also quite flexible in terms of the credentials and the transport security mechanism used between the client device and the LwM2M Server or the LwM2M Bootstrap-Server. Credentials such as a pre-shared symmetric key, a raw public key (RPK), or x.509 certificates can be used with various transport protocols such as Transport Layer Security (TLS) or Datagram Transport Layer Security (DTLS) as specified in LwM2M transport bindings specification {{oma-transport}}.
+The LwM2M specification is also quite flexible in terms of the credentials and the transport security mechanism used between the client device and the LwM2M Server or the LwM2M Bootstrap-Server. Credentials such as a pre-shared symmetric key, a raw public key (RPK), or X.509 certificates can be used with various transport protocols such as Transport Layer Security (TLS) or Datagram Transport Layer Security (DTLS) as specified in LwM2M transport bindings specification {{oma-transport}}.
 
-As explained earlier, an LwM2M Bootstrap-Server is responsible for provisioning credentials into an LwM2M Client. When x509 certificates are being provisioned, the asymmetric key pair is generated on the Bootstrap-Server and then sent to the LwM2M client device. This approach is not acceptable in all scenarios and therefore, LwM2M specification also supports a mode where the client device uses the Enrollment over Secure Transport (EST) certificate management protocol for provisioning certificates from the LwM2M Bootstrap-Server to the LwM2M Client.
+As explained earlier, an LwM2M Bootstrap-Server is responsible for provisioning credentials into an LwM2M Client. When X.509 certificates are being provisioned, the asymmetric key pair is generated on the Bootstrap-Server and then sent to the LwM2M client device. This approach is not acceptable in all scenarios and therefore, LwM2M specification also supports a mode where the client device uses the Enrollment over Secure Transport (EST) certificate management protocol for provisioning certificates from the LwM2M Bootstrap-Server to the LwM2M Client.
 
 
 OMA has the following characteristics:
@@ -392,18 +386,21 @@ BRSKI has the following characteristics:
 
 ## Secure Zero Touch Provisioning (SZTP)
 
- {{RFC8572}} defines a bootstrapping strategy for enabling devices to securely obtain all the configuration information with no installer input, beyond the actual physical placement and connection of cables. Their goal is to enable a secure NETCONF {{RFC6241}} or RESTCONF {{RFC8040}} connection to the deployment specific network management system (NMS). SZTP requires the devices to be configured with trust anchors in the form of X.509 certificates. {{RFC8572}} is similar to BRSKI based on {{RFC8366}}.
+ {{RFC8572}} defines a bootstrapping strategy that enables devices to securely obtain all configuration information with minimal installer input, beyond physical placement and cable connections. The goal of this bootstrapping protocol is to enable a secure NETCONF {{RFC6241}} or RESTCONF {{RFC8040}} connection to the deployment-specific network management system (NMS). Devices receive signed and optionally encrypted information about the owner's NMS, which they authenticate using an owner certificate and an ownership voucher {{RFC8366}} signed by the device manufacturer. The owner certificate and ownership voucher can be delivered to the device via Domain Name System (DNS), Dynamic Host Configuration Protocol (DHCP), removable storage (e.g., USB drives), or knowledge of well-known bootstrapping servers. Devices may be redirected to multiple servers before acquiring the necessary credentials to verify and connect to the designated NMS.
 
 SZTP has the following characteristics:
 
-  * Terms: Bootstrapping, provisioning, onboarding, enrollment, configuration, discovery.
-  * Players: Administrator, Bootstrap Server, Client, Device, Manufacturer, Onboarding Server, Owner, Redirect Server, Bootstrap Server, User, Owner
-  * Initial beliefs assumed in the device: Initially, the device needs have pre-configured a state that allows allows the bootstrap processs. Among other information, the trust anchor for ownership voucher, client & intermediaries certificates, and list of trusted bootstrap servers and their trust anchors.
-  * Processes: Initial state, Boot sequence, Processing bootstrapping data, validating signed data, processing redirect information, processing onboarding information.
-  * Beliefs imparted to the device after protocol execution: The bootstrapping process provides the device with all the necessary information (onboarding information) to create a trust relation between the device and the bootstrap server. This allows the device to download its boot image and the necessary initial configuration. The enrollment information will allow a device to be bootstrapped and operate establishing secure connections with other systems.
+  * **Terms**:
+    * *Bootstrapping*: term used to describe the entire process involved during the initial security setup 
+    * *Provisioning*:
+    * *Onboarding*:
+    * *Enrollment*:
+    * *Discovery*:
 
-
-
+  * **Players**: 
+  * **Initial beliefs assumed in the device**: SZTP requires devices to have a pre-configured state, including a client X.509 certificate for TLS client authentication to bootstrap servers. While the specification allows the use of HTTP authentication with passwords, it typically relies on X.509 certificates in the form of IDevID certificates, as defined in {{ieee8021ar}}. Additionally, devices must have a list of trusted bootstrap servers and trust anchor certificates for verifying bootstrap server certificates and ownership vouchers signed by the manufacturer. All this information, including the client TLS certificate and trust anchors, must be installed during manufacturing.
+  * **Processes**:  receives the serial numbers of the root certificate for the devID certificate. Then uses.
+  * **Beliefs imparted to the device after protocol execution**: After the SZTP bootstrapping process, the device possesses all necessary information, called as bootstrapping data, for secure communication with the deployment-specific NMS. This bootstrapping data includes the ownership voucher, the owner certificate, and onboarding information. The owner certificate and ownership voucher are used to verify the onboarding information, which encompasses the boot image and its hash or signature, initial configuration, and pre- and post-configuration scripts to be executed by the device.
 
 ## LPWAN {#lpwan}
 
