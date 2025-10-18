@@ -352,27 +352,6 @@ OCF has the following characteristics:
 
 
 
-## Fast IDentity Online (FIDO) alliance
-
-The Fast IDentity Online Alliance (FIDO) is currently specifying an automatic onboarding protocol for IoT devices {{fidospec}}. The goal of this protocol is to provide a new IoT device with information for interacting securely with an online IoT platform. This protocol allows owners to choose the IoT platform for their devices at a late stage in the device lifecycle. The draft specification refers to this feature as "late binding".
-
-The FIDO IoT protocol itself is composed of one Device Initialization (DI) protocol and 3 Transfer of Ownership (TO) protocols TO0, TO1, TO2. Protocol messages are encoded in Concise Binary Object Representation (CBOR) {{RFC8949}} and can be transported over application layer protocols such as Constrained Application Protocol (CoAP) {{RFC7252}} or directly over TCP, Bluetooth etc. FIDO IoT however assumes that the device already has IP connectivity to a rendezvous server. Establishing this initial IP connectivity is explicitly stated as "out-of-scope" but the draft specification hints at the usage of Hypertext Transfer Protocol (HTTP) {{RFC7230}} proxies for IP networks and other forms of tunnelling for non-IP networks.
-
-The specification only provides a non-normative example of the DI protocol which must be executed in the factory during device manufacture. This protocol embeds initial ownership and manufacturing credentials into a Restricted Operation Environment (ROE) on the device. The initial information embedded also includes a unique device identifier (called GUID in the specification). After DI is executed, the manufacturer has an ownership voucher which is passed along the supply chain to the device owner.
-
-When a device is unboxed and powered on by the new owner, the device discovers a network-local or an Internet-based rendezvous server. Protocols (TO0, TO1, and TO2) between the device, the rendezvous server, and the new owner (as the owner onboarding service) ensure that the device and the new owner are able to authenticate each other. Thereafter, the new owner establishes cryptographic control of the device and provides it with credentials of the IoT platform which the device should use.
-
-
-FIDO has the following characteristics:
-
-  * Terms: Provisioning, onboarding, commissioning, initialisation.
-  * Players: Device, Manager, Manufacturer, Owner, Rendezvous Server,  User
-  * Initial beliefs assumed in the device: In the initial state the device is not yet associated with a specific owner. The DI process has to take place to embed ownership and manufacturing credentials in the device, the first in a chain to create an ownership voucher that will be used to perform the transfer of ownership of the device.
-
-  * Processes: Device Initialize Protocol (DI), Transfer Ownership Protocol 0 (TO0), Transfer Ownership Protocol 1 (TO1), Transfer Ownership Protocol 2 (TO2)
-  * Beliefs imparted to the device after protocol execution: When the device is powered on, and all TO protocols run, the device figures out by contacting the rendezvous server, who the owner is, authenticate with the owner. At this point the rendezvous server, and the owner are able to authenticate the device.
-
-
 
 ## Bootstrapping Remote Secure Key Infrastructures (BRSKI)
 
@@ -403,6 +382,32 @@ SZTP has the following characteristics:
   * **Initial beliefs assumed in the device**: SZTP requires devices to have a pre-configured state, including a client X.509 certificate for TLS client authentication to bootstrap servers. While the specification allows the use of HTTP authentication with passwords, it typically relies on X.509 certificates in the form of IDevID certificates, as defined in {{ieee8021ar}}. Additionally, devices must have a list of trusted bootstrap servers and trust anchor certificates for verifying bootstrap server certificates and ownership vouchers signed by the manufacturer. All this information, including the client TLS certificate and trust anchors, must be installed during manufacturing.
   * **Processes**: A precursor for the device to bootstrap and join the owner’s network is the enrollment of the owner with the manufacturer and the setup of all necessary network infrastructure to authenticate the device. Thereafter, the device can use various sources such as Domain Name System (DNS), Dynamic Host Configuration Protocol (DHCP) options, removable storage (e.g., USB drives), or knowledge of well-known bootstrapping servers to locate the owner certificate and ownership voucher. These methods can be used in parallel to expedite the process. Once the owner certificate and ownership voucher are obtained and verified, the device receives, verifies/decrypts the signed and/or encrypted onboarding information, including boot images, configuration details, and scripts. With the image, configuration, and scripts, the device can securely join the owner's network management system (NMS). Unlike other protocols, once all the infrastructure has been set up, no actions are needed on the device itself other than its physical placement, cabling, and booting up.
   * **Beliefs imparted to the device after protocol execution**: After the SZTP bootstrapping process, the device possesses all necessary information, called as bootstrapping data, for secure communication with the deployment-specific NMS. This bootstrapping data includes the ownership voucher, the owner certificate, and onboarding information. The owner certificate and ownership voucher are used to verify the onboarding information, which encompasses the boot image and its hash or signature, initial configuration, and pre- and post-configuration scripts to be executed by the device.
+
+
+## FIDO Device Onboard (FDO)
+
+The Fast IDentity Online Alliance (FIDO) has specified an automatic onboarding protocol for IoT devices {{fidospec}}. The goal of this protocol is to provide a new IoT device with information for interacting securely with an online IoT platform. This protocol allows owners to choose the IoT platform for their devices at a late stage in the device lifecycle. The draft specification refers to this feature as "late binding".
+
+The FIDO IoT protocol itself is composed of one Device Initialization (DI) protocol and 3 Transfer of Ownership (TO) protocols TO0, TO1, TO2. Protocol messages are encoded in Concise Binary Object Representation (CBOR) {{RFC8949}} and can be transported over application layer protocols such as Constrained Application Protocol (CoAP) {{RFC7252}} or directly over TCP, Bluetooth etc. FIDO IoT however assumes that the device already has IP connectivity to a rendezvous server. Establishing this initial IP connectivity is explicitly stated as "out-of-scope" but the draft specification hints at the usage of Hypertext Transfer Protocol (HTTP) {{RFC7230}} proxies.
+
+The specification only provides a non-normative example of the DI protocol which must be executed in the factory during device manufacture. This protocol embeds initial ownership and manufacturing credentials into a Restricted Operation Environment (ROE) on the device. The initial information embedded also includes a unique device identifier (called GUID in the specification). After DI is executed, the manufacturer has an ownership voucher which is passed along the supply chain to the device owner.
+
+When a device is unboxed and powered on by the new owner, the device discovers a network-local or an Internet-based rendezvous server. Protocols (TO0, TO1, and TO2) between the device, the rendezvous server, and the new owner (as the owner onboarding service) ensure that the device and the new owner are able to authenticate each other. Thereafter, the new owner establishes cryptographic control of the device and provides it with credentials of the IoT platform which the device should use.
+
+
+FIDO has the following characteristics:
+
+  * Terms: Provisioning, onboarding, commissioning, initialisation.
+  * **Players**: The device manufacturer plays a significant role in FDO. During production, the manufacturer provisions each device with a unique identifier (GUID), an asymmetric key pair used for cryptographic attestation (based on Intel EPID or standard ECDSA), a hash of the manufacturer’s public key (used for verifying the ownership voucher chain), and detailed rendezvous information describing how the device can later locate its onboarding infrastructure. These rendezvous instructions may include DNS names, IP addresses, certificate hashes for TLS pinning, and even information such as a Wi-Fi SSID and passphrase to enable initial connectivity to the rendezvous server. The manufacturer also ensures that the device generates a symmetric secret, which is then used to compute an HMAC value over elements such as the device’s GUID, rendezvous information, and manufacturer public key. This HMAC, unique to each unit, is embedded into a signed ownership voucher created by the manufacturer and transferred separately through the supply chain, establishing a verifiable link between the physical device and its digital identity. The specification does not prescribe who operates the rendezvous servers and refers to them generically as Internet services; in practice, they are often maintained by the manufacturer but could be hosted by other entities.
+
+    The final device owner, who seeks long-term management of the device for tasks such as retrieving data and performing software updates, either operates a dedicated onboarding service or delegates this function to another entity. The owner maintains a key pair whose public key is linked to the last entry in the ownership voucher and uses it to register device ownership with a rendezvous server. During the TO2 onboarding protocol, the owner authenticates to the device using its private key and the voucher, while the device attests its identity in return. Once mutual trust is established, the owner’s onboarding service securely provisions operational credentials and configuration data, after which the device updates its internal FDO credentials to enable future resale or re-onboarding as needed.
+
+    FDO can be seen as a more elaborate evolution of SZTP. While both rely on manufacturer-installed credentials and trusted servers for redirection, FDO introduces a tighter cryptographic binding between the device and its ownership voucher through the embedded HMAC mechanism and supports verifiable ownership transfers across multiple entities. This design adds complexity but provides the important advantage that devices remain manageable even if the original manufacturer ceases operation, since ownership and onboarding continuity can be maintained by the last legitimate owner, who can update all information except the device’s attestation keys.
+
+  * Initial beliefs assumed in the device: FDO assumes that each device is provisioned during manufacturing with a unique device identifier (GUID), a cryptographic key pair used for device attestation, a hash of the manufacturer’s public key for verifying the ownership voucher chain, and the rendezvous information needed to discover onboarding services. The rendezvous information may include DNS names, IP addresses, supported communication protocols, certificate hashes for authenticating the rendezvous server, and even Wi-Fi SSID and passphrase details to enable initial network connectivity. The device also holds a symmetric secret used to compute and verify HMAC values that cryptographically bind the device’s internal identity to its ownership voucher.
+
+  * Processes: Device Initialize Protocol (DI), Transfer Ownership Protocol 0 (TO0), Transfer Ownership Protocol 1 (TO1), Transfer Ownership Protocol 2 (TO2)
+  * Beliefs imparted to the device after protocol execution: When the device is powered on, and all TO protocols run, the device figures out by contacting the rendezvous server, who the owner is, authenticate with the owner. At this point the rendezvous server, and the owner are able to authenticate the device.
 
 ## LPWAN {#lpwan}
 
