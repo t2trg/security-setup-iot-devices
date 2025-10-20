@@ -24,7 +24,7 @@ author:
   email: mohit@iki.fi
 - ins: B. Sarikaya
   name: Behcet Sarikaya
-  org:
+  org: Unaffiliated
   city: ''
   region: ''
   code: ''
