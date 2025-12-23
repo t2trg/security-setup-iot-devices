@@ -355,15 +355,25 @@ OCF has the following characteristics:
 
 ## Bootstrapping Remote Secure Key Infrastructures (BRSKI)
 
-The ANIMA working group is working on a bootstrapping solution for devices that rely on 802.1AR {{ieee8021ar}} vendor certificates called Bootstrapping Remote Secure Key Infrastructures (BRSKI) {{RFC8995}}. In addition to vendor installed IEEE 802.1AR certificates, a vendor based service on the Internet is required. Before being authenticated, a new device only needs link-local connectivity, and does not require a routable address. When a vendor provides an Internet based service, devices can be forced to join only specific domains. The document highlights that the described solution is aimed in general at non-constrained (i.e. class 2+ defined in {{RFC7228}}) devices operating in a non-challenged network. It claims to scale to thousands of devices located in hostile environments, such as ISP provided CPE devices which are drop-shipped to the end user.
+Bootstrapping Remote Secure Key Infrastructures (BRSKI) {{RFC8995}} defines a bootstrapping solution that enables devices to securely join the device owner's network domain using manufacturer-installed IEEE 802.1AR {{ieee8021ar}} certificates, together with a manufacturer-provided Internet service called the Manufacturer Authorized Signing Authority (MASA).The document highlights that the solution is aimed in general at non-constrained (i.e. class 2+ defined in {{RFC7228}}) devices operating in a non-challenged network. The goal of the protocol is to securely provide a new device (called pledge in the specification) with the CA fingerprint of the owner's network domain, allowing the device to identify and trust future interactions within the owner network. If the owner network provides an Enrollment over Secure Transport (EST) service, the device may also enroll and obtain a locally issued certificate bound to the owner domain. To enable this process, the owner operates a registrar that authenticates devices using their manufacturer installed certificates and requests authorization vouchers from the MASA based on its list of trusted manufacturers and device serial numbers. Prior to full network access, the device may rely on link local connectivity via an owner provided proxy (Join Proxy), allowing it to complete authentication and trust establishment before being assigned a routable network address. 
 
 BRSKI has the following characteristics:
 
-  * Terms: Bootstrapping, provisioning, enrollment, onboarding.
-  * Players: Administrator, Client, Cloud Registrar, Configurator, Device, Domain Registrar, Initiator, Join Proxy, JRC, Manufacturer, Owner, Peer, Pledge, Server, User
-  * Initial beliefs assumed in the device: Every device has an IDevID, installed and signed by the manufacturer, which is used as a basis for establishing further trust relations. In the initial stage, when the device is deployed in a specific location it cannot securely communicate with the registrar or JRC, to be integrated into the network, so  the device and the registrar need to establish mutual trust.
-  * Processes: Discover, self-Identify, joint registrar, imprint registrar, enroll.
-  * Beliefs imparted to the device after protocol execution: After the process has finished and the device is imprinted, and trusts the registrar/JRC, through a voucher issued by the manufacturer and verified by the device.
+  * **Terms**: 
+    * *Bootstrapping*: used to describe the overall process by which a device transitions from an unaffiliated factory state to being a trusted member of an owner network. In BRSKI, bootstrapping encompasses device discovery of the local domain, interaction with the registrar and manufacturer authorized signing authority, validation of a voucher, and establishment of trust in the owner domain. The term broadly covers all protocol steps required before the device can securely operate in the network.
+    * *Provisioning*: sed in a general sense to refer to the act of supplying a device with the information and trust anchors it needs to operate securely in a specific domain. In BRSKI, provisioning primarily occurs when the device accepts the domain trust anchor conveyed in the voucher and optionally receives a locally issued device certificate. The term is not used as a formally distinct protocol phase and is largely interchangeable with bootstrapping in descriptive text.
+    * *Enrollment*: used to refer specifically to the process of obtaining a locally issued identity within the owner domain. This typically occurs after imprinting and is realized through Enrollment over Secure Transport, where the device enrolls with a local certification authority to obtain a Locally Issued Device Identifier certificate.
+    * *Onboarding*: not used as a primary or formally defined term. It appears informally to generally refer to the broader act of bringing a device under the control of an owner network.
+    * *Join*: used to describe the act of a device attempting to attach itself to a specific owner network. It reflects the device intent to become a member of the domain but does not by itself imply trust has been established.
+    * *Imprint*: used to describe the transition where the device accepts the owner domain trust anchor provided in the voucher. Imprinting marks the point at which the device irrevocably binds itself to the owner domain by trusting the pinned domain certificate.
+
+  * **Players**: The device manufacturer is responsible for installing the IEEE 802.1AR IDevID certificate and private key during manufacturing, along with the trust anchor required to verify vouchers signed by the Manufacturer Authorized Signing Authority (MASA) and the MASA service location itself. The manufacturer must also operate the MASA service, which authorizes devices to join specific owner domains by issuing signed vouchers, and maintain sufficient asset tracking to associate device identities such as serial numbers with authorized owners.
+
+    On the owner side, the network into which the device is deployed must provide initial connectivity, often via a proxy, to allow the device to communicate with the registrar and indirectly with the MASA before it has full network access. The device owner operates a registrar that authenticates devices using their manufacturer installed certificates, maintains a list of trusted manufacturers and corresponding MASA services, and tracks the identities of devices that are permitted to join the domain. If the owner intends to issue locally scoped identity credentials, the owner must additionally deploy and operate an Enrollment over Secure Transport (EST) server to provision domain specific certificates to devices after successful bootstrapping.
+
+  * Initial beliefs assumed in the device: BRSKI requires each device to possess an IEEE 802.1AR Initial Device Identifier (IDevID) certificate and associated private key. In addition, the device must include a built in trust anchor that enables it to validate vouchers signed by the manufacturer’s Manufacturer Authorized Signing Authority (MASA). The device is also configured with the MASA service location, typically expressed as a URI embedded in the IDevID certificate.
+  * Processes: BRSKI assumes that devices are manufactured with an IEEE 802.1AR Initial Device Identifier certificate and the information required to contact the manufacturer authorized signing authority. When a device is powered on in the owner network, it discovers the owner proxy using link local discovery mechanisms and establishes provisional network connectivity. Through this proxy, the device connects to the domain registrar using a provisional (unauthenticated) TLS connection and presents its IDevID for identification. The device then generates a voucher request and sends it to the registrar, which validates the request and contacts the appropriate MASA. The manufacturer verifies the device identity and issues a signed voucher that authorizes the device to join the owner domain. This voucher is relayed back to the device via the registrar, where the device verifies the manufacturer signature and associated freshness information. Upon successful verification, the device imprints by accepting the owner domain certificate conveyed in the voucher as a new trust anchor. If supported by the owner network, the device then enrolls with a local EST server to obtain a locally issued device identifier certificate for ongoing authentication and management. After these steps are completed, the device is able to securely participate in the owner network. With BRSKI, once the required infrastructure such as the registrar, proxy, and manufacturer services is in place, it enables a bootstrapping experience that requires only physical installation, connectivity, and powering up of the device.
+  * Beliefs imparted to the device after protocol execution: After the BRSKI bootstrapping process, the device obtains the CA fingerprint of the owner's network domain, which establishes the basis for trusting future interactions with the owner network. If enrollment is performed, the device additionally obtains a Locally Issued Device Identifier (LDevID) certificate. With this trust anchor and optional local identity in place, the device can securely communicate with domain services, participate in secure routing, and be managed by the owner using domain specific management protocols.
 
 ## Secure Zero Touch Provisioning (SZTP)
 
@@ -416,32 +426,6 @@ FIDO has the following characteristics:
 
   * **Beliefs imparted to the device after protocol execution**: After the FDO onboarding process is complete, the device possesses all configuration and credential information necessary for secure operation under the new owner's management domain. This includes data transferred from the owner's onboarding service, which may contain network configuration parameters, the address and endpoint URLs of the final management server or IoT platform, and the credentials such as keys, certificates, tokens, or shared secrets required for the device to authenticate securely to these services. The data may also include instructions for installing required agents, drivers, or firmware updates. In addition, the device may receive and update its internal FDO credentials with new information supplied by the owner, which can include an updated device identifier (GUID), revised rendezvous server information, and a new hash of the owner's public key to establish a renewed trust anchor.
 
-
-## LPWAN {#lpwan}
-
-Low Power Wide Area Network (LPWAN) encompasses a wide variety of technologies whose link-layer characteristics are severely constrained in comparison to other typical IoT link-layer technologies such as Bluetooth or IEEE 802.15.4. While some LPWAN technologies rely on proprietary bootstrapping solutions which are not publicly accessible, others simply ignore the challenge of bootstrapping and key distribution. In this section, we discuss the bootstrapping methods used by LPWAN technologies covered in {{RFC8376}}.
-
-* LoRaWAN {{LoRaWAN}} describes its own protocol to authenticate nodes before allowing them join a LoRaWAN network. This process is called as joining and it is based on pre-shared keys (called AppKeys in the standard). The joining procedure comprises only one exchange (join-request and join-accept) between the joining node and the network server. There are several adaptations to this joining procedure that allow network servers to delegate authentication and authorization to a backend AAA infrastructure {{RFC2904}}.
-
-* Wi-SUN Alliance Field Area Network (FAN) uses IEEE 802.1X {{ieee8021x}} and EAP-TLS for network access authentication. It performs a 4-way handshake to establish a session keys after EAP-TLS authentication.
-
-* NB-IoT relies on the traditional 3GPP mutual authentication scheme based on a shared-secret in the Subscriber Identity Module (SIM) of the device and the mobile operator.
-
-* Sigfox security is based on unique device identifiers and cryptographic keys. As stated in {{RFC8376}}, although the algorithms and keying details are not publicly available, there is sufficient information to indicate that bootstrapping in Sigfox is based on pre-established credentials between the device and the Sigfox network.
-
-From the above, it is clear that all LPWAN technologies rely on pre-provisioned credentials for authentication between a new device and the network.
-
-LPWAN has the following characteristics:
-
-  * Terms: Provisioning, configuration, discovery.
-  * Players: Administrator, Authenticator, Border Router, Client, Device, Manager, Network Server, User
-  * Initial beliefs assumed in the device: The device normally has credentials that are used to directly secure the communications or to device key material to do so. There is a basic trust in the network server.
-  * Processes: Provisioning
-  * Beliefs imparted to the device after protocol execution: Either because of an authentication process that results in newly derived key material or the pre-provisioned key material is used, the device is able to exchange information securely through the network server.
-
-
-
-
 ##  Thread {#thread}
 
 Thread Group commissioning {{threadcommissioning}} introduces a two phased process i.e. Petitioning and Joining. Entities involved are leader, joiner, commissioner, joiner router, and border router. Leader is the first device in Thread network that must be commissioned using out-of-band process and is used to inject correct user generated Commissioning Credentials (can be changed later) into Thread Network. Joiner is the node that intends to get authenticated and authorized on Thread Network. Commissioner is either within the Thread Network (Native) or connected with Thread Network via a WLAN (External).
@@ -463,6 +447,8 @@ There are several stages before a device becomes fully operational. There is typ
 After some initial credential is installed, there is a process that typically involves authentication establishing initial trust, after which  credentials and/or parameters are configured or installed into the device.
 
 Finally, when the entities involved in the process are authenticated and the configuration and key material established, the normal operation of the IoT device can take place.
+
+TODO Discuss that some protocols think about resale and potential reused. Others assume that device reset will take care but haven't thought about the exact scenario - what if the device is sold without reset.
 
 
 ## Comparison of terminology {#comp-term}
