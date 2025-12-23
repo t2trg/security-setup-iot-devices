@@ -229,7 +229,9 @@ Bluetooth mesh has the following characteristics:
 
 ## Device Provisioning Protocol (DPP)
 
-The Wi-Fi Alliance Device Provisioning Protocol (DPP) {{dpp}} (also called Wi-Fi Easy Connect) describes itself as a standardized protocol for providing user-friendly Wi-Fi setupfor devices. DPP relies on a configurator, e.g. a smartphone application, for setting up all other devices, called enrollees, in the network.
+The Wi-Fi Alliance Device Provisioning Protocol (DPP) {{dpp}} (also called Wi-Fi Easy Connect) is a standardized protocol for providing user-friendly Wi-Fi setup for devices. DPP relies on a configurator, e.g. a smartphone application, for setting up all other devices, called enrollees, in the Wi-Fi network. An enrollee is typically provisioned during manufacturing with a static bootstrapping asymmetric key pair. The configurator may also possess a static bootstrapping key pair generated when the application is first installed or initialized, or it may generate a bootstrapping key pair dynamically. DPP defines four conceptual phases. During the initial *bootstrapping* phase, the most common deployment model uses unidirectional authentication of the enrollee bootstrapping public key. In this case, the configurator possesses an authenticated copy of the enrollee public key, for example obtained through a QR code printed on the device packaging, while the enrollee does not authenticate the configurator at this stage and instead relies on the configurator having prior knowledge of its public key. Bidirectional authentication of bootstrapping public keys is also supported when enrollee and configurator input and output capabilities permit it, such as through PKEX, where the user inputs a short shared secret code on both sides, or through bidirectional NFC exchanges.
+
+  After successful unidirectional or bidirectional bootstrapping authentication, the protocol proceeds to the *authentication* phase, during which the configurator and enrollee perform a mutually authenticated key exchange using fresh ephemeral keys and the previously authenticated bootstrapping keys. At the conclusion of this phase, both parties derive shared key material. This key material is then used in the *configuration* phase to securely provision the enrollee with network access information. This includes a Connector (a modern credential containing a tuple of the network identity and an access key instead of a network wide password) and traditional network parameters such as the SSID. In the final *access* phase, the enrollee uses the Connector together with the network introduction protocol to authenticate to and establish connectivity with the Wi Fi access point (AP), completing the DPP provisioning process.
 
 DPP has the following characteristics:
 
@@ -549,6 +551,8 @@ The OCF device starts as unowned. It has to perform an ownership transfer, to es
 Bluetooth devices start as unprovisioned. Initial trust is established as a consequence of exchanging public keys and performing the authentication. If the public keys are ephemeral, there is no initial credential establishment.
 
 ### Initial trust based on the credentials installed
+
+Benefit on certificate over bootstrapping key only in DPP
 
 These credentials may very from the time of installing, and the entity to which it related. In this sense, they could be from the  manufacturer, owner or other entity.
 
