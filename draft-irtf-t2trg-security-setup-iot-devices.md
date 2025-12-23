@@ -88,14 +88,6 @@ informative:
     date: 2018
     seriesinfo:
       Wi-Fi Alliance: 'Version 3.0'
-  LoRaWAN:
-    target: https://lora-alliance.org/resource_hub/lorawan-specification-v1-1/
-    title: LoRa Specification
-    author:
-    - org: LoRa Alliance
-    date: 2017-10
-    seriesinfo:
-      LoRa Alliance: 'Version: 1.1'
   oma:
     target: https://openmobilealliance.org/release/LightweightM2M/V1_2_1-20221209-A/OMA-TS-LightweightM2M_Core-V1_2_1-20221209-A.pdf
     title: 'Lightweight Machine to Machine Technical Specification: Core'
@@ -229,14 +221,16 @@ Bluetooth mesh has the following characteristics:
 
 ## Device Provisioning Protocol (DPP)
 
-The Wi-Fi Alliance Device Provisioning Protocol (DPP) {{dpp}} (also called Wi-Fi Easy Connect) is a standardized protocol for providing user-friendly Wi-Fi setup for devices. DPP relies on a configurator, e.g. a smartphone application, for setting up all other devices, called enrollees, in the Wi-Fi network. An enrollee is typically provisioned during manufacturing with a static bootstrapping asymmetric key pair. The configurator may also possess a static bootstrapping key pair generated when the application is first installed or initialized, or it may generate a bootstrapping key pair dynamically. DPP defines four conceptual phases. During the initial *bootstrapping* phase, the most common deployment model uses unidirectional authentication of the enrollee bootstrapping public key. In this case, the configurator possesses an authenticated copy of the enrollee public key, for example obtained through a QR code printed on the device packaging, while the enrollee does not authenticate the configurator at this stage and instead relies on the configurator having prior knowledge of its public key. Bidirectional authentication of bootstrapping public keys is also supported when enrollee and configurator input and output capabilities permit it, such as through PKEX, where the user inputs a short shared secret code on both sides, or through bidirectional NFC exchanges.
+The Wi-Fi Alliance Device Provisioning Protocol (DPP) {{dpp}} (also called Wi-Fi Easy Connect) is a standardized protocol for providing user-friendly Wi-Fi setup for devices. DPP relies on a configurator, e.g. a smartphone application, for setting up all other devices, called enrollees, in the local network. DPP also supports cloud managed environments where the configurator is not directly reachable on the local network. In this variant, referred to as DPP over TCP, the enrollee communicates with a local relay, typically the Wi Fi access point (AP), which encapsulates DPP messages into a TCP connection to a remote configurator.
+
+  In DPP, an enrollee is typically provisioned during manufacturing with a static bootstrapping asymmetric key pair. The configurator may also possess a static bootstrapping key pair generated when the application is first installed or initialized, or it may generate a bootstrapping key pair dynamically. DPP defines four conceptual phases. During the initial *bootstrapping* phase, the most common deployment model uses unidirectional authentication of the enrollee bootstrapping public key. In this case, the configurator possesses an authenticated copy of the enrollee public key, for example obtained through a QR code printed on the device packaging, while the enrollee does not authenticate the configurator at this stage and instead relies on the configurator having prior knowledge of its public key. Bidirectional authentication of bootstrapping public keys is also supported when enrollee and configurator input and output capabilities permit it, such as through PKEX, where the user inputs a short shared secret code on both sides, or through bidirectional NFC exchanges.
 
   After successful unidirectional or bidirectional bootstrapping authentication, the protocol proceeds to the *authentication* phase, during which the configurator and enrollee perform a mutually authenticated key exchange using fresh ephemeral keys and the previously authenticated bootstrapping keys. At the conclusion of this phase, both parties derive shared key material. This key material is then used in the *configuration* phase to securely provision the enrollee with network access information. This includes a Connector (a modern credential containing a tuple of the network identity and an access key instead of a network wide password) and traditional network parameters such as the SSID. In the final *access* phase, the enrollee uses the Connector together with the network introduction protocol to authenticate to and establish connectivity with the Wi Fi access point (AP), completing the DPP provisioning process.
 
 DPP has the following characteristics:
 
   * Terms: Bootstrapping, configuration, discovery, enrollment, provisioning.
-  * Players: Authenticator, Client, Configurator, Device, Initiator, Manufacturer, Owner, Peer, Persona, Responder, User, Enrollee
+  * **Players**: The device manufacturer is responsible for provisioning each device with a bootstrapping asymmetric key pair during manufacturing. In many deployments, the manufacturer is also responsible for encoding the corresponding bootstrapping public key, together with associated metadata, as a QR code printed on the device or its packaging. The device user or owner is responsible for securely transferring this bootstrapping public key information to the configurator. The configurator required to perform the DPP protocol and enable new devices to join the Wi Fi network can be provided through functionality built into mobile operating systems such as Android or iOS, or through a dedicated application supplied by the device manufacturer. In enterprise or cloud managed deployments, the configurator may be part of a remote IoT platform, in which case the local Wi Fi access point acts as a relay and must be configured with the network location of the remote configurator.
   * Initial beliefs assumed in the device: There are two entities involved in the DPP protocol, the Initiator and Responder. These entities as a starting point do not have a trust relation, nor do they share credentials or key material. DPP uses a decentralized architecture with no central authority to coordinate or control authentication and rely on a direct trust model.
  In DPP, authentication does not rely on a pre-existing trust relation with a third-party or centralized entity, hence all entities involved in DPP need to perform the required validation.
 
@@ -514,6 +508,7 @@ The specifics of every term varies depending on the technology, but we enumerate
 
 ## Comparison of players {#comp-players}
 
+User in DPP vs. owner in BRSKI
 
 In this section we classify the different players.
 
