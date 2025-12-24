@@ -125,10 +125,12 @@ informative:
     - org: IEEE
     date: 2020
   threadcommissioning:
-    title: Thread Commissioning
+    title: Thread Specification
     author:
     - org: Thread Group
-    date: 2015
+    date: 2024
+    target: https://www.threadgroup.org/ThreadSpec
+    seriesinfo: 'Version: 1.4.0'
   fidospec:
     target: https://fidoalliance.org/specifications/download-iot-specifications/
     title: FIDO Device Onboard Specification
@@ -240,7 +242,7 @@ DPP has the following characteristics:
   * **Initial beliefs assumed in the device**: DPP requires devices to have a bootstrapping asymmetric key pair, which is typically installed in the factory. The corresponding bootstrapping public key is intended to be conveyed securely to the configurator through an out of band mechanism. Depending on the selected DPP variant and the device capabilities, this may require the device to support specific I/O interfaces. For example, devices may present the bootstrapping public key and associated metadata encoded as a QR code or NFC tag, or they may support limited user input to enable password based bootstrapping using PKEX.
   * **Processes**: DPP provisioning process begins with bootstrapping, during which a user initiates an out-of-band transfer of public keys between the configurator and the enrollee. In a typical unidirectional deployment, the user employs a configurator, such as a smartphone application, to scan a QR code associated with the enrollee, thereby providing the configurator with an authenticated copy of the enrollee bootstrapping public key. Bidirectional variants are also supported, including NFC based exchanges and PKEX, where both the configurator and the enrollee authenticate each other using a short-shared secret input by the user. Once the configurator possesses the enrollee authenticated bootstrapping key, the devices proceed to the authentication phase, performing cryptographic exchanges to verify the bootstrapping keys and establish a secure encrypted channel using derived shared key material. During the subsequent configuration phase, the configurator uses this protected channel to provision the enrollee with a DPP configuration object containing deployment specific network parameters and a Connector. The Connector is a cryptographically protected credential that binds the network identity to a device specific access key and replaces legacy network wide passwords. In the access phase, the enrollee presents the Connector to a Wi-Fi AP to establish secure association with the network. If network settings change or credentials expire, the device can also undergo reconfiguration by using its stored keys to obtain updated configuration information without repeating the initial physical bootstrapping steps.
 
-  * **Beliefs imparted to the device after protocol execution**: After successful completion of the DPP provisioning process, the enrollee device and the configurator establish shared key material that is used to protect the subsequent information provisioned onto the device. The information includes a Connector, which is a signed and cryptographically protected structure containing a group identifier, a network role, and a network access key. The Connector replaces traditional network wide passwords and allows the device to prove to other peers that it has been authorized by the configurator to join the network. The device also receives and trusts the configurator public signing key, which it uses to verify Connectors presented by other devices such as APs. In addition, the device gains knowledge of deployment specific network parameters, typically including the SSID, supported operating channels, security policies of the domain, and privacy protection keys (used to protect identity of the enrollee when requesting reconfiguration by the configurator). 
+  * **Beliefs imparted to the device after protocol execution**: After successful completion of the DPP provisioning process, the enrollee device and the configurator establish shared key material that is used to protect the subsequent information provisioned onto the device. The information includes a Connector, which is a signed and cryptographically protected structure containing a group identifier, a network role, and a network access key. The Connector replaces traditional network wide passwords and allows the device to prove to other peers that it has been authorized by the configurator to join the network. The device also receives and trusts the configurator public signing key, which it uses to verify Connectors presented by other devices such as APs. In addition, the device gains knowledge of deployment specific network parameters, typically including the SSID, supported operating channels, security policies of the domain, and privacy protection keys (used to protect identity of the enrollee when requesting reconfiguration by the configurator).
 
 ## Enrollment over Secure Transport (EST)
 
@@ -424,10 +426,10 @@ Under some topologies, Joiner Router and Border Router facilitate the Joiner nod
 Thread has the following characteristics:
 
   * Terms: Commissioning, discovery, provisioning.
-  * Players: Administrator, Border Agent, Border Router, Commissioner, Commissioner Candidate, Configurator, Device, End Device, End Device, Endpoint Identifier, Initiator, Joiner, Joiner Router, Owner, Peer, Responder, Server, User
-  * Initial beliefs assumed in the device: The joiner needs to share credentials with an entity that belongs to the Thread network, prior to the authentication process.
+  * Players:
+  * **Initial beliefs assumed in the device**: Thread mesh commissioning assumes that a device is manufactured with a unique EUI-64 and a Pre Shared Key for the Device (PSKd), which is a short human-readable string intended to be conveyed out-of-band to an authorized commissioner. This PSKd is typically printed on the device itself, on an attached label, or on the original packaging, and may also be encoded in a QR code to facilitate user entry. The commissioning process relies on the assumption that this PSKd is securely transferred by the user to the commissioner, such as a smartphone application, and is used to initiate a mutually authenticated commissioning exchange.
   * Processes: Petitioning, Joining
-  * Beliefs imparted to the device after protocol execution: Once the authentication takes place, a trust relation is established between the Joiner and the Commissioner it receives the network parameters needed to be attached to the Thread network.
+  * **Beliefs imparted to the device after protocol execution**: After completion of the Thread mesh commissioning process, the device possesses all information required to securely participate as a node in the Thread network. This includes information such as the network name, channel, PAN identifier, and security policy. The device is also provided the thread network key, which serves as the root of trust for securing link-layer frames and Mesh Link Establishment (MLE) communications; this allows the device to mutually authenticate neighboring nodes as legitimate members of the same security domain. In addition, the device acquires addressing and identity information (Mesh-Local Endpoint Identifier (ML-EID) and Routing Locator (RLOC)) to facilitate efficient IPv6 routing and forwarding within the network.
 
 # Comparison {#comp}
 
