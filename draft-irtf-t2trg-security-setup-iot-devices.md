@@ -39,7 +39,6 @@ author:
   email: garciadan@uniovi.es
 informative:
   RFC2904:
-  RFC4291:
   RFC5272:
   RFC6241:
   RFC7030:
@@ -118,12 +117,6 @@ informative:
     author:
     - org: IEEE
     date: 2018
-  ieee8021x:
-    target: https://1.ieee802.org/security/802-1x/
-    title: IEEE Standard for Local and metropolitan area networks–Port-Based Network Access Control
-    author:
-    - org: IEEE
-    date: 2020
   threadcommissioning:
     title: Thread Specification
     author:
@@ -419,16 +412,27 @@ FIDO has the following characteristics:
 
 ##  Thread {#thread}
 
-Thread Group commissioning {{threadcommissioning}} introduces a two phased process i.e. Petitioning and Joining. Entities involved are leader, joiner, commissioner, joiner router, and border router. Leader is the first device in Thread network that must be commissioned using out-of-band process and is used to inject correct user generated Commissioning Credentials (can be changed later) into Thread Network. Joiner is the node that intends to get authenticated and authorized on Thread Network. Commissioner is either within the Thread Network (Native) or connected with Thread Network via a WLAN (External).
+Thread Mesh Commissioning Protocol (MeshCoP) {{threadcommissioning}} enables new Thread devices to securely join an existing Thread mesh network. That is, MeshCoP ensures that the network wide Thread Network Key, which is used to protect all link layer and mesh control communications, is securely transferred to a device that the owner/user intends to add to the mesh. MeshCoP relies on a dedicated Commissioner, which may be implemented as a smartphone application, to guide and authorize the commissioning process. Within the Thread mesh, one node acts as the Leader and is responsible for coordinating network wide state. Devices that wish to act as the active Commissioner must petition the Leader for this role. A new device seeking to join the network, called a Joiner, does not yet possess network credentials and therefore relies on an existing mesh node, called a Joiner Router, to relay commissioning traffic. A Border Router hosts a Border Agent and provides connectivity between the IEEE 802.15.4 Thread mesh and external IP networks such as Wi-Fi or Ethernet, enabling interaction with external Commissioners.
 
-Under some topologies, Joiner Router and Border Router facilitate the Joiner node to reach Native and External Commissioner, respectively. Petitioning begins before Joining process and is used to grant sole commissioning authority to a Commissioner. After an authorized Commissioner is designated, eligible thread devices can join network. Pair-wise key is shared between Commissioner and Joiner, network parameters (such as network name, security policy, etc.,) are sent out securely (using pair-wise key) by Joiner Router to Joiner for letting Joiner to join the Thread Network. Entities involved in Joining process depends on system topology i.e. location of Commissioner and Joiner. Thread networks only operate using IPv6. Thread devices can devise GUAs (Global Unicast Addresses) {{RFC4291}}. Provision also exist via Border Router, for Thread device to acquire individual global address by means of DHCPv6 or using SLAAC (Stateless Address Autoconfiguration) address derived with advertised network prefix.
+Before authorizing Joiners, the Commissioner must first authenticate its own authority to the Thread network. This is achieved by establishing a mutually authenticated DTLS J-PAKE session with the Border Agent using the network’s commissioning credential, known as the PSKc. The PSKc is a key derived from a human-readable passphrase (the Commissioning Credential) chosen by the user during the initial network setup and is typically entered by the user into the Commissioner user interface. Following successful authentication, the Commissioner petitions the network Leader to become the active Commissioner for the mesh network partition. Once accepted, the Commissioner is authorized to manage commissioning and the network begins accepting join attempts for specific Joiner devices that have been enabled by the user.
+
+A new Joiner device scans available radio channels and listens for Discovery Response messages transmitted by nearby routers, which advertise commissioning support. The owner/user facilitates the joining device's entry by providing its unique PSKd printed on the device or its packaging. Using this PSKd, the Commissioner and the Joiner initiate a DTLS J-PAKE handshake that is relayed through a nearby Joiner Router and the Border Agent to reach the Commissioner. Upon successful authentication, a secure Joiner Session is established and the Commissioner performs the Joiner Entrust phase, during which it securely delivers the Thread Network Key and other operational parameters, such as the Mesh Local Prefix, protected by a session derived Key Encryption Key. After receiving these credentials, the Joiner terminates the commissioning session and uses its newly acquired Network Key to perform the Mesh Link Establishment attach procedure with a parent router, thereby becoming a fully authenticated and operational node in the Thread mesh network.
+
 
 Thread has the following characteristics:
 
-  * Terms: Commissioning, discovery, provisioning.
-  * Players:
+  * **Terms**:
+    * *Commissioning*: refers to the entire process by which a new device is authorized to join an existing Thread network. It encompasses the discovery of commissioning-capable networks, authentication of the Commissioner, authentication of the Joiner using a device-specific PSKd, and the secure delivery of network credentials to the Joiner.
+    * *Petitioning*: refers specifically to the process by which a prospective Commissioner requests authority from the Thread network to act as the active Commissioner.
+    * *Discovery*: used for the mechanisms by which Joiner devices identify Thread networks that are currently accepting new devices.
+    * *Provisioning*: refer narrowly to the act of delivering credentials to a Joiner once it has been authenticated.
+    * *Entrust*: protocol step in which the Commissioner securely provides the Joiner with the Thread Network Key and other essential network parameters. Entrusting marks the transition point at which the joining device gains the cryptographic material required to participate as a trusted member of the mesh.
+    * *Attach*: refers to the process that follows commissioning, in which the newly provisioned device uses the Network Key to perform Mesh Link Establishment (MLE) with a parent router.
+    * *Join*: act of a device that is not yet a member of the Thread mesh network joining the mesh network
+
+  * **Players**: The device manufacturer is responsible for provisioning each device with a unique EUI-64 identifier and a Pre-Shared Key for the Device (PSKd), making this credential available to the user via physical labels or packaging. The device owner/user is responsible for establishing the Thread network infrastructure prior to commissioning. This includes deploying a functioning Thread mesh with at least one Border Router and selecting a human-readable Commissioning Credential (passphrase). This passphrase is used to derive the PSKc (Pre-Shared Key for the Commissioner), which allows the Commissioner to authenticate and communicate securely with the network's Border Agent. Additionally, the user must ensure an existing Thread device is in the vicinity of the new Joiner to serve as the Joiner Router relay. The Commissioner role may be fulfilled by functionality built into mobile operating systems (Android/iOS) or via a manufacturer-supplied application. Once the infrastructure is ready, the user is responsible for inputting the new device's PSKd into the Commissioner to initiate the mutually authenticated joining process.
   * **Initial beliefs assumed in the device**: Thread mesh commissioning assumes that a device is manufactured with a unique EUI-64 and a Pre Shared Key for the Device (PSKd), which is a short human-readable string intended to be conveyed out-of-band to an authorized commissioner. This PSKd is typically printed on the device itself, on an attached label, or on the original packaging, and may also be encoded in a QR code to facilitate user entry. The commissioning process relies on the assumption that this PSKd is securely transferred by the user to the commissioner, such as a smartphone application, and is used to initiate a mutually authenticated commissioning exchange.
-  * Processes: Petitioning, Joining
+  * **Processes**: The Thread mesh commissioning process begins when a user authorized Commissioner, commonly implemented as an application or service associated with a border router, discovers the target Thread network via a Border Agent. In parallel, a prospective device, known as a Joiner, is powered on and placed into joining mode, where it actively scans available IEEE 802.15.4 channels and transmits Discovery Request messages. Existing network nodes that are permitted to assist commissioning, such as routers or router eligible end devices, respond with Discovery Responses that advertise network identifiers and Steering Data, enabling the Joiner to identify a compatible network. Before authorizing new devices, the Commissioner must authenticate itself by establishing a mutually authenticated DTLS session with the Border Agent using the network commissioning credential and by petitioning the network Leader to become the active Commissioner for the partition. Once authorized, and after the user supplies the Joiner specific PSKd to the Commissioner, the Joiner initiates a DTLS based authentication exchange that is relayed through a nearby Joiner Router and the Border Agent. This exchange uses a password authenticated key exchange to mutually prove possession of the PSKd. Upon successful authentication, a secure commissioning session is established and the Commissioner performs the Joiner Entrust procedure, securely delivering the Thread Network Key and other operational parameters to the Joiner. With these credentials installed, the Joiner terminates the commissioning session and proceeds to attach to the mesh by executing the Mesh Link Establishment protocol with a parent router, thereby completing commissioning and becoming a fully authenticated and operational node in the Thread network.
   * **Beliefs imparted to the device after protocol execution**: After completion of the Thread mesh commissioning process, the device possesses all information required to securely participate as a node in the Thread network. This includes information such as the network name, channel, PAN identifier, and security policy. The device is also provided the thread network key, which serves as the root of trust for securing link-layer frames and Mesh Link Establishment (MLE) communications; this allows the device to mutually authenticate neighboring nodes as legitimate members of the same security domain. In addition, the device acquires addressing and identity information (Mesh-Local Endpoint Identifier (ML-EID) and Routing Locator (RLOC)) to facilitate efficient IPv6 routing and forwarding within the network.
 
 # Comparison {#comp}
@@ -441,6 +445,7 @@ Finally, when the entities involved in the process are authenticated and the con
 
 TODO Discuss that some protocols think about resale and potential reused. Others assume that device reset will take care but haven't thought about the exact scenario - what if the device is sold without reset.
 
+TODO Discuss several protocols require temporary connectivity via border router authenticator etc.
 
 ## Comparison of terminology {#comp-term}
 
