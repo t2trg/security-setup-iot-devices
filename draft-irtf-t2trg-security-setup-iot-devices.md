@@ -44,12 +44,14 @@ informative:
   RFC7030:
   RFC7228:
   RFC7252:
-  RFC7230:
+  RFC7616:
+  RFC7617:
   RFC8040:
   RFC8366:
   RFC8572:
   RFC8949:
   RFC8995:
+  RFC9112:
   RFC9140:
   RFC9148:
   simpleconn:
@@ -251,7 +253,7 @@ EST has the following characteristics:
     * *Bootstrapping*: used for the process when the client device has not been configured with an Implicit Trust Anchor (TA) database and device owner or administrator manually verifies the fingerprint of the EST CA certificate. This manual verification is only needed once, as the device establishes an explicit TA database for subsequent TLS authentication of the EST server.
     * *Enrollment*: describes the entire process of obtaining a client certificate from the EST CA. This includes learning the EST CA certificate, discovering required attributes for the Certificate Signing Request (CSR), submitting the CSR, and receiving the final client certificate.
     * *Initialization*: term used to refer to the essential initialization data that the device needs for completing the enrollment including the trust anchors, the EST server URI, and credentials for TLS authentication.
-  * **Players**: The network administrator is responsible for deploying and maintaining the EST CA and EST server before a device can be enrolled into the network. The device manufacturer must install a client identity certificate (such as an IEEE 802.1AR certificate), a shared secret for TLS authentication without certificates, and/or a username and password for HTTP Basic or Digest authentication. Additionally, the manufacturer may configure trust anchors for verifying the EST server and set the EST server URI. However, the EST specification allows for manual configuration of all required information, including the manual verification of the EST CA certificate fingerprint.
+  * **Players**: The network administrator is responsible for deploying and maintaining the EST CA and EST server before a device can be enrolled into the network. The device manufacturer must install a client identity certificate (such as an IEEE 802.1AR certificate), a shared secret for TLS authentication without certificates, and/or a username and password for HTTP Basic {{RFC7617}} or Digest {{RFC7616}} authentication. Additionally, the manufacturer may configure trust anchors for verifying the EST server and set the EST server URI. However, the EST specification allows for manual configuration of all required information, including the manual verification of the EST CA certificate fingerprint.
   * **Initial beliefs assumed in the device**: A device acting as an EST client is assumed to possess an existing credential for authenticating itself during the TLS handshake with the EST server. This credential may be a previously issued EST client certificate or a certificate from a distinct PKI, such as an IEEE 802.1AR manufacturer-installed certificate. Alternatively, the client may authenticate using a shared secret-based credential, such as a pre-installed symmetric key, or a username and password, either as a standalone method or in combination with TLS authentication. To verify the EST server, the client relies on a trust anchor database, which may be explicit, used to authenticate certificates issued by the EST CA, including the EST server certificate, or implicit, allowing authentication of the EST server when it presents a certificate issued by an external CA. The implicit trust anchor database may initially contain pre-installed CA certificates and can be disabled once the EST CA certificate is obtained. The EST client must also be configured with a Uniform Resource Identifier (URI) to locate the EST server.
   * **Processes**: Before a device can enroll using EST, the necessary network infrastructure must be in place, including the deployment of the EST server and CA. The device can discover the EST server URI through various methods, such as manual configuration or preconfigured settings from the manufacturer. If the device lacks an explicit Trust Anchor (TA) database, it may require bootstrapping, where the owner or administrator manually verifies the fingerprint of the EST CA certificate. Once the EST server is authenticated, the device retrieves the EST CA certificate, learns the required attributes for generating a Certificate Signing Request (CSR), and submits the CSR to obtain a client certificate. After enrollment, the device can securely authenticate to the network using its newly issued certificate and renew it before expiration.
   * **Beliefs imparted to the device after protocol execution**: After completing the enrollment process, the device obtains a client certificate issued by the EST CA, which it can use for authentication in subsequent communications. During enrollment, the device also learns the EST CA certificate, along with any intermediate certificates needed to build a complete trust chain to the EST CA trust anchor. The client also discovers the attributes it should include in a Certificate Signing Request (CSR), such as key usage, extended key usage, etc. Depending on the enrollment method, the device may generate its own key pair and submit a CSR or receive both a server-generated key pair and certificate. If the client requested a Full PKI, it may also receive information such as certificate revocation lists (CRLs), policy and name constriants etc. as defined in {{RFC5272}}.
@@ -380,7 +382,7 @@ SZTP has the following characteristics:
 
 The Fast IDentity Online Alliance (FIDO) has specified an automatic onboarding protocol for IoT devices {{fidospec}}. The goal of this protocol is to provide a new IoT device with information for interacting securely with an online IoT platform. This protocol allows owners to choose the IoT platform for their devices at a late stage in the device lifecycle. The draft specification refers to this feature as "late binding".
 
-The FIDO IoT protocol itself is composed of one Device Initialization (DI) protocol and 3 Transfer of Ownership (TO) protocols TO0, TO1, TO2. Protocol messages are encoded in Concise Binary Object Representation (CBOR) {{RFC8949}} and can be transported over application layer protocols such as Constrained Application Protocol (CoAP) {{RFC7252}} or directly over TCP, Bluetooth etc. FIDO IoT however assumes that the device already has IP connectivity to a rendezvous server. Establishing this initial IP connectivity is explicitly stated as "out-of-scope" but the draft specification hints at the usage of Hypertext Transfer Protocol (HTTP) {{RFC7230}} proxies.
+The FIDO IoT protocol itself is composed of one Device Initialization (DI) protocol and 3 Transfer of Ownership (TO) protocols TO0, TO1, TO2. Protocol messages are encoded in Concise Binary Object Representation (CBOR) {{RFC8949}} and can be transported over application layer protocols such as Constrained Application Protocol (CoAP) {{RFC7252}} or directly over TCP, Bluetooth etc. FIDO IoT however assumes that the device already has IP connectivity to a rendezvous server. Establishing this initial IP connectivity is explicitly stated as "out-of-scope" but the draft specification hints at the usage of Hypertext Transfer Protocol (HTTP) {{RFC9112}} proxies.
 
 The specification only provides a non-normative example of the DI protocol which must be executed in the factory during device manufacture. This protocol embeds initial ownership and manufacturing credentials into a Restricted Operation Environment (ROE) on the device. The initial information embedded also includes a unique device identifier (called GUID in the specification). After DI is executed, the manufacturer has an ownership voucher which is passed along the supply chain to the device owner.
 
@@ -613,17 +615,7 @@ SZTP after running, the device has obtained onboarding information and is equipp
 
 # Security Considerations
 
-This draft does not take any posture on the security properties of the different bootstrapping protocols discussed. Specific security considerations of bootstrapping protocols are present in the respective specifications.
-
-Nonetheless, we briefly discuss some important security aspects which are not fully explored in various specifications.
-
-Firstly, an IoT system may deal with authorization for resources and services separately from initial security setup in terms of timing as well as protocols. As an example, two resource-constrained devices A and B may perform mutual authentication using credentials provided by an offline third-party X before device A obtains authorization for running a particular application on device B from an online third-party Y. In some cases, authentication and authorization maybe tightly coupled, e.g., successful authentication also means successful authorization.
-
-Secondly, initial security setup of IoT devices may be necessary several times during the device lifecycle since keys have limited lifetimes and devices may be lost or resold. Protocols and systems must have adequate provisions for revocation and fresh security setup. A rerun of the security setup mechanism must be as secure as the initial security setup regardless of whether it is done manually or automatically over the network.
-
-Lastly, some IoT networks use a common group key for multicast and broadcast traffic. As the number of devices in a network increase over time, a common group key may not be scalable and the same network may need to be split into separate groups with different keys. Bootstrapping and provisioning protocols may need appropriate mechanisms for identifying and distributing keys to the current member devices of each group.
-
-
+This draft does not take any posture on the security properties of the different bootstrapping protocols discussed. Specific security considerations of each protocol is present in the respective specifications.
 
 # IANA Considerations
 
