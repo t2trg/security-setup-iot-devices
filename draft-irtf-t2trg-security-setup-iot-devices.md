@@ -62,6 +62,22 @@ informative:
     date: 2019
     seriesinfo:
       Version: 2.0.7
+  Sethi19:
+    target: https://doi.org/10.1145/3321705.3329813
+    title: Misbinding Attacks on Secure Device Pairing and Bootstrapping
+    author:
+    - ins: M. Sethi
+      name: Mohit Sethi
+      org: Aalto University
+    - ins: A. Peltonen
+      name: Aleksi Peltonen
+      org: Aalto University
+    - ins: T. Aura
+      name: Tuomas Aura
+      org: Aalto University
+    date: 2019-07
+    seriesinfo:
+      Proceedings: of the 2019 ACM Asia Conference on Computer and Communications Security (AsiaCCS '19), pp. 453-464, Auckland, New Zealand
   Sethi14:
     target: http://dx.doi.org/10.1145/2632048.2632049
     title: Secure Bootstrapping of Cloud-Managed Ubiquitous Displays
@@ -308,7 +324,7 @@ EAP-NOOB has the following characteristics:
     * *Bootstrapping*: used to describe the entire process involved during the initial security setup of an IoT device. The specification does not use separate terms or distinguish the process of obtaining identifier and credentials for communicating with an application server where the user has an account or for network connectivity.
     * *Registration*: describes the process of associating the device with a user account on an application server.
   * **Players**: The device owner/user is responsible for transferring an OOB message necessary for protocol completion. The application server where the device is registered may be provided by different service providers including the device manufacturer or device owner. The local network needs standard AAA configuration for routing EAP-NOOB sessions to the application server chosen by the device owner/user.
-  * **Initial beliefs assumed in the device**: EAP-NOOB does not require devices to have any pre-installed credentials but expects all devices to use a standard identifier (noob@eap-noob.arpa) during initial network discovery.
+  * **Initial beliefs assumed in the device**: EAP-NOOB does not require devices to have any pre-installed credentials but expects all devices to use a standard identifier (noob@eap-noob.arpa) during initial network discovery. The devices also populate the PeerInfo JSON object using during the boostrapping process and may contain information such as the MAC Address, Manufacturer name, and model information.
   * **Processes**: The IoT device performs network discovery and one or more OOB outputs may be generated. The user is expected EAP exchange is encompassed by Initial Exchange, OOB step, Completion Exchange and Waiting Exchange.
   * **Beliefs imparted to the device after protocol execution**: After EAP-NOOB bootstrapping process is complete, the device and server establish a long-term secret, which can be renewed without further user involvement. As a side-effect, the device also obtains identifier and credentials for network and Internet connectivity (via the EAP authenticator).
 
@@ -515,79 +531,41 @@ The specifics of every term varies depending on the technology, but we enumerate
 
 ## Comparison of players {#comp-players}
 
-User in DPP vs. owner in BRSKI
 
-In this section we classify the different players.
-
-Human User: user
-
-Device that intends to securely join a network: pledge, device, client, peer, persona, enrollee, candidate
-
-Entity that makes the device: Manufacturer
-
-Entity that owns the device: owner, manager
-
-Entity with which the device establishes a connection: IoT platform, Rendezvous Server, Server,
-
-Entity that aids in  the process: Join Proxy, Bootstrap Server, Onboarding Server, Border Router
-
-Person that manages a deployment or system: Administrator
-
-Entity that steers the process for the IoT device to securely join the network: Configurator, Bootstrap Server, Rendezvous Server, JRC, Onboarding/Redirect Server, Commissioner.
-
-External or third-party entity that intervenes in the process:  Registrar, MASA
 
 
 
 ## Comparison of initial beliefs {#comp-beliefs}
 
-The IoT devices may have different initial beliefs depending on the credentials pre-installed, during the manufacturing process or prior to being turned on. There are cases where the initial credentials that need to be shared to establish basic trust, or they are exchanged during one of the procedures after the device is turned on, not installed during manufacturing.
+Protocols can be grouped into four broad categories based on the type and strength of identity and credentials that are imparted to the device during manufacturing or prior to deployment. The choice of category has significant implications for supply chain complexity, user involvement, scalability, and achievable security properties.
 
-### No initial trust established
+ * **The Blank Slate (No Cryptographic Secrets)**: In this category, devices are assumed to have no pre-installed cryptographic secrets or unique credentials. Trust is established entirely through user-assisted mechanisms. Examples include OCF Just Works, OCF Random PIN, and EAP-NOOB. Security in this category relies heavily on the user’s ability to correctly associate the physical device in their possession and complete the procedure securely (e.g. using Just Works in a physically secure environment).
+
+ * **Static Symmetric Secrets**: These protocols assume that a shared secret or password is installed at manufacturing time. In Thread, the device holds a unique EUI-64 and a PSKd (Pre-Shared Key for Device). The trust model assumes that possession of the PSKd, typically obtained by reading a label or scanning a QR code, implies authorization to commission the device. In LwM2M Factory or Smartcard modes, a symmetric key known to both the device and the Bootstrap Server is used, enabling automated bootstrapping without direct user interaction.
+
+ * **Raw Asymmetric Keys**: Devices in this category possess a unique asymmetric key pair but no certificate signed by a trusted authority. In Wi-Fi DPP, the device holds a bootstrapping key pair and the public key is encoded in a QR code or URI that is transferred to the configurator. Similar approaches are used in Bluetooth Mesh with Static OOB authentication and in LwM2M Raw Public Key (RPK) mode. In these protocols, knowledge of the device public key is sufficient to provision or onboard the device.
+
+ * **Certificates and Supporting Infrastructure**: The most infrastructure-intensive category assumes that devices are provisioned during manufacturing with X.509 certificates and corresponding trust anchors. BRSKI, SZTP, FDO, EST, OCF in certificate-based modes, and Bluetooth Mesh v1.1 certificate provisioning fall into this category. In BRSKI, the device must possess an IEEE 802.1AR IDevID certificate and a trust anchor to verify vouchers issued by the Manufacturer Authorized Signing Authority (MASA). SZTP similarly assumes an IDevID and trust anchors for verifying manufacturer-signed ownership vouchers and bootstrap servers. FDO assumes a GUID, an attestation key pair, a hash of the manufacturer public key, rendezvous information, and a device-specific HMAC secret used to validate ownership vouchers. EST assumes an existing credential, commonly an IEEE 802.1AR certificate, to mutually authenticate the TLS session with the EST server. OCF certificate-based modes and Bluetooth Mesh v1.1 support optional manufacturer-installed certificates that enable automated device authentication during ownership transfer or provisioning.
+
+The nature of the initial beliefs assumed on the devices by various protocols have other consequences worth considering:
+
+ * **Privacy**: Protocols that expose static identifiers can pose privacy risks. Bluetooth Mesh and Thread often advertise a Device UUID or EUI-64 in the clear during discovery, creating a persistent digital fingerprint that can be passively observed. EAP-NOOB includes a PeerInfo field, which may contain information such as MAC address or device make and model. However, this information is revealed only after the server responds to the initial generic identity noob@eap-noob.arpa, ensuring that disclosure occurs only to a server that actively participates in the EAP exchange rather than continuously via broadcast beacons. Another privacy consideration is protection from the device manufacturer. Vendor-mediated protocols such as FDO, SZTP, and BRSKI achieve convenience and minimal user interaction by requiring the device to contact a manufacturer-operated service such as a Rendezvous Server, MASA, or bootstrap server. As a result, the manufacturer or cloud provider can retain a permanent record of when and from which network a device is onboarded. The owner cannot install the device without the manufacturer becoming aware of its activation. In contrast, local sovereignty protocols operate entirely within the local deployment context and remain invisible to the manufacturer. A user can deploy a device in an isolated environment without the vendor ever learning that it was activated.
+
+ * **Vulnerability to label swapping**: Protocols in the static symmetric secret and raw asymmetric key categories rely heavily on the physical integrity of device labels. If an attacker can photograph or copy a QR code in the supply chain or replace it with a malicious one, they may be able to claim the device as soon as it comes online or perform a man-in-the-middle attack. Damage to or loss of the label can also render a device unusable unless the manufacturer retains and can recover the associated public key. If the QR code is not attached to the device itself and the device is resold on a secondary market, the new owner may be unable to onboard it. In some ecosystems, devices cannot be transferred to a new owner without cooperation from the previous owner, leading to devices being resold but effectively unusable.
+
+ * **Raw public keys vs. certificates**: Protocols based on raw public keys, such as Wi Fi DPP with Static OOB authentication, prevent passive eavesdropping but can be vulnerable to misbinding attacks {{Sethi19}}. An attacker can print a QR code containing their own public key and attach it to a different device. If the user scans this code, the protocol may complete successfully with an attacker controlled device. In contrast, certificate based approaches allow a device to cryptographically prove contextual information such as its manufacturer, model, or serial number, reducing the risk that initial security setup is completed with the wrong or malicious device. Both raw public keys and certificates introduce cost factors, since factory installed credentials require secure manufacturing processes to ensure that keys and certificates are generated, stored, and injected without leakage. While the use of certificates is becoming increasingly common and provides the additional benefit of signed contextual information, the complexity and cost of operating a public key infrastructure cannot always be ignored by manufacturers. Commercial private PKI services, such as those offered by cloud providers like Amazon Web Services (AWS), typically charge per issued certificate, which may be prohibitive for certain types of devices.
 
 
-EAP-NOOB does not require initial configuration of credentials to establish trust, since its done using the out-of-band process.
 
-The OCF device starts as unowned. It has to perform an ownership transfer, to establish basic trust to perform onboarding and  provisioning. Depending on the Owener Transfer Mode (OTM) it can be considered to have not initial trust based on the credentials installed.
-
-Bluetooth devices start as unprovisioned. Initial trust is established as a consequence of exchanging public keys and performing the authentication. If the public keys are ephemeral, there is no initial credential establishment.
-
-### Initial trust based on the credentials installed
-
-Benefit on certificate over bootstrapping key only in DPP
-
-These credentials may very from the time of installing, and the entity to which it related. In this sense, they could be from the  manufacturer, owner or other entity.
-
-FIDO devices have installed during the manufacturing process a set of ownership credentials (i.e., ownership voucher) and additional information to determine the current owner of the device. Hence, there is an initial trust from the IoT device and the owner. With this basic setup, and and the cooperation among device, owner and rendezvous server, the onboarding process can take place.
-
-EST devices are configured with the needed information to perform mutual authentication and for authorization between the EST client and server.
-
-BRSKI have manufacturer-installed certificates as starting point to establish trust.
-
-SZTP have pre-configured initial state which provides the basis for trust.
-
-LPWAN specifics depends on the technology, but they all have in common some pre-installed credentials that allows the establishment of trust and to secure the communications.
-
-Thread devices, share credentials as well to establish trust.
-
-OMA devices can have all the necessary information to start working on the network where they are deployed, if they have the factory bootstrap, hence all needed credentials to establish trust. There need to be installed some basic credentials to establish trust with the bootstrap server and perform the bootstrapping.
-
-DPP initial trust is established during the bootstrapping where the public key is transmitted.
 
 
 ## Comparison of processes {#comp-process}
 
 Analyzing the different terms used over the different solutions reviewed in this document, we can identify several processes. These are named differently in some cases, and not every technologies considers them all as part of their the following common concepts:
 
-* To refer to the process previous to the device being turned on, in which some information, or credentials are installed into the device. This process is commonly referred to as manufacture. Is in this phase where the IoT devices have installed the needed information (specifics depend on the technology) to provide the basis for trust and to authenticate other entities.
 
 
-* To refer to the process after the device is turned on and intends to locate the entity with which it has to communicate to start the authentication process to be integrated into the security domain. Here is where the device start the process to get to perform its normal operation.
 
-
-* To the process by which the device obtains additional credentials, in addition to what it already had installed before being turned on.
-
-* To the process by which the device is authenticated and established a trust relation.
 
 
 ## Comparison of knowledge imparted to the device {#comp-impart}
