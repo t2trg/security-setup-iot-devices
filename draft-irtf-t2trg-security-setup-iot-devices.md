@@ -209,7 +209,7 @@ The next section provides an overview of some standards and protocols for initia
 
 
 
-# Standards and Protocols {#usage}
+# Standards and Protocols {#standards}
 
 
 ## Bluetooth Mesh Provisioning
@@ -453,80 +453,28 @@ Thread has the following characteristics:
 
 # Comparison {#comp}
 
-There are several stages before a device becomes fully operational. There is typically a stage where some sort of credential is installed. The nature or purpose of this credential can be varied, form being part of the IoT device authentication, to a credential from a 3rd trusted party, be it the manufacturer or the owner. Solution differ on this initial process, and in some cases this can even be done in an out-of-band fashion.
 
-After some initial credential is installed, there is a process that typically involves authentication establishing initial trust, after which  credentials and/or parameters are configured or installed into the device.
 
-Finally, when the entities involved in the process are authenticated and the configuration and key material established, the normal operation of the IoT device can take place.
 
-TODO Discuss that some protocols think about resale and potential reused. Others assume that device reset will take care but haven't thought about the exact scenario - what if the device is sold without reset.
 
-TODO Discuss several protocols require temporary connectivity via border router authenticator etc. Even DPP and Bluetooth support provisioner not in radio coverage
 
 ## Comparison of terminology {#comp-term}
 
-The specifics of every term varies depending on the technology, but we enumerate here the basic terminology and what it means for the different solutions.
+The ten protocols covered in {{standards}} highlight the lack of a common lexicon for specifying initial security setup mechanisms for IoT devices. While these protocols broadly aim to achieve the same outcome, namely transitioning a device from a factory default state to an operational and trusted network node, the terminology used to describe this process is fragmented and often inconsistent. Although it is difficult to identify strict patterns, several noteworthy observations emerge from a comparison of the terminology used across the protocols.
 
+IETF protocols such as BRSKI, EAP NOOB, and SZTP predominantly rely on *bootstrapping* as the umbrella term for the entire process of transitioning a device from a factory default state to an operational state. Notably, SZTP includes the word provisioning in its title but explicitly describes itself as a bootstrapping strategy within the specification. In contrast, Wi-Fi DPP uses *bootstrapping* more narrowly as only the initial step of establishing trust through mechanisms such as QR codes or NFC. This differs from the IETF usage, where bootstrapping typically encompasses the complete process.
 
-- Bootstrapping:
-  * DPP: Client obtains the Controller’s public bootstrapping key and IP address
-  * OMA: An IoT device retrieves and processes all the bootstrap data
-  * EST: installation of the Explicit TA database
-  * BRSKI: A protocol to obtain a local trust anchor.
-  * SZTP: The process by which obtains "bootstrapping data" such as conveyed information, owner certificate and owner voucher.
-  * EAP-NOOB: For an IoT device to be registered, authenticated, authorized and for it to derive key material to act as a trustworty entity in the security domain where it is deployed.
+OCF and FDO use *onboarding* as the umbrella term for the entire initial security setup. This terminology reflects a consumer or enterprise management mindset, where a device is brought on board into an administrative or ownership domain. In both protocols, onboarding is closely tied to the concept of ownership transfer, treating the device as an asset that moves between legal or administrative entities such as manufacturers and owners. It is also worth noting a subtle semantic distinction OCF and FDO define onboarding primarily as a verb describing the process of transitioning the device, whereas SZTP defines *onboarding information* as a noun referring to the payload, such as boot images, configuration, and scripts, that the device receives.
 
-- configuration:
-  * DPP: The process performed by a Configurator by which the Enrollee is provisioned.
-  * OMA: Adding or removing an LwM2M Server Account to or from the LwM2M Client configuration.
-  * OCF: The necessary information the Device must hold to be considered as ready for normal operation.
-  * EST: The basic information (e.g., TA database) needed to initiate protocol operation.
-  * SZTP: The system configuration  to be installed into the device by the bootstrapping process.
-  * EAP-NOOB: Establishing  necessary information for the device to operate.
-  * LPWAN: In LoRaWAN, the information related to the working of the device and protocol.
+Bluetooth Mesh and Wi Fi DPP use *provisioning* as the umbrella term for the entire process. This choice is potentially confusing, as provisioning has traditionally referred to a specific sub step involving the delivery of configuration data or credentials. By elevating provisioning to describe the full lifecycle of initial security setup, these protocols blur the conceptual boundary between establishing trust and configuring operational parameters.
 
-- discovery:
-  * DPP: Exchange that allows obtaining specific information such as SSID, operating channel and band.
-  * OCF: Making the different resources available through URIs.
-  * BRSKI: Locating an entity that needs to take part of the bootstrapping process (e.g., Join proxy)
+Thread uses the term *commissioning* to describe entire initial setup process. This term has possible roots in building automation and industrial control systems, where it implies a technician physically installing, verifying, and activating equipment. The choice of commissioning reflects Thread’s emphasis on local installation and user assisted setup within a constrained network environment.
 
-- enrollment:
-  * EST: The process of obtaining the credentials needed to perform the device normal operation.
-  * BRSKI: Same process describe as EST.
-  * SZTP: The process of an owner joining a manufacturer's SZTP program.
+The term *provisioning* exhibits the most severe semantic overloading across protocols. In Wi Fi DPP and Bluetooth Mesh, provisioning refers to the entire process of adding a device, including discovery, authentication, and key distribution. In Thread and OCF, provisioning is a more narrowly defined step that refers specifically to the delivery of credentials and security related information after authentication or ownership transfer. SZTP uses the term more loosely and often interchangeably with bootstrapping, further contributing to ambiguity.
 
+The term *enrollment* is predominantly used in protocols that rely on X.509 certificates. EST and BRSKI use enrollment in its strict PKI sense, referring to the process by which a device obtains a certificate from a Certificate Authority. In contrast, Wi Fi DPP uses enrollment more informally to mean authorizing a device to join a network, largely detached from its PKI origins. SZTP uses enrollment in a completely different manner, referring to the device owner enrolling with the manufacturer, which reverses the more common direction of device enrolling into a network or domain.
 
-- provisioning:
-  * DPP: Securely enabling a device to establish secure associations with other devices in a network.
-  * OMA: Establishing security credentials and access control lists by a dedicated LwM2M bootstrap server.
-  * OCF: A set of processes that take place both during and after the ownership transfer. These entail configuration of credentials, and security-related resources for any services or devices that the provisioned device needs to interact with in the future.
-  * Bluetooth: The procedure by which a device is authenticated, and a secure link is established, becoming a trustworthy node in the network.
-  * FIDO: Same as FIDO onboarding.
-  * SZTP: The set of steps that take place to enable a device to establish secure connections with other systems.
-  * LPWAN: In LoRaWAN, the establishment of configuration data and credentials.
-
-
-- intialization:
-  * OMA: When Bootstrap-Delete operation is used, to restore a device.
-  * FIDO: Protocol (DI), establishing basic information at manufacture.
-
-- registration:
-  * OMA: Establishing a registration session, which is an association between the client and the server.
-  * EAP-NOOB: Add information about an IoT device in a server database.
-
-- onboarding:
-  * OCF:  The device is considered to complete the onboarding after the ownership of the Device has been transferred and the Device provisioned.
-  * FIDO: The procedure of installing configuration information and secret to a device so that it may safely connect to and communicate with an IoT platform.
-  * SZTP: information related to the boot image a device must be running, an initial configuration the device must commit, and scripts that the device must successfully execute.
-
-- commissioning:
-  * Thread: The process of a Thread device joining a Thread network.
-
-
-- imprint:
-  * BRSKI: The process by which a device obtains the needed information to act as trustworthy entity within the network or domain
-
-
+While strict harmonization of terminology across diverse standards is impractical, this analysis reveals that much of the ambiguity arises when terms describing atomic actions, such as transferring credentials, are conflated with terms describing broader lifecycle phases, such as transitioning a device from a factory state to an operational state. To improve clarity, it is beneficial to adopt clear umbrella terms such as *onboarding* or *bootstrapping* to describe the comprehensive process. *Onboarding* is preferable when emphasizing ownership or administrative control transitions, as seen in OCF and FDO, while *bootstrapping* is more suitable for network centric state transitions, as in BRSKI and SZTP. Action oriented terms such as *provisioning* and *authentication* should be reserved for specific sub phases within the umbrella process. In particular, provisioning should ideally refer to the secure delivery of configuration data or credentials, rather than the entire initial security setup lifecycle.
 
 
 ## Comparison of players {#comp-players}
@@ -589,7 +537,11 @@ BRSKI after running it is able to verify that the communicating entities are who
 
 SZTP after running, the device has obtained onboarding information and is equipped to establish secure connections with other systems.
 
+## Other observations
 
+TODO Discuss that some protocols think about resale and potential reused. Others assume that device reset will take care but haven't thought about the exact scenario - what if the device is sold without reset.
+
+TODO Discuss several protocols require temporary connectivity via border router authenticator etc. Even DPP and Bluetooth support provisioner not in radio coverage
 
 # Security Considerations
 
