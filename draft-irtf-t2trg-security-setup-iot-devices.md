@@ -544,10 +544,6 @@ Although all surveyed protocols aim to securely transition a device into an oper
 
 The extent to which a device is prepared for reuse and ownership transfer also varies significantly across protocols. Protocols such as FDO and OCF explicitly update internal state and credentials to support future resale or re-execution of the protocol for initial security setup, imparting the belief that ownership and trust relationships are mutable over time. By contrast, Thread and Bluetooth Mesh generally treat commissioning as a one time event, with reset and reprovisioning possible but not explicitly modeled as ownership transitions. A particularly challenging case arises in protocols that rely on physical labels. If possession of a label or QR code is sufficient to claim a device, then an unauthorized individual with temporary access to the device or its packaging may be able to take control of it. In other cases, a device reset may not be sufficient to make the device reusable until the previous owner explicitly removes it from their management system. These differences have significant implications for secondary markets, device longevity, and long term sustainability.
 
-## Other observations
-
-TODO Discuss several protocols require temporary connectivity via border router authenticator etc. Even DPP and Bluetooth support provisioner not in radio coverage
-
 # Security Considerations
 
 This draft does not take any posture on the security properties of the different bootstrapping protocols discussed. Specific security considerations of each protocol is present in the respective specifications.
