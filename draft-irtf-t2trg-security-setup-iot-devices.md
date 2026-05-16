@@ -270,22 +270,9 @@ EST has the following characteristics:
 ## Open Mobile Alliance (OMA) Lightweight Machine to Machine specification (LwM2M)
 
 
-LwM2M specification developed by OMA {{oma}} defines a RESTful architecture where a new IoT device (LwM2M client) first contacts an LwM2M Bootstrap-Server for obtaining essential information such credentials for subsequently registering with one or more LwM2M Servers. These one or more LwM2M servers are used for performing device management actions during the device lifecycle (reading sensor data, controlling an actuator, modifying access controls etc.). LwM2M specification does not deal with the initial network configuration of IoT devices and assumes that the IoT client device has network reachability to the LwM2M Bootstrap-Server and LwM2M Server.
+The Open Mobile Alliance Lightweight Machine to Machine (LwM2M) specification {{oma}} defines a management framework in which a device, called an LwM2M client, obtains the information required to communicate securely with one or more LwM2M servers that perform device management functions. A key component of this framework is the LwM2M Bootstrap Server, which is responsible for provisioning the client with the credentials and configuration needed to establish and maintain secure communication with operational LwM2M servers. The specification assumes that the client already has network connectivity and can reach the Bootstrap Server.
 
-The current standard defines the following four bootstrapping modes:
-
-* Factory Bootstrap: An IoT device is configured with all the information necessary for securely communicating with an LwM2M Bootstrap-Server and/or LwM2M Server while it is manufactured and prior to its deployment.
-
-* Bootstrap from Smartcard: An IoT device retrieves all the information necessary for securely communicating with an LwM2M Bootstrap-Server and/or LwM2M Server from a Smartcard.
-
-* Client Initiated Bootstrap: If the IoT device in one of the above bootstrapping modes is only configured with information about an LwM2M Bootstrap-Server, then the client device must first communicate securely with the configured LwM2M Bootstrap-Server and obtain the necessary information and credentials to subsequently register with one or more LwM2M Servers.
-
-* Server Initiated Bootstrap: In this bootstrapping mode, the LwM2M server triggers the client device to begin the client initiated bootstrap sequence described above.
-
-The LwM2M specification is also quite flexible in terms of the credentials and the transport security mechanism used between the client device and the LwM2M Server or the LwM2M Bootstrap-Server. Credentials such as a pre-shared symmetric key, a raw public key (RPK), or X.509 certificates can be used with various transport protocols such as Transport Layer Security (TLS) or Datagram Transport Layer Security (DTLS) as specified in LwM2M transport bindings specification {{oma-transport}}.
-
-As explained earlier, an LwM2M Bootstrap-Server is responsible for provisioning credentials into an LwM2M Client. When X.509 certificates are being provisioned, the asymmetric key pair is generated on the Bootstrap-Server and then sent to the LwM2M client device. This approach is not acceptable in all scenarios and therefore, LwM2M specification also supports a mode where the client device uses the Enrollment over Secure Transport (EST) certificate management protocol for provisioning certificates from the LwM2M Bootstrap-Server to the LwM2M Client.
-
+During bootstrapping, the LwM2M client establishes a secure connection to the Bootstrap Server using supported security mechanisms such as pre-shared keys, raw public keys, or X.509 certificates. The Bootstrap Server then provisions the client with the security parameters and server information required to register with one or more LwM2M servers. Once bootstrapping is complete, the client registers with these servers and transitions to normal operation, where the servers perform device management tasks such as data collection, control of device functions, and configuration of access control. In deployments that use X.509 certificates, the Bootstrap Server may rely on protocols such as Enrollment over Secure Transport (EST) to provision certificates instead of directly installing keys on the device.
 
 OMA has the following characteristics:
 
